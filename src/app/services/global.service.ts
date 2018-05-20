@@ -5,19 +5,5 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalService {
   constructor() { }
-  private Global: string = "http://localhost/engine/public/";
-  public PATH = {
-    GET: {
-      
-    },
-    POST: {
-
-    },
-    DELETE: {
-
-    },
-    PUT: {
-      
-    }
-  };
+  public API: string = "http://localhost/engine/public/";
 }

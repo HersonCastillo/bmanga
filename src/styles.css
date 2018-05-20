@@ -5,3 +5,10 @@
 *, html, body{
     font-family: 'Roboto', sans-serif, arial;
 }
+body{
+    background-image: url(assets/img/background.jpg);
+}
+.content{
+    padding: 20px;
+    margin: 10px;
+}
