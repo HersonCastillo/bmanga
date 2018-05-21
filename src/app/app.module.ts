@@ -9,11 +9,13 @@ import { MaterialModule } from './material.module';
 import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './error/error.component';
 import { BibliotecaComponent } from './biblioteca/biblioteca.component';
+import { LeerComponent } from './leer/leer.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'error', component: ErrorComponent },
   { path: 'biblioteca/:nombre', component: BibliotecaComponent },
+  { path: 'leer/:id', component: LeerComponent },
   { path: '**', redirectTo: 'error', pathMatch: 'full' }
 ];
 
@@ -22,7 +24,8 @@ const appRoutes: Routes = [
     AppComponent,
     HomeComponent,
     ErrorComponent,
-    BibliotecaComponent
+    BibliotecaComponent,
+    LeerComponent
   ],
   imports: [
     BrowserModule,

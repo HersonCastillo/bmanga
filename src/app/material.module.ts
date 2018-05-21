@@ -24,7 +24,8 @@ import {
   MatPaginatorModule,
   MatSelectModule,
   MatExpansionModule,
-  MatGridListModule
+  MatGridListModule,
+  MatSlideToggleModule
 } from '@angular/material';
 
 import { MatProgressBarModule } 
@@ -55,7 +56,8 @@ from '@angular/material/progress-bar';
     MatPaginatorModule,
     MatSelectModule,
     MatExpansionModule,
-    MatGridListModule
+    MatGridListModule,
+    MatSlideToggleModule
   ],
   exports: [
     MatButtonModule,
@@ -78,7 +80,8 @@ from '@angular/material/progress-bar';
     MatPaginatorModule,
     MatSelectModule,
     MatExpansionModule,
-    MatGridListModule
+    MatGridListModule,
+    MatSlideToggleModule
   ],
   declarations: []
 })
