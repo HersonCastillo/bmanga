@@ -18,4 +18,10 @@ export class CapitulosService {
       .subscribe(r => resolve(r.json()), err => reject(err));
     });
   }
+  public getCapitulos(id: number): Promise<any>{
+    return new Promise<void>((resolve, reject) => {
+      this.http.get(this.globals.API + "capitulos/" + id)
+      .subscribe(r => resolve(r.json()), err => reject(err));
+    });
+  }
 }

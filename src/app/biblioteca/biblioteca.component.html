@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="row">
+    <div class="alert alert-danger" *ngIf="isError.generalLoad">
+      <h2>¡Ups!</h2>
+      Ocurrió un error al tratar de encontrar el libro que buscas.
+      <br><br>
+      Inténtalo más tarde. Si el problema persiste repórtalo con un administrador.
+      <br><br>
+      <code>Log: <b>{{mensajeError}}</b></code>
+    </div>
+    <div *ngIf="!isError.generalLoad && mangaInformacion" class="media mat-card">
+      <mat-tab-group>
+          <mat-tab label="Información General">
+            <mat-card>
+              <div class="media-left">
+                <img 
+                  class="media-object" 
+                  [attr.src]="getImage(mangaInformacion.imagen)"
+                  onerror="this.src='assets/img/image-no-load.png'"
+                  style="max-width: 200px;
+                  border: 1px solid #eee;
+                  border-radius: 3px;"
+                  alt="BMANGA Resource">
+              </div>
+              <div class="media-body" style="padding-left: 15px; position: relative;">
+                <br>
+                <h1>
+                  {{mangaInformacion.nombre}}<br>
+                  <small style="color: gray; font-weight: normal;">
+                    <small><i>{{mangaInformacion.generos}}</i></small>
+                  </small>
+                </h1>
+                <br>
+                <span style="margin-right: 5px;">
+                  {{mangaInformacion.sinopsis}}
+                </span>
+              </div>
+              <br>
+              <mat-divider></mat-divider>
+              <h3>
+                <span class="material-icons icon-top">bookmark</span>
+                <label class="icon-mar">LISTA DE CAPÍTULOS</label>
+              </h3>
+              <mat-list>
+                <mat-list-item *ngFor="let item of getData(chapters); let i = index;">
+                  <div *ngIf="item">
+                    {{(item?.titulo !== null) ? item?.titulo : 'Capítulo sin título '}} <b style="margin-left: 5px;">{{item?.capitulo}}</b>
+                    <button mat-mini-fab color="primary" style="position: absolute;
+                    right: 50px;">
+                      <span class="material-icons">play_arrow</span>
+                    </button>
+                    <button mat-mini-fab color="warn" style="position: absolute;
+                    right: 0px;">
+                      <span class="material-icons">cloud_download</span>
+                    </button>
+                    </div>
+                </mat-list-item>
+              </mat-list>
+              <br><br>
+              <div style="position: relative; text-align: center;">
+                <button mat-mini-fab (click)="changePage(i)" class="icon-mar" *ngFor="let i of paginator">
+                  {{i + 1}}
+                </button>
+              </div>
+            </mat-card>
+          </mat-tab>
+          <mat-tab label="Suscripciones">
+            <h2>Suscripciones</h2>
+            <span>
+              Centro de notificaciones de mangas, este beneficio posee la posibilidad de darte un aviso cuando
+              un cierto manga ha sido subido a la plataforma.
+              <br><br>
+              El actual sistema solo permite inscripción a los personas con cuentas verídicas en BMANGA.
+            </span><br><br><br>
+            <mat-form-field style="width: 100%;">
+              <input 
+              matInput 
+              placeholder="Escribe un correo electrónico válido..." 
+              name="email" 
+              [(ngModel)]="email">
+              <span class="material-icons" matSuffix>email</span>
+            </mat-form-field>
+            <br><br>
+            <button 
+            mat-raised-button 
+            color="primary"
+            (click)="envEmail()">Recibir notificaciones</button>
+          </mat-tab>
+          <mat-tab label="Historial">
+              <span>Historial</span>
+          </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

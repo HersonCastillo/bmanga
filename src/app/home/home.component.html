@@ -34,7 +34,8 @@
       mat-icon-button 
       color="primary" 
       class="icon-mar" 
-      matTooltip="Ver capítulos" 
+      matTooltip="Ver capítulos"
+      (click)="irManga(element.nombre)"
       [matTooltipPosition]="positionTooltip">
         <span class="material-icons">book</span>
       </button>
@@ -78,7 +79,7 @@
               <div class="media-body">
                 <br>
                 <h4 class="media-heading">{{item.nombre}}</h4>
-                <small style="margin-right: 5px;">capítulo <b>{{item.capitulo}}</b></small>
+                <span style="margin-right: 5px;">capítulo <b>{{item.capitulo}}</b></span>
                 <button mat-button color="primary">Leer capítulo</button>
               </div>
             </div>
@@ -102,7 +103,7 @@
                   <div class="media-body">
                     <br>
                     <h4 class="media-heading">{{item.nombre}}</h4>
-                    <small style="margin-right: 5px;">capítulo <b>{{item.capitulo}}</b></small>
+                    <span style="margin-right: 5px;">capítulo <b>{{item.capitulo}}</b></span>
                     <button mat-button color="primary">Leer capítulo</button>
                   </div>
                 </div>
@@ -137,7 +138,7 @@
     alt="BMANGA Resource"
     class="fix-size">
     <mat-card-actions>
-      <button mat-raised-button color="primary">
+      <button mat-raised-button color="primary" (click)="irManga(element.nombre)">
         VER CAPÍTULOS
       </button>
     </mat-card-actions>

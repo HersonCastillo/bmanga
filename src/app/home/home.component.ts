@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CapitulosService } from '../services/capitulos.service';
 import { LibrosService } from '../services/libros.service';
+import { Router, Route } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -8,7 +9,8 @@ import { LibrosService } from '../services/libros.service';
 })
 export class HomeComponent implements OnInit {
   constructor(private capitulos: CapitulosService,
-  private libros: LibrosService) {}
+  private libros: LibrosService,
+  private router: Router) {}
   public capitulosNuevos: Array<any> = [];
   public capitulosOtros: Array<any> = [];
   public librosRanking: Array<any> = [];
@@ -59,5 +61,8 @@ export class HomeComponent implements OnInit {
     for(let i = 0; i < 15; i++) nName += name[i];
     nName += "...";
     return nName;
+  }
+  irManga(nombre: string): void{
+    this.router.navigateByUrl('/biblioteca/' + nombre);
   }
 }

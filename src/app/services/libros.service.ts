@@ -12,4 +12,10 @@ export class LibrosService {
       .subscribe(r => resolve(r.json()), err => reject(err));
     });
   }
+  public getLibro(nombre: string): Promise<any>{
+    return new Promise<void>((resolve, reject) => {
+      this.http.get(this.globals.API + "libros/" + nombre)
+      .subscribe(r => resolve(r.json()), err => reject(err));
+    });
+  }
 }
