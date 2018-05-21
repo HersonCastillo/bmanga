@@ -7,8 +7,14 @@ import { GlobalService } from './global.service';
 export class CapitulosService {
   constructor(private globals: GlobalService, private http: Http) { }
   public ultimosCapitulos(): Promise<any>{
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.http.get(this.globals.API + "capitulos/ultimos")
+      .subscribe(r => resolve(r.json()), err => reject(err));
+    });
+  }
+  public otrosCapitulos(): Promise<any>{
+    return new Promise<void>((resolve, reject) => {
+      this.http.get(this.globals.API + "capitulos/otros")
       .subscribe(r => resolve(r.json()), err => reject(err));
     });
   }

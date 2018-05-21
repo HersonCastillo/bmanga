@@ -1,3 +1,17 @@
 .icon-mar{
-    margin: 0 14px;
+    margin: 0 8px;
+}
+.icon-top{
+    top: 4px;
+    position: relative;
+}
+.news-card{
+    width: 214px;
+    max-width: 215px;
+    margin: 7px !important;
+    display: inline-block;
+}
+.fix-size{
+    height: 299px;
+    max-height: 300px;
 }

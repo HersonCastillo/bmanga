@@ -1,8 +1,11 @@
-<mat-toolbar>
+<mat-toolbar style="position: fixed; z-index: 99999;">
     <mat-toolbar-row class="mat-elevation-z6">
-          <span>BMANGA</span>
-          <span class="flex"></span>
-        <button mat-icon-button matTooltip="Iniciar sesión" class="icon-mar">
+        <span><b>BMANGA</b></span>
+        <span class="flex"></span>
+        <button mat-icon-button matTooltip="Descargar" class="icon-mar">
+            <span class="material-icons">cloud_download</span>
+        </button>
+          <button mat-icon-button matTooltip="Iniciar sesión" class="icon-mar">
             <span class="material-icons">account_circle</span>
         </button>
         <button mat-icon-button matTooltip="Ver mangas" class="icon-mar">
@@ -13,4 +16,5 @@
         </button>
     </mat-toolbar-row>
 </mat-toolbar>
+<br><br><br><br>
 <router-outlet></router-outlet>

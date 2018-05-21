@@ -1,14 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 @import "material-icons/iconfont/material-icons.css";
 @import "roboto-fontface/css/roboto/roboto-fontface.css";
-
+@import "assets/css/bootstrap.grid.css";
+@import "assets/pace/pace-theme-minimal.css";
 *, html, body{
     font-family: 'Roboto', sans-serif, arial;
 }
 body{
     background-image: url(assets/img/background.jpg);
 }
-.content{
-    padding: 20px;
-    margin: 10px;
+/*Scroll*/
+::-webkit-scrollbar {
+    width: 13px;
+}
+::-webkit-scrollbar-track {
+    background: #f9f9f9; 
+}
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #999; 
 }
