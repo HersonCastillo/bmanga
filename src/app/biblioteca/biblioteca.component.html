@@ -8,7 +8,7 @@
       <br><br>
       <code>Log: <b>{{mensajeError}}</b></code>
     </div>
-    <div *ngIf="!isError.generalLoad && mangaInformacion" class="media mat-card">
+    <div *ngIf="!isError.generalLoad && mangaInformacion" class="media mat-card col-md-9">
       <mat-tab-group>
           <mat-tab label="Información General">
             <mat-card>
@@ -90,6 +90,10 @@
               <span>Historial</span>
           </mat-tab>
       </mat-tab-group>
+    </div>
+    <div class="col-md-3">
+      <h2>Obras similares</h2>
+      <mat-divider></mat-divider>
     </div>
   </div>
 </div>
