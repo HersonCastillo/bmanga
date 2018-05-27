@@ -10,6 +10,9 @@ export class ErrorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    $("body, html").on('contextmenu', function(){
+			return false;
+		});
   }
 
 }

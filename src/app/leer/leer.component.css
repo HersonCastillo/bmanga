@@ -1,5 +1,5 @@
 .float-btn{
-    position: absolute;
+    position: fixed;
     right: 30px;
 }
 .x1{
@@ -7,4 +7,11 @@
 }
 .x2{
     bottom: 95px;
+}
+.view{
+    width: auto; 
+	max-width: 100%;
+	margin: 0 auto;
+	display: block;
+	margin-bottom: 15px;
 }

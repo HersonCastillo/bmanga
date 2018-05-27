@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CapitulosService } from '../services/capitulos.service';
 import { LibrosService } from '../services/libros.service';
 import { Router, Route } from '@angular/router';
+import * as $ from 'jquery';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -26,6 +27,10 @@ export class HomeComponent implements OnInit {
     rank: false
   };
   ngOnInit() {
+    $("title").text("BMANGA");
+    $("body, html").on('contextmenu', function(){
+			return false;
+		});
     this.capitulos.ultimosCapitulos().then(r => {
       this.capitulosNuevos = r;
       this.isLoad.ultimos = true;

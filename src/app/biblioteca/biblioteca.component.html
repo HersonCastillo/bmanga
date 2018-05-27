@@ -43,7 +43,7 @@
                   <div *ngIf="item">
                     {{(item?.titulo !== null) ? item?.titulo : 'Capítulo sin título '}} <b style="margin-left: 5px;">{{item?.capitulo}}</b>
                     <button mat-mini-fab color="primary" style="position: absolute;
-                    right: 50px;">
+                    right: 50px;" (click)="lectura(item?.id)">
                       <span class="material-icons">play_arrow</span>
                     </button>
                     <button mat-mini-fab color="warn" style="position: absolute;

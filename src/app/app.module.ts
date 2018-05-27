@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DisqusModule } from 'ngx-disqus';
 
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
@@ -36,7 +37,8 @@ const appRoutes: Routes = [
       useHash: false
     }),
     FormsModule,
-    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+    DisqusModule.forRoot('mangabooombin')
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -24,4 +24,25 @@ export class CapitulosService {
       .subscribe(r => resolve(r.json()), err => reject(err));
     });
   }
+  public infoLectura(id: number): Promise<any>{
+    return new Promise<void>((rs, rj) => {
+      this.http.get(this.globals.API + "capitulos/lectura/" + id)
+      .subscribe(r => rs(r.json()), err => rj(err));
+    });
+  }
+  public getImages(dir: string, n: number): Promise<any>{
+    return new Promise<void>((rs, rj) => {
+      this.http.post(this.globals.API + "capitulos/lectura/images", {
+        dir: dir,
+        n: n
+      }).subscribe(r => rs(r.json()), err => rj(err));
+    });
+  }
+  public getImagesCount(dir: string): Promise<any>{
+    return new Promise<void>((rs, rj) => {
+      this.http.post(this.globals.API + "capitulos/lectura/images/count", {
+        dir: dir
+      }).subscribe(r => rs(r.json()), err => rj(err));
+    });
+  }
 }

@@ -6,7 +6,7 @@
       </h2>
       <mat-divider></mat-divider><br>
       <div class="alert alert-info react" *ngIf="!isLoad.ultimos">
-        <mat-progress-bar mode="indeterminate" class="up-top"></mat-progress-bar>
+        <mat-progress-bar mode="buffer" class="up-top"></mat-progress-bar>
         Cargando lista de capítulos.
       </div>
       <div class="alert alert-danger" *ngIf="isError.ultimos">
@@ -61,7 +61,7 @@
       </h2>
       <mat-divider></mat-divider><br>
       <div class="alert alert-info react" *ngIf="!isLoad.otros">
-        <mat-progress-bar mode="indeterminate" class="up-top"></mat-progress-bar>
+        <mat-progress-bar mode="buffer" class="up-top"></mat-progress-bar>
         Cargando lista de capítulos.
       </div>
       <div class="alert alert-danger" *ngIf="isError.otros">
@@ -124,7 +124,7 @@
       </h2>
       <mat-divider></mat-divider><br>
       <div class="alert alert-info react" *ngIf="!isLoad.otros">
-        <mat-progress-bar mode="indeterminate" class="up-top"></mat-progress-bar>
+        <mat-progress-bar mode="buffer" class="up-top"></mat-progress-bar>
         Cargando lista de ranking.
       </div>
       <div class="alert alert-danger" *ngIf="isError.otros">

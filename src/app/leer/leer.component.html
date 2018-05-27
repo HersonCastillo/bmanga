@@ -1,21 +1,51 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <div class="col-md-7">
-      <h2>Nombre del manga</h2>
-    </div>
-    <div class="col-md-5">
-      <br>
-      <button mat-raised-button style="margin-right: 5px;">SIGUIENTE</button>
-      <button mat-raised-button>ANTERIOR</button>
-      <mat-slide-toggle style="margin-right: 10px; 
-      margin-left: 25px;
-      top: 3px;
-      position: relative;" [checked]="checked">
-        <b>CASCADA</b>
-      </mat-slide-toggle>
-    </div>
+		<div class="col-md-12">
+			<div class="alert alert-danger" *ngIf="loadError">
+				<h1>Contenido no disponible.</h1>
+				El capítulo solicitado no existe o es posible que algún administrador lo haya deshabilitado y en otro 
+				momento se encuentre disponible. <br><br>
+				<button mat-raised-button routerLink="/">Regresar al inicio</button>
+			</div>
+		</div>
+		<div *ngIf="!loadError">
+				<div class="col-md-7">
+						<h2>Nombre del manga</h2>
+				</div>
+				<div class="col-md-3">
+						<br>
+						<button mat-raised-button style="margin-right: 5px;">SIGUIENTE</button>
+						<button mat-raised-button style="margin-right: 5px;">ANTERIOR</button>
+				</div>
+				<div class="col-md-2">
+					<br>
+						<mat-slide-toggle 
+						style="margin-top: 5px;" 
+						(change)="pageChangeMode()"
+						[(ngModel)]="checked"
+							[checked]="checked">
+								<b>CASCADA</b>
+							</mat-slide-toggle>
+				</div>
+				<div class="col-md-12">
+					<br>
+					<mat-divider></mat-divider>
+					<br>
+					<canvas 
+						id="img{{id}}"
+						class="mat-elevation-z1 view"
+						*ngFor="let id of nObjetos">
+					</canvas>
+					<br>
+					<br>
+					<div style="background: white; padding: 30px; position: relative;">
+						<!--<disqus [identifier]="pageId" [url]="url"></disqus>-->
+					</div>
+				</div>
+		</div>
   </div>
 </div>
+<!--Botones flotantes-->
 <button mat-fab color="primary" class="float-btn x1">
   <span class="material-icons">settings</span>
 </button>
