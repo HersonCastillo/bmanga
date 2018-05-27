@@ -5,3 +5,24 @@
     top: 4px;
     position: relative;
 }
+.header-card{
+    position: absolute;
+    bottom: 0px;
+    left: 0px; 
+    width: 100%; 
+    background: white; 
+    padding-top: 15px; 
+    padding-left: 10px;
+}
+.custom-card{
+    height: 200px;
+    overflow: hidden; 
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.image-card-manga{
+    max-width: 270px;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    box-shadow: 0px 1px 3px rgba(0,0,0,.3);
+}

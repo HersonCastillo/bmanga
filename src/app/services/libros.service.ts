@@ -18,4 +18,18 @@ export class LibrosService {
       .subscribe(r => resolve(r.json()), err => reject(err));
     });
   }
+  public obrasSimilares(generos: string, id: number): Promise<any>{
+    return new Promise<void>((resolve, reject) => {
+      this.http.post(this.globals.API + "libros/similares", {
+        generos: generos,
+        id: id
+      }).subscribe(r => resolve(r.json()), err => reject(err));
+    });
+  }
+  public otrasObras(id: number): Promise<any>{
+    return new Promise<void>((resolve, reject) => {
+      this.http.get(this.globals.API + "libros/random/" + id)
+      .subscribe(r => resolve(r.json()), err => reject(err));
+    });
+  }
 }

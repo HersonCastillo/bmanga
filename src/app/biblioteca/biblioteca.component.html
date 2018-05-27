@@ -14,12 +14,9 @@
             <mat-card>
               <div class="media-left">
                 <img 
-                  class="media-object" 
+                  class="media-object image-card-manga" 
                   [attr.src]="getImage(mangaInformacion.imagen)"
                   onerror="this.src='assets/img/image-no-load.png'"
-                  style="max-width: 200px;
-                  border: 1px solid #eee;
-                  border-radius: 3px;"
                   alt="BMANGA Resource">
               </div>
               <div class="media-body" style="padding-left: 15px; position: relative;">
@@ -69,18 +66,27 @@
             <span>
               Centro de notificaciones de mangas, este beneficio posee la posibilidad de darte un aviso cuando
               un cierto manga ha sido subido a la plataforma.
-              <br><br>
-              El actual sistema solo permite inscripción a los personas con cuentas verídicas en BMANGA.
             </span><br><br><br>
-            <mat-form-field style="width: 100%;">
-              <input 
-              matInput 
-              placeholder="Escribe un correo electrónico válido..." 
-              name="email" 
-              [(ngModel)]="email">
-              <span class="material-icons" matSuffix>email</span>
-            </mat-form-field>
-            <br><br>
+            <form>
+              <mat-form-field style="width: 100%;">
+                <input 
+                matInput 
+                placeholder="Escribe un correo electrónico..." 
+                name="email" 
+                autocomplete="off"
+                [formControl]="emailControl"
+                [errorStateMatcher]="matcher"
+                [(ngModel)]="email"/>
+                <span class="material-icons" matSuffix>email</span>
+                <mat-error *ngIf="emailControl.hasError('email') && !emailControl.hasError('required')">
+                  Por favor ingresa un correo electrónico <strong>válido</strong>
+                </mat-error>
+                <mat-error *ngIf="emailControl.hasError('required')">
+                  El correo electrónico es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </form>
+            <br>
             <button 
             mat-raised-button 
             color="primary"
@@ -91,9 +97,38 @@
           </mat-tab>
       </mat-tab-group>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3" *ngIf="!isError.generalLoad && mangaInformacion">
       <h2>Obras similares</h2>
       <mat-divider></mat-divider>
+      <br>
+      <mat-card 
+      *ngFor="let similar of mangasSimilares" 
+      [routerLink]="['/biblioteca', similar.nombre]"
+      class="custom-card">
+        <img mat-card-image 
+        [attr.src]="getSizeImageCard(similar.imagen)"
+        onerror="this.src='assets/img/image-no-load.png'"
+        alt="Resource">
+        <mat-card-header class="header-card">
+          <mat-card-title>{{similar.nombre}}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
+      <br>
+      <h2>Algo al azar</h2>
+      <mat-divider></mat-divider>
+      <br>
+      <mat-card 
+      *ngFor="let otros of otrosMangas"
+      [routerLink]="['/biblioteca', otros.nombre]"
+      class="custom-card">
+        <img mat-card-image 
+        [attr.src]="getSizeImageCard(otros.imagen)"
+        onerror="this.src='assets/img/image-no-load.png'"
+        alt="Resource">
+        <mat-card-header class="header-card">
+          <mat-card-title>{{otros.nombre}}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
     </div>
   </div>
 </div>
