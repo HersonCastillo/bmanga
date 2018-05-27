@@ -12,6 +12,15 @@
     display: inline-block;
 }
 .fix-size{
-    height: 269px;
-    max-height: 270px;
+    height: 349px;
+    max-height: 350px;
+}
+.up-top{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+}
+.react{
+    position: relative;
 }
