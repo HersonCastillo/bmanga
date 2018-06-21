@@ -11,12 +11,20 @@ import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './error/error.component';
 import { BibliotecaComponent } from './biblioteca/biblioteca.component';
 import { LeerComponent } from './leer/leer.component';
+import { LoginComponent } from './usuarios/login/login.component';
+import { CpanelAdminComponent } from './usuarios/cpanel-admin/cpanel-admin.component';
+import { CpanelUserComponent } from './usuarios/cpanel-user/cpanel-user.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'error', component: ErrorComponent },
   { path: 'biblioteca/:nombre', component: BibliotecaComponent },
   { path: 'leer/:id', component: LeerComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'home', children: [
+    { path: 'admin', component: CpanelAdminComponent },
+    { path: '@me', component: CpanelUserComponent }
+  ] },
   { path: '**', redirectTo: 'error', pathMatch: 'full' }
 ];
 
@@ -26,7 +34,10 @@ const appRoutes: Routes = [
     HomeComponent,
     ErrorComponent,
     BibliotecaComponent,
-    LeerComponent
+    LeerComponent,
+    LoginComponent,
+    CpanelAdminComponent,
+    CpanelUserComponent
   ],
   imports: [
     BrowserModule,

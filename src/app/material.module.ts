@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } 
 from '@angular/platform-browser/animations';
-
+import { LayoutModule } from '@angular/cdk/layout';
 import { 
   MatButtonModule,
   MatToolbarModule,
@@ -57,7 +57,8 @@ from '@angular/material/progress-bar';
     MatSelectModule,
     MatExpansionModule,
     MatGridListModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    LayoutModule
   ],
   exports: [
     MatButtonModule,
@@ -81,7 +82,8 @@ from '@angular/material/progress-bar';
     MatSelectModule,
     MatExpansionModule,
     MatGridListModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    LayoutModule
   ],
   declarations: []
 })
