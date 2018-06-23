@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class GlobalService {
-  constructor() { }
-  public API: string = "https://bmanga.net/engine/public/";
+    constructor() { }
+    public API: string = "https://bmanga.net/engine/public/";
 }

@@ -16,42 +16,42 @@ import { CpanelAdminComponent } from './usuarios/cpanel-admin/cpanel-admin.compo
 import { CpanelUserComponent } from './usuarios/cpanel-user/cpanel-user.component';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'error', component: ErrorComponent },
-  { path: 'biblioteca/:nombre', component: BibliotecaComponent },
-  { path: 'leer/:id', component: LeerComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'home', children: [
-    { path: 'admin', component: CpanelAdminComponent },
-    { path: '@me', component: CpanelUserComponent }
-  ] },
-  { path: '**', redirectTo: 'error', pathMatch: 'full' }
+    { path: '', component: HomeComponent },
+    { path: 'error', component: ErrorComponent },
+    { path: 'biblioteca/:nombre', component: BibliotecaComponent },
+    { path: 'leer/:id', component: LeerComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'home', children: [
+        { path: 'admin', component: CpanelAdminComponent },
+        { path: '@me', component: CpanelUserComponent }
+    ] },
+    { path: '**', redirectTo: 'error', pathMatch: 'full' }
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    ErrorComponent,
-    BibliotecaComponent,
-    LeerComponent,
-    LoginComponent,
-    CpanelAdminComponent,
-    CpanelUserComponent
-  ],
-  imports: [
-    BrowserModule,
-    MaterialModule,
-    HttpModule,
-    RouterModule.forRoot(appRoutes, {
-      preloadingStrategy: PreloadAllModules,
-      useHash: false
-    }),
-    FormsModule,
-    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
-    DisqusModule.forRoot('mangabooombin')
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        ErrorComponent,
+        BibliotecaComponent,
+        LeerComponent,
+        LoginComponent,
+        CpanelAdminComponent,
+        CpanelUserComponent
+    ],
+    imports: [
+        BrowserModule,
+        MaterialModule,
+        HttpModule,
+        RouterModule.forRoot(appRoutes, {
+        preloadingStrategy: PreloadAllModules,
+        useHash: false
+        }),
+        FormsModule,
+        ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+        DisqusModule.forRoot('mangabooombin')
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
