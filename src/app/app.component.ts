@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as $ from 'jquery';
 @Component({
     selector: 'app-root',
@@ -6,9 +7,15 @@ import * as $ from 'jquery';
     styleUrls: [ './app.component.css' ]
 })
 export class AppComponent implements OnInit {
+    constructor(
+        private router: Router
+    ){}
     ngOnInit(): void{
         $("body, html").on('contextmenu', function(){
 			return false;
 		});
+    }
+    goTo(url: string): void{
+        this.router.navigate([url]);
     }
 }

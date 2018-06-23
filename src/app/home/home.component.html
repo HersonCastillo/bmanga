@@ -6,20 +6,14 @@
             <label class="icon-mar">NUEVO</label>
         </mat-toolbar>
         <mat-divider></mat-divider><br>
-        <mat-card class="container" *ngIf="!isLoad.ultimos">
-            <div class="row">
-                <div class="col col-md-1">
-                    <mat-spinner [diameter]="25"></mat-spinner>
-                </div>
-                <div class="col col-md-11">
-                    Cargando lista de capítulos.
-                </div>
-            </div>
+        <mat-card *ngIf="!isLoad.ultimos">
+            <mat-progress-bar mode="indeterminate" class="up-top"></mat-progress-bar>
+            Cargando lista de capítulos.
         </mat-card>
-        <div class="alert alert-danger" *ngIf="isError.ultimos">
-            Ocurrió un error al cargar los capítulos.<br>
-            Inténtalo mas tarde.
-        </div>
+        <mat-card *ngIf="isError.ultimos">
+            <span class="material-icons" style="top: 6px; position: relative;">error</span>
+            <span style="margin-left: 10px;">Ocurrió un error al cargar la lista. Inténtalo mas tarde.</span>
+        </mat-card>
         <div class="col">
             <div class="col-md-3" *ngFor="let element of capitulosNuevos" style="margin-bottom: 15px;">
             <mat-card>
@@ -67,20 +61,14 @@
             <label class="icon-mar">MÁS CAPÍTULOS</label>
         </mat-toolbar>
         <mat-divider></mat-divider><br>
-        <mat-card class="container" *ngIf="!isLoad.otros">
-            <div class="row">
-                <div class="col col-md-1">
-                    <mat-spinner [diameter]="25"></mat-spinner>
-                </div>
-                <div class="col col-md-11">
-                    Cargando lista de capítulos.
-                </div>
-            </div>
+        <mat-card *ngIf="!isLoad.otros">
+            <mat-progress-bar mode="indeterminate" class="up-top"></mat-progress-bar>
+            Cargando lista de capítulos.
         </mat-card>
-        <div class="alert alert-danger" *ngIf="isError.otros">
-            Ocurrió un error al cargar los capítulos.<br>
-            Inténtalo mas tarde.
-        </div>
+        <mat-card *ngIf="isError.otros">
+            <span class="material-icons" style="top: 6px; position: relative;">error</span>
+            <span style="margin-left: 10px;">Ocurrió un error al cargar la lista. Inténtalo mas tarde.</span>
+        </mat-card>
         <div class="container">
             <div class="col-md-6">
                 <ul class="media-list">
@@ -136,20 +124,14 @@
             <label class="icon-mar">LO MÁS LEIDO</label>
         </mat-toolbar>
         <mat-divider></mat-divider><br>
-        <mat-card class="container" *ngIf="!isLoad.otros">
-            <div class="row">
-                <div class="col col-md-1">
-                    <mat-spinner [diameter]="25"></mat-spinner>
-                </div>
-                <div class="col col-md-11">
-                    Cargando lista de ranking.
-                </div>
-            </div>
+        <mat-card *ngIf="!isLoad.rank">
+            <mat-progress-bar mode="indeterminate" class="up-top"></mat-progress-bar>
+            Cargando lista de lo más leido.
         </mat-card>
-        <div class="alert alert-danger" *ngIf="isError.otros">
-            Ocurrió un error al cargar el ranking.<br>
-            Inténtalo mas tarde.
-        </div>
+        <mat-card *ngIf="isError.rank">
+            <span class="material-icons" style="top: 6px; position: relative;">error</span>
+            <span style="margin-left: 10px;">Ocurrió un error al cargar la lista. Inténtalo mas tarde.</span>
+        </mat-card>
         <div class="col">
             <div class="col-md-3" *ngFor="let element of librosRanking" style="margin-bottom: 15px;">
             <mat-card>

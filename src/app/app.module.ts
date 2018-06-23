@@ -14,6 +14,7 @@ import { LeerComponent } from './leer/leer.component';
 import { LoginComponent } from './usuarios/login/login.component';
 import { CpanelAdminComponent } from './usuarios/cpanel-admin/cpanel-admin.component';
 import { CpanelUserComponent } from './usuarios/cpanel-user/cpanel-user.component';
+import { BuscarComponent } from './buscar/buscar.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
         { path: 'admin', component: CpanelAdminComponent },
         { path: '@me', component: CpanelUserComponent }
     ] },
+    { path: 'buscar', component: BuscarComponent },
     { path: '**', redirectTo: 'error', pathMatch: 'full' }
 ];
 
@@ -37,15 +39,16 @@ const appRoutes: Routes = [
         LeerComponent,
         LoginComponent,
         CpanelAdminComponent,
-        CpanelUserComponent
+        CpanelUserComponent,
+        BuscarComponent
     ],
     imports: [
         BrowserModule,
         MaterialModule,
         HttpModule,
         RouterModule.forRoot(appRoutes, {
-        preloadingStrategy: PreloadAllModules,
-        useHash: false
+            preloadingStrategy: PreloadAllModules,
+            useHash: false
         }),
         FormsModule,
         ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
