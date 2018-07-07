@@ -37,9 +37,9 @@ export class LeerComponent implements OnInit {
 			this.id = this.toDecimal(subs['id']);
 			this.pageId += this.id;
 			this.capitulos.infoLectura(this.id).then(r => {
-				if(r.success){
+				try{
 					this.chapterInfo = r;
-					console.log(r.info)
+					$("title").text(r.info.nombre + " " + r.info.capitulo + " en BMANGA");
 					this.capitulos.getImagesCount(r.info.directorio).then(c => {
 						for(let j = 0; j < c.count; j++)
 							this.nObjetos.push(j);
@@ -63,7 +63,9 @@ export class LeerComponent implements OnInit {
 							});
 						}
 					});
-				} else this.loadError = true;
+				}catch(ex){
+					this.loadError = true;
+				}
 			}).catch(() => {
 				this.loadError = true;
 			});
@@ -74,5 +76,14 @@ export class LeerComponent implements OnInit {
 	}
 	toDecimal(hexa: string): number{
 		return parseInt(hexa, 16);
+	}
+	title(str: string): string{
+		if(str) return "";
+		else return str;
+	}
+	upto(): void{
+		$("body, html").animate({
+			scrollTop: 0
+		}, "slow");
 	}
 }
