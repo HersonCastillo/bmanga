@@ -1,8 +1,8 @@
 <mat-toolbar class="mat-elevation-z1" *ngIf="chapterInfo">
 	<mat-toolbar-row class="mat-elevation-z3">
 		<span>
-            {{chapterInfo?.info.nombre}} {{title(chapterInfo?.info.titulo)}}
-            <b>{{'#' + chapterInfo?.info.capitulo}}</b>
+            {{chapterInfo?.info.nombre}} <i>{{title(chapterInfo?.info.titulo)}}</i> 
+            <b>{{' #' + chapterInfo?.info.capitulo}}</b>
         </span>
         <span class="spacer"></span>
         <button mat-mini-fab [routerLink]="['biblioteca', chapterInfo.info.nombre]">
@@ -51,7 +51,7 @@
   </div>
 </div>
 <!--Botones flotantes-->
-<button mat-fab color="primary" class="float-btn x1">
+<button mat-fab color="primary" class="float-btn x1" (click)="openConfig()">
   <span class="material-icons">settings</span>
 </button>
 <button mat-fab color="accent" class="float-btn x2" (click)="upto()">

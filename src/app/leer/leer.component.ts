@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CapitulosService } from '../services/capitulos.service';
+import { MatSnackBar, MatBottomSheet } from '@angular/material';
+import { ConfigComponent } from '../modals/modal';
 import * as $ from 'jquery';
 @Component({
 	selector: 'app-leer',
@@ -12,7 +14,9 @@ export class LeerComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		private capitulos: CapitulosService
+		private capitulos: CapitulosService,
+		private snack: MatSnackBar,
+		private sheet: MatBottomSheet
 	) { }
 	public checked = false;
 	private id: number;
@@ -27,6 +31,9 @@ export class LeerComponent implements OnInit {
 			if(d === "true") this.checked = true;
 			else this.checked = false;
 		} else this.checked = false;
+	}
+	makeSnack(str: string, t: number): void{
+		this.snack.open(str, null, { duration: t || 1500 });
 	}
 	ngOnInit() {
 		$("body, html").on('contextmenu', function(){
@@ -78,12 +85,15 @@ export class LeerComponent implements OnInit {
 		return parseInt(hexa, 16);
 	}
 	title(str: string): string{
-		if(str) return "";
-		else return str;
+		if(str) return str;
+		else return "";
 	}
 	upto(): void{
 		$("body, html").animate({
 			scrollTop: 0
 		}, "slow");
+	}
+	openConfig(): void{
+		this.sheet.open(ConfigComponent);
 	}
 }

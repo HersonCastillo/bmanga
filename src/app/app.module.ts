@@ -15,6 +15,7 @@ import { LoginComponent } from './usuarios/login/login.component';
 import { CpanelAdminComponent } from './usuarios/cpanel-admin/cpanel-admin.component';
 import { CpanelUserComponent } from './usuarios/cpanel-user/cpanel-user.component';
 import { BuscarComponent } from './buscar/buscar.component';
+import { ConfigComponent } from './modals/config/config.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -40,7 +41,8 @@ const appRoutes: Routes = [
         LoginComponent,
         CpanelAdminComponent,
         CpanelUserComponent,
-        BuscarComponent
+        BuscarComponent,
+        ConfigComponent
     ],
     imports: [
         BrowserModule,
@@ -55,6 +57,9 @@ const appRoutes: Routes = [
         DisqusModule.forRoot('mangabooombin')
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [
+        ConfigComponent
+    ]
 })
 export class AppModule { }
