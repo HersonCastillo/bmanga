@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CapitulosService } from '../services/capitulos.service';
 import { LibrosService } from '../services/libros.service';
-import { Router, Route } from '@angular/router';
+import { Router } from '@angular/router';
 import * as $ from 'jquery';
 @Component({
     selector: 'app-home',
@@ -15,16 +15,19 @@ export class HomeComponent implements OnInit {
     public capitulosNuevos: Array<any> = [];
     public capitulosOtros: Array<any> = [];
     public librosRanking: Array<any> = [];
+    public libroAzar = {};
     public positionTooltip: string = "above";
-    public isLoad: any = {
+    public isLoad = {
         ultimos: false,
         otros: false,
-        rank: false
+        rank: false,
+        azar: false
     };
-    public isError: any = {
+    public isError = {
         ultimos: false,
         otros: false,
-        rank: false
+        rank: false,
+        azar: false
     };
     ngOnInit() {
         $("title").text("BMANGA");
@@ -52,6 +55,13 @@ export class HomeComponent implements OnInit {
             this.isLoad.rank = true;
             this.isError.rank = true;
         });
+        this.libros.otrasObras(0).then(r => {
+            this.libroAzar = r[0];
+            this.isLoad.azar = true;
+        }).catch(() => {
+            this.isLoad.azar = true;
+            this.isError.azar = true;
+        });
     }
     getImage(imageUrl: string): string{
         return "https://i1.wp.com/bmanga.net/" + imageUrl;
@@ -66,6 +76,11 @@ export class HomeComponent implements OnInit {
         for(let i = 0; i < 15; i++) nName += name[i];
         nName += "...";
         return nName;
+    }
+    elipsis(str: string, num: number): string{
+        str = str.toString();
+        if(str.length <= num) return str;
+        else return str.slice(0, num - 1) + "...";
     }
     irManga(nombre: string): void{
         this.router.navigateByUrl('/biblioteca/' + nombre);

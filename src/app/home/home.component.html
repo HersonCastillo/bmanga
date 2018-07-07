@@ -17,41 +17,41 @@
         <div class="col">
             <div class="col-md-3" *ngFor="let element of capitulosNuevos" style="margin-bottom: 15px;">
             <mat-card>
-            <mat-card-header>
-                <mat-card-title>{{getName(element.nombre)}}</mat-card-title>
-                <mat-card-subtitle>capítulo <b>{{element.capitulo}}</b></mat-card-subtitle>
-            </mat-card-header>
-            <img 
-            mat-card-image 
-            src="{{getImage(element.imagen)}}"
-            onerror="this.src='assets/img/image-no-load.png'"
-            alt="BMANGA Resource"
-            class="fix-size">
-            <mat-card-actions>
-                <button 
-                mat-fab 
-                color="accent" 
-                matTooltip="Leer" 
-                [matTooltipPosition]="positionTooltip">
-                <span class="material-icons">play_arrow</span>
-                </button>
-                <button 
-                mat-icon-button 
-                color="primary" 
-                class="icon-mar" 
-                matTooltip="Ver capítulos"
-                (click)="irManga(element.nombre)"
-                [matTooltipPosition]="positionTooltip">
-                <span class="material-icons">book</span>
-                </button>
-                <button 
-                mat-icon-button 
-                color="warn" 
-                matTooltip="Descargar"
-                [matTooltipPosition]="positionTooltip">
-                <span class="material-icons">cloud_download</span>
-                </button>
-            </mat-card-actions>
+                <mat-card-header>
+                    <mat-card-title>{{getName(element.nombre)}}</mat-card-title>
+                    <mat-card-subtitle>capítulo <b>{{element.capitulo}}</b></mat-card-subtitle>
+                </mat-card-header>
+                <img 
+                mat-card-image 
+                src="{{getImage(element.imagen)}}"
+                onerror="this.src='assets/img/image-no-load.png'"
+                alt="BMANGA Resource"
+                class="fix-size">
+                <mat-card-actions style="padding-bottom: 10px; padding-left: 10px;">
+                    <button 
+                    mat-fab 
+                    color="accent" 
+                    matTooltip="Leer" 
+                    [matTooltipPosition]="positionTooltip">
+                    <span class="material-icons">play_arrow</span>
+                    </button>
+                    <button 
+                    mat-icon-button 
+                    color="primary" 
+                    class="icon-mar" 
+                    matTooltip="Ver capítulos"
+                    (click)="irManga(element.nombre)"
+                    [matTooltipPosition]="positionTooltip">
+                    <span class="material-icons">book</span>
+                    </button>
+                    <button 
+                    mat-icon-button 
+                    color="warn" 
+                    matTooltip="Descargar"
+                    [matTooltipPosition]="positionTooltip">
+                    <span class="material-icons">cloud_download</span>
+                    </button>
+                </mat-card-actions>
             </mat-card>
             </div>
         </div>
@@ -61,62 +61,49 @@
             <label class="icon-mar">MÁS CAPÍTULOS</label>
         </mat-toolbar>
         <mat-divider></mat-divider><br>
-        <mat-card *ngIf="!isLoad.otros">
+        <mat-card *ngIf="!isLoad.otros && !isLoad.azar">
             <mat-progress-bar mode="indeterminate" class="up-top"></mat-progress-bar>
             Cargando lista de capítulos.
         </mat-card>
-        <mat-card *ngIf="isError.otros">
+        <mat-card *ngIf="isError.otros || isError.azar">
             <span class="material-icons" style="top: 6px; position: relative;">error</span>
             <span style="margin-left: 10px;">Ocurrió un error al cargar la lista. Inténtalo mas tarde.</span>
         </mat-card>
         <div class="container">
             <div class="col-md-6">
-                <ul class="media-list">
-                <li class="media" *ngFor="let item of capitulosOtros; let i = index;">
-                    <div *ngIf="i % 2 === 0">
-                    <div class="media-left">
-                        <a>
-                        <img 
-                        class="media-object" 
-                        src="{{getImage(item.imagen)}}"
-                        onerror="this.src='assets/img/image-no-load.png'"
-                        style="width: 60px; height: 100px;"
-                        alt="BMANGA Resource">
-                        </a>
+                <mat-card *ngFor="let caps of capitulosOtros" style="margin-bottom: 10px;">
+                    <img src="{{getImage(caps.imagen)}}" alt="BMANGA Resource" onerror="this.src='assets/img/image-no-load.png'" class="mat-image-card">
+                    <div class="cnt">
+                        <b style="font-weight: 800; font-size: 1.5em;">{{getName(caps.nombre)}}</b><br><br>
+                        <span>Capítulo </span><b>{{caps.capitulo}}</b> por <code>{{caps.nick}}</code>
+                        <br><br>
+                        <button mat-fab color="primary" style="transform: scale(.7,.7)">
+                            <b><span class="material-icons">play_arrow</span></b>
+                        </button>
+                        <button mat-fab (click)="irManga(caps.nombre)" style="transform: scale(.7,.7)">
+                            <b><span class="material-icons">add</span></b>
+                        </button>
+                        <br><br>
                     </div>
-                    <div class="media-body">
-                        <br>
-                        <h4 class="media-heading">{{item.nombre}}</h4>
-                        <span style="margin-right: 5px;">capítulo <b>{{item.capitulo}}</b></span>
-                        <button mat-button color="primary">Leer capítulo</button>
-                    </div>
-                    </div>
-                </li>
-                </ul>
+                </mat-card>
             </div>
             <div class="col-md-6">
-                <ul class="media-list">
-                <li class="media" *ngFor="let item of capitulosOtros; let i = index;">
-                    <div *ngIf="i % 2 !== 0">
-                    <div class="media-left">
-                        <a>
-                        <img 
-                            class="media-object" 
-                            src="{{getThumbImage(item.imagen)}}"
-                            onerror="this.src='assets/img/image-no-load.png'"
-                            style="width: 60px; height: 100px;"
-                            alt="BMANGA Resource">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <br>
-                        <h4 class="media-heading">{{item.nombre}}</h4>
-                        <span style="margin-right: 5px;">capítulo <b>{{item.capitulo}}</b></span>
-                        <button mat-button color="primary">Leer capítulo</button>
-                    </div>
-                    </div>
-                </li>
-                </ul>
+                <mat-card *ngIf="isLoad.azar">
+                    <mat-card-header>
+                        <mat-card-title>{{libroAzar.nombre}}</mat-card-title>
+                        <mat-card-subtitle>{{libroAzar.generos}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="{{getImage(libroAzar.imagen)}}" onerror="this.src='assets/img/image-no-load.png'" alt="BMANGA Resource">
+                    <mat-card-content>
+                        <p>{{elipsis(libroAzar.sinopsis, 75)}}</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button color="warn" mat-raised-button [routerLink]="['biblioteca', libroAzar.nombre]">
+                            <b>SABER MÁS</b>
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+                <br>
             </div>
         </div>
         <mat-toolbar class="mat-elevation-z2">

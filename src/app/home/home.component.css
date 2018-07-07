@@ -23,3 +23,14 @@
 .react{
     position: relative;
 }
+.mat-image-card{
+    max-width: 90px;
+    min-width: 85px;
+    max-height: 140px;
+    min-height: 135px;
+}
+.cnt{
+    position: absolute;
+    left: 125px;
+    top: 25px;
+}
