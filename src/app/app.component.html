@@ -5,10 +5,10 @@
         <button mat-icon-button matTooltip="Descargar" class="icon-mar">
             <span class="material-icons">cloud_download</span>
         </button>
-          <button (click)="goTo('login')" mat-icon-button matTooltip="Iniciar sesión" class="icon-mar">
+          <button (click)="goTo('login')" mat-icon-button matTooltip="Iniciar sesión" [routerLink]="['login']" class="icon-mar">
             <span class="material-icons">account_circle</span>
         </button>
-        <button mat-icon-button matTooltip="Buscar mangas" class="icon-mar">
+        <button mat-icon-button matTooltip="Buscar mangas" [routerLink]="['buscar']" class="icon-mar">
             <span class="material-icons">search</span>
         </button>
     </mat-toolbar-row>

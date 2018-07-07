@@ -136,4 +136,8 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
             return [];
         }
     }
+    reduce(str: string, num: number): string{
+        if(str.length <= num) return str;
+        else return str.slice(0, num - 1) + "...";
+    }
 }
