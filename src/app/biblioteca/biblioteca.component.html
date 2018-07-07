@@ -13,25 +13,31 @@
       <mat-tab-group>
           <mat-tab label="Información General">
             <mat-card>
-              <div class="media-left">
-                <img 
-                  class="media-object image-card-manga" 
-                  [attr.src]="getImage(mangaInformacion.imagen)"
-                  onerror="this.src='assets/img/image-no-load.png'"
-                  alt="BMANGA Resource">
-              </div>
-              <div class="media-body" style="padding-left: 15px; position: relative;">
-                <br>
-                <h1>
-                  {{mangaInformacion.nombre}}<br>
-                  <small style="color: gray; font-weight: normal;">
-                    <small><i>{{mangaInformacion.generos}}</i></small>
-                  </small>
-                </h1>
-                <br>
-                <span style="margin-right: 5px;">
-                  {{mangaInformacion.sinopsis}}
-                </span>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col col-md-5">
+                      <img 
+                      class="image-card-manga" 
+                      [attr.src]="getImage(mangaInformacion.imagen)"
+                      onerror="this.src='assets/img/image-no-load.png'"
+                      alt="BMANGA Resource">
+                  </div>
+                  <div class="col col-md-7">
+                    <div>
+                      <br>
+                      <h1>
+                        {{mangaInformacion.nombre}}<br>
+                        <small style="color: gray; font-weight: normal;">
+                          <small><i>{{mangaInformacion.generos}}</i></small>
+                        </small>
+                      </h1>
+                      <br>
+                      <span style="margin-right: 5px;">
+                        {{mangaInformacion.sinopsis}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
               <br>
               <mat-divider></mat-divider>
