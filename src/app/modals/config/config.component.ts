@@ -28,6 +28,7 @@ export class ConfigComponent implements OnInit{
             'width': "100%"
         });
         localStorage.removeItem('vwi');
+        ConfigComponent._val(100);
         ConfigComponent._close();
     }
 }
