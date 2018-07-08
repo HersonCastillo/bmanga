@@ -42,18 +42,17 @@
 					*ngFor="let id of nObjetos">
 				</canvas>
 				<br>
-				<br>
-				<div style="background: white; padding: 30px; position: relative;">
-					<!--<disqus [identifier]="pageId" [url]="url"></disqus>-->
-                </div>
 			</div>
 		</div>
   </div>
 </div>
+<div style="background: white; padding: 30px; position: relative;">
+    <!--<disqus [identifier]="pageId" [url]="url"></disqus>-->
+</div>
 <!--Botones flotantes-->
-<button mat-fab color="primary" class="float-btn x1" (click)="openConfig()">
+<button mat-fab color="primary" class="float-btn x1" (click)="openConfig()" [disabled]="bbDis">
   <span class="material-icons">settings</span>
 </button>
-<button mat-fab color="accent" class="float-btn x2" (click)="upto()">
+<button mat-fab color="accent" class="float-btn x2" (click)="upto()" [disabled]="bbDis">
   <span class="material-icons">keyboard_arrow_up</span>
 </button>

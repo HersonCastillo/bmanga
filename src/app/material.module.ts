@@ -27,7 +27,8 @@ import {
     MatGridListModule,
     MatSlideToggleModule,
     MatProgressSpinnerModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatSliderModule
 } from '@angular/material';
 
 import { MatProgressBarModule } 
@@ -62,7 +63,8 @@ from '@angular/material/progress-bar';
         MatSlideToggleModule,
         LayoutModule,
         MatProgressSpinnerModule,
-        MatBottomSheetModule
+        MatBottomSheetModule,
+        MatSliderModule
     ],
     exports: [
         MatButtonModule,
@@ -89,7 +91,8 @@ from '@angular/material/progress-bar';
         MatSlideToggleModule,
         LayoutModule,
         MatProgressSpinnerModule,
-        MatBottomSheetModule
+        MatBottomSheetModule,
+        MatSliderModule
     ],
     declarations: []
 })

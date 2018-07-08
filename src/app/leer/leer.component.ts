@@ -25,6 +25,8 @@ export class LeerComponent implements OnInit {
 	public nObjetos: Array<number> = [];
 	public pageId: string = "/leer/";
 	public url: string = this.router.url;
+	private valConfigwidth:number = 100;
+	public bbDis: boolean = true;
 	check(): void{
 		if(localStorage.getItem('pagemode')){
 			let d = localStorage.getItem('pagemode');
@@ -47,7 +49,12 @@ export class LeerComponent implements OnInit {
 				try{
 					this.chapterInfo = r;
 					$("title").text(r.info.nombre + " " + r.info.capitulo + " en BMANGA");
+					this.bbDis = false;
 					this.capitulos.getImagesCount(r.info.directorio).then(c => {
+						if(c.error){
+							this.loadError = true;
+							return;
+						}
 						for(let j = 0; j < c.count; j++)
 							this.nObjetos.push(j);
 						for(let i = 0; i < c.count; i++){
@@ -65,6 +72,13 @@ export class LeerComponent implements OnInit {
 										}
 									}catch(ex){}
 								}, 1);
+								if(localStorage.getItem('vwi')){
+									this.valConfigwidth = +localStorage.getItem('vwi');
+									console.log(this.valConfigwidth)
+									$(".view").css({
+										'width': this.valConfigwidth + "%"
+									});
+								}
 							}).catch(e => {
 								this.loadError = true;
 							});
@@ -94,6 +108,14 @@ export class LeerComponent implements OnInit {
 		}, "slow");
 	}
 	openConfig(): void{
+		ConfigComponent._close = () => {
+			this.sheet.dismiss();
+		}
+		ConfigComponent._val = (g) => {
+			this.valConfigwidth = g;
+			localStorage.setItem("vwi", this.valConfigwidth.toString());
+		}
+		ConfigComponent.setVal(this.valConfigwidth);
 		this.sheet.open(ConfigComponent);
 	}
 }
