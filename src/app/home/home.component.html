@@ -1,5 +1,10 @@
+<div id="initial_startup" [@popOverState]="(isAllLoaded) ? 'hide' : 'show'">
+    <svg class="spinner-container" width="50" height="50" viewBox="0 0 44 44">
+        <circle class="spinner-path" cx="22" cy="22" r="20" fill="none" stroke-width="4"></circle>
+    </svg>
+</div>
 <br>
-<div class="container">
+<div class="container" [@popOverState]="(isAllLoaded) ? 'show' : 'hide'">
     <div class="row">
         <mat-toolbar class="mat-elevation-z2">
             <span class="material-icons icon-top">favorite</span>
@@ -69,7 +74,7 @@
             <span class="material-icons" style="top: 6px; position: relative;">error</span>
             <span style="margin-left: 10px;">Ocurrió un error al cargar la lista. Inténtalo mas tarde.</span>
         </mat-card>
-        <div class="container">
+        <div class="container" *ngIf="!isError.otros && !isError.azar">
             <div class="col-md-6">
                 <mat-card *ngFor="let caps of capitulosOtros" style="margin-bottom: 10px;">
                     <img src="{{getImage(caps.imagen)}}" alt="BMANGA Resource" onerror="this.src='assets/img/image-no-load.png'" class="mat-image-card">

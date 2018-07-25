@@ -1,14 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CapitulosService } from '../services/capitulos.service';
 import { LibrosService } from '../services/libros.service';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
+import {
+    trigger,
+    transition,
+    style,
+    animate,
+    state
+} from '@angular/animations';
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css']
+    styleUrls: ['./home.component.css'],
+    animations: [trigger('popOverState', [
+        state('show', style({
+          opacity: 1,
+          transform: 'scale(1, 1)'
+        })),
+        state('hide',   style({
+          opacity: 0,
+          display: 'none',
+          transform: 'scale(.95, .95)'
+        })),
+        transition('show => hide', animate('100ms ease-out')),
+        transition('hide => show', animate('250ms ease-in'))
+    ])]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
     constructor(private capitulos: CapitulosService,
     private libros: LibrosService,
     private router: Router) {}
@@ -29,6 +49,8 @@ export class HomeComponent implements OnInit {
         rank: false,
         azar: false
     };
+    public isAllLoaded: boolean = false;
+    private counter: number = 0;
     ngOnInit() {
         $("title").text("BMANGA");
         $("body, html").on('contextmenu', function(){
@@ -37,31 +59,51 @@ export class HomeComponent implements OnInit {
         this.capitulos.ultimosCapitulos().then(r => {
             this.capitulosNuevos = r;
             this.isLoad.ultimos = true;
+            this.counter++;
+            if(this.counter == 4)
+                this.isAllLoaded = true;
         }).catch(() => {
             this.isLoad.ultimos = true;
             this.isError.ultimos = true;
+            this.isAllLoaded = true;
         });
         this.capitulos.otrosCapitulos().then(r => {
             this.capitulosOtros = r
             this.isLoad.otros = true;
+            this.counter++;
+            if(this.counter == 4)
+                this.isAllLoaded = true;
         }).catch(() => {
             this.isLoad.otros = true;
             this.isError.otros = true;
+            this.isAllLoaded = true;
         });
         this.libros.ranking().then(r => {
             this.librosRanking = r;
             this.isLoad.rank = true;
+            this.counter++;
+            if(this.counter == 4)
+                this.isAllLoaded = true;
         }).catch(() => {
             this.isLoad.rank = true;
             this.isError.rank = true;
+            this.isAllLoaded = true;
         });
         this.libros.otrasObras(0).then(r => {
             this.libroAzar = r[0];
             this.isLoad.azar = true;
+            this.counter++;
+            if(this.counter == 4)
+                this.isAllLoaded = true;
         }).catch(() => {
             this.isLoad.azar = true;
             this.isError.azar = true;
+            this.isAllLoaded = true;
         });
+    }
+    ngOnDestroy(): void{
+        this.isAllLoaded = false;
+        this.counter = 0;
     }
     getImage(imageUrl: string): string{
         return "https://i1.wp.com/bmanga.net/" + imageUrl;

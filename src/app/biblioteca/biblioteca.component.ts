@@ -5,6 +5,13 @@ import {
     NgForm, 
     Validators } 
 from '@angular/forms';
+import {
+    trigger,
+    transition,
+    style,
+    animate,
+    state
+} from '@angular/animations';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LibrosService } from '../services/libros.service';
@@ -18,11 +25,24 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
         const isSubmitted = form && form.submitted;
         return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
     }
-} 
+}
 @Component({
     selector: 'app-biblioteca',
     templateUrl: './biblioteca.component.html',
-    styleUrls: ['./biblioteca.component.css']
+    styleUrls: ['./biblioteca.component.css'],
+    animations: [trigger('popOverState', [
+        state('show', style({
+          opacity: 1,
+          transform: 'scale(1, 1)'
+        })),
+        state('hide',   style({
+          opacity: 0,
+          display: 'none',
+          transform: 'scale(.9, .9)'
+        })),
+        transition('show => hide', animate('100ms ease-out')),
+        transition('hide => show', animate('250ms ease-in'))
+    ])]
 })
 export class BibliotecaComponent implements OnInit, OnDestroy {
     constructor(
@@ -46,6 +66,8 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
     public isError: any = {
         generalLoad: false
     };
+    private counter: number = 0;
+    public isAllLoaded: boolean = false;
     public mensajeError: string = "";
     public emailControl: any = new FormControl('', [
         Validators.required, 
@@ -65,6 +87,8 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
     }
     ngOnDestroy(){
         this.observable.unsubscribe();
+        this.isAllLoaded = false;
+        this.counter = 0;
     }
     ngOnInit(){
         $("body, html").on('contextmenu', function(){
@@ -73,22 +97,34 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
         this.observable = this.route.params.subscribe(subs => {
             this.paginator = [];
             this.id = subs['nombre'];
+            this.isAllLoaded = false;
+            this.counter = 0;
             $("title").text(this.id + " en BMANGA");
             this.libros.getLibro(this.id).then(r => {
                 if(r.error){
                     this.isError.generalLoad = true;
                     this.mensajeError = r.error;
+                    this.isAllLoaded = true;
                 } else {
                     document.getElementsByTagName("html")[0].scroll(0, 0);
                     this.mangaInformacion = r;
                     this.libros.obrasSimilares(r.generos, r.id).then(s => {
                         this.mangasSimilares = s;
+                        this.counter++;
+                        if(this.counter == 3)
+                            this.isAllLoaded = true;
                     });
                     this.libros.otrasObras(r.id).then(o => {
                         this.otrosMangas = o;
+                        this.counter++;
+                        if(this.counter == 3)
+                            this.isAllLoaded = true;
                     });
                     this.capitulos.getCapitulos(r.id).then(c => {
                         this.chapters = c;
+                        this.counter++;
+                        if(this.counter == 3)
+                            this.isAllLoaded = true;
                         if(this.chapters.length > 0){
                             let n = Math.ceil(this.chapters.length / 10);
                             for(let i = 0; i < n; i++) this.paginator.push(i);
@@ -96,10 +132,12 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
                     }).catch(() => {
                         this.isError.generalLoad = true;
                         this.mensajeError = "Los capítulos están corruptos.";
+                        this.isAllLoaded = true;
                     });
                 }
             }).catch(() => {
                 this.isError.generalLoad = true;
+                this.isAllLoaded = true;
                 this.mensajeError = "Error en el servidor.";
             });
         });
