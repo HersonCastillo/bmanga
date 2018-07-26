@@ -1,18 +1,33 @@
-<mat-toolbar class="mat-elevation-z1" *ngIf="chapterInfo">
+<div id="initial_startup" [@popOverState]="(isAllLoaded) ? 'hide' : 'show'">
+    <svg class="spinner-container" width="50" height="50" viewBox="0 0 44 44">
+        <circle class="spinner-path" cx="22" cy="22" r="20" fill="none" stroke-width="4"></circle>
+    </svg>
+</div>
+<mat-toolbar class="mat-elevation-z1" [@popOverState]="(isAllLoaded) ? 'show' : 'hide'">
 	<mat-toolbar-row class="mat-elevation-z3">
 		<span>
             {{chapterInfo?.info.nombre}} <i>{{title(chapterInfo?.info.titulo)}}</i> 
             <b>{{' #' + chapterInfo?.info.capitulo}}</b>
         </span>
         <span class="spacer"></span>
-        <button mat-mini-fab [routerLink]="['biblioteca', chapterInfo.info.nombre]">
+        <button mat-mini-fab [routerLink]="['/biblioteca', chapterInfo?.info.nombre]">
             <span class="material-icons">arrow_back</span>
         </button>
     </mat-toolbar-row>
     <mat-toolbar-row>
         <span class="spacer"></span>
-        <button mat-raised-button style="margin-right: 5px;">CAPÍTULO ANTERIOR</button>
-        <button mat-raised-button style="margin-right: 5px;" color="primary">CAPÍTULO SIGUIENTE</button>
+        <mat-progress-spinner
+            style="margin-right: 15px;"
+            color="accent"
+            diameter="25"
+            *ngIf="!isChapterLoaded"
+            mode="indeterminate">
+        </mat-progress-spinner>
+        <button mat-button style="margin-right: 5px;">
+            <span class="material-icons">cloud_download</span>
+        </button>
+        <button mat-raised-button style="margin-right: 5px;" (click)="previusChapter()" [disabled]="chp.previus">CAPÍTULO ANTERIOR</button>
+        <button mat-raised-button style="margin-right: 5px;" color="primary" (click)="nextChapter()" [disabled]="chp.next">CAPÍTULO SIGUIENTE</button>
         <mat-slide-toggle 
         style="margin-left: 5px;" 
         (change)="pageChangeMode()"
@@ -23,10 +38,10 @@
         </mat-slide-toggle>
     </mat-toolbar-row>
 </mat-toolbar>
-<div class="container-fluid">
+<div class="container-fluid" [@popOverState]="(isAllLoaded) ? 'show' : 'hide'">
   <div class="row">
 		<div class="col-md-12">
-			<div class="mat-card mat-elevation-z1" style="padding: 10px; margin-top: 30px;" *ngIf="loadError">
+			<div class="mat-card mat-elevation-z1" style="padding: 10px; margin-top: 15px; margin-bottom: 15px;" *ngIf="loadError">
 				<h1>Contenido no disponible.</h1>
 				El capítulo solicitado no existe o es posible que algún administrador lo haya deshabilitado y en otro 
 				momento se encuentre disponible. <br><br>
@@ -36,17 +51,41 @@
 		<div *ngIf="!loadError">
             <br>
 			<div class="col-md-12">
-				<canvas 
-					id="img{{id}}"
-					class="mat-elevation-z1 view"
-					*ngFor="let id of nObjetos">
-				</canvas>
+                <div *ngFor="let id of nObjetos; let ind = index;">
+                    <div [hidden]="!(!checked || (ind === numberPage))" style="position: relative;">
+                        <canvas
+                            id="img{{id}}"
+                            class="mat-elevation-z1 view"
+                            (click)="next()">
+                        </canvas>
+                        <button *ngIf="isChapterLoaded" mat-button class="intoPage" (click)="refreshImage(ind)">
+                            <span class="material-icons">refresh</span>
+                        </button>
+                    </div>
+                </div>
 				<br>
-			</div>
+            </div>
+            <mat-toolbar class="mat-elevation-z1 vcontrol">
+                <mat-toolbar-row class="mat-elevation-z2">
+                        <button mat-button color="primary" style="margin-right: 5px;" (click)="previusChapter()" [disabled]="chp.previus">ANTERIOR</button>
+                    <button mat-button color="primary" style="margin-right: 5px;" (click)="nextChapter()" [disabled]="chp.next">SIGUIENTE</button>
+                    <button mat-raised-button color="primary" style="margin-right: 5px;">DESCARGAR</button>
+                    <button mat-raised-button [routerLink]="['/biblioteca', chapterInfo?.info.nombre]">{{chapterInfo?.info.nombre}}</button>
+                    <span class="spacer"></span>
+                    <button mat-mini-fab *ngIf="checked" (click)="before()" [disabled]="nb.before">
+                        <span class="material-icons">navigate_before</span>
+                    </button>
+                    <b style="margin-left: 10px; margin-right: 10px;" *ngIf="checked">{{(numberPage + 1)}}</b>
+                    <button mat-mini-fab *ngIf="checked" (click)="next()" [disabled]="nb.next">
+                        <span class="material-icons">navigate_next</span>
+                    </button>
+                    <h2 routerLink="/" style="cursor: pointer; margin-left: 15px;"><b>BMANGA</b></h2>
+                </mat-toolbar-row>
+            </mat-toolbar>
 		</div>
   </div>
 </div>
-<div style="background: white; padding: 30px; position: relative;">
+<div style="background: white; padding: 30px; position: relative;" [@popOverState]="(isAllLoaded) ? 'show' : 'hide'">
     <!--<disqus [identifier]="pageId" [url]="url"></disqus>-->
 </div>
 <!--Botones flotantes-->
