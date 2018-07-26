@@ -66,7 +66,7 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
     public isError: any = {
         generalLoad: false
     };
-    public url: string = this.router.url;
+    public url: string = this.router.url || window.location.href;
     public pageId: string;
     private counter: number = 0;
     public isAllLoaded: boolean = false;

@@ -45,7 +45,7 @@ export class LeerComponent implements OnInit, OnDestroy {
 	public chapterInfo: any;
 	public nObjetos: Array<number> = [];
 	public pageId: string;
-	public url: string = this.router.url;
+	public url: string = this.router.url || window.location.href;
 	private valConfigwidth:number = 100;
 	public bbDis: boolean = true;
 	private subs: Subscription;
