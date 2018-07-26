@@ -119,8 +119,7 @@ export class LeerComponent implements OnInit, OnDestroy {
 			this.isAllLoaded = false;
 			this.count = 0;
 			this.id = this.toDecimal(subs['id']);
-			this.pageId = "/leer/";
-			this.pageId += this.id;
+			this.pageId = "/leer/" + this.id;
 			this.bbDis = true;
 			this.nObjetos = [];
 			this.capitulos.infoLectura(this.id).then(r => {

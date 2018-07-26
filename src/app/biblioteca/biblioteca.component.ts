@@ -66,6 +66,8 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
     public isError: any = {
         generalLoad: false
     };
+    public url: string = this.router.url;
+    public pageId: string;
     private counter: number = 0;
     public isAllLoaded: boolean = false;
     public mensajeError: string = "";
@@ -99,6 +101,7 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
             this.id = subs['nombre'];
             this.isAllLoaded = false;
             this.counter = 0;
+            this.pageId = "/leer/" + this.id;
             $("title").text(this.id + " en BMANGA");
             this.libros.getLibro(this.id).then(r => {
                 if(r.error){

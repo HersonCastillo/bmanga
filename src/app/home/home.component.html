@@ -8,7 +8,7 @@
     <div class="row">
         <mat-toolbar class="mat-elevation-z2">
             <span class="material-icons icon-top">favorite</span>
-            <label class="icon-mar">NUEVO</label>
+            <label class="icon-mar"><b>NUEVO</b></label>
         </mat-toolbar>
         <mat-divider></mat-divider><br>
         <mat-card *ngIf="!isLoad.ultimos">
@@ -31,12 +31,15 @@
                 src="{{getImage(element.imagen)}}"
                 onerror="this.src='assets/img/image-no-load.png'"
                 alt="BMANGA Resource"
+                style="cursor: pointer;"
+                (click)="irManga(element.nombre)"
                 class="fix-size">
                 <mat-card-actions style="padding-bottom: 10px; padding-left: 10px;">
                     <button 
                     mat-fab 
                     color="accent" 
                     matTooltip="Leer" 
+                    (click)="leer(element.id)"
                     [matTooltipPosition]="positionTooltip">
                     <span class="material-icons">play_arrow</span>
                     </button>
@@ -63,7 +66,7 @@
         <br><br>
         <mat-toolbar class="mat-elevation-z2">
             <span class="material-icons icon-top">plus_one</span>
-            <label class="icon-mar">MÁS CAPÍTULOS</label>
+            <label class="icon-mar"><b>MÁS CAPÍTULOS</b></label>
         </mat-toolbar>
         <mat-divider></mat-divider><br>
         <mat-card *ngIf="!isLoad.otros && !isLoad.azar">
@@ -77,16 +80,17 @@
         <div class="container" *ngIf="!isError.otros && !isError.azar">
             <div class="col-md-6">
                 <mat-card *ngFor="let caps of capitulosOtros" style="margin-bottom: 10px;">
-                    <img src="{{getImage(caps.imagen)}}" alt="BMANGA Resource" onerror="this.src='assets/img/image-no-load.png'" class="mat-image-card">
+                    <img src="{{getImage(caps.imagen)}}" alt="BMANGA Resource" onerror="this.src='assets/img/image-no-load.png'" class="mat-image-card" 
+                    style="cursor: pointer;" (click)="irManga(caps.nombre)">
                     <div class="cnt">
                         <b style="font-weight: 800; font-size: 1.5em;">{{getName(caps.nombre)}}</b><br><br>
                         <span>Capítulo </span><b>{{caps.capitulo}}</b> por <code>{{caps.nick}}</code>
                         <br><br>
-                        <button mat-fab color="primary" style="transform: scale(.7,.7)">
+                        <button mat-fab color="primary" style="transform: scale(.7,.7)" (click)="leer(caps.id)">
                             <b><span class="material-icons">play_arrow</span></b>
                         </button>
                         <button mat-fab (click)="irManga(caps.nombre)" style="transform: scale(.7,.7)">
-                            <b><span class="material-icons">add</span></b>
+                            <b><span class="material-icons">book</span></b>
                         </button>
                         <br><br>
                     </div>
@@ -95,7 +99,7 @@
             <div class="col-md-6">
                 <mat-card *ngIf="isLoad.azar">
                     <mat-card-header>
-                        <mat-card-title>{{libroAzar.nombre}}</mat-card-title>
+                        <mat-card-title><b>{{libroAzar.nombre}}</b></mat-card-title>
                         <mat-card-subtitle>{{libroAzar.generos}}</mat-card-subtitle>
                     </mat-card-header>
                     <img mat-card-image src="{{getImage(libroAzar.imagen)}}" onerror="this.src='assets/img/image-no-load.png'" alt="BMANGA Resource">
@@ -113,7 +117,7 @@
         </div>
         <mat-toolbar class="mat-elevation-z2">
             <span class="material-icons icon-top">stars</span>
-            <label class="icon-mar">LO MÁS LEIDO</label>
+            <label class="icon-mar"><b>LO MÁS LEIDO</b></label>
         </mat-toolbar>
         <mat-divider></mat-divider><br>
         <mat-card *ngIf="!isLoad.rank">
@@ -131,13 +135,15 @@
                 <mat-card-title>
                     <span>{{getName(element.nombre)}}</span>
                 </mat-card-title>
-                <mat-card-subtitle>Lecturas <b>{{element.vistas}}</b></mat-card-subtitle>
+                <mat-card-subtitle><span class="material-icons icon-top" style="top: 5px;">remove_red_eye</span> <b class="icon-mar">{{element.vistas}}</b></mat-card-subtitle>
                 </mat-card-header>
                 <img 
                 mat-card-image 
                 src="{{getImage(element.imagen)}}"
                 onerror="this.src='assets/img/image-no-load.png'"
                 alt="BMANGA Resource"
+                style="cursor: pointer;"
+                (click)="irManga(element.nombre)"
                 class="fix-size">
                 <mat-card-actions>
                 <button mat-raised-button color="primary" (click)="irManga(element.nombre)">

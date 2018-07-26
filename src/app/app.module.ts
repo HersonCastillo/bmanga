@@ -23,7 +23,7 @@ const appRoutes: Routes = [
     { path: 'error', component: ErrorComponent },
     { path: 'biblioteca/:nombre', component: BibliotecaComponent },
     { path: 'leer/:id', component: LeerComponent },
-    { path: 'acceder', component: LoginComponent },
+    { path: 'dashboard', component: LoginComponent },
     { path: '@', children: [
         { path: 'admin', component: CpanelAdminComponent },
         { path: 'me', component: CpanelUserComponent }
@@ -34,6 +34,7 @@ const appRoutes: Routes = [
     { path: 'descargar', component: DownloadComponent, children: [
         { path: ':id', component: DownloadComponent }
     ] },
+    { path: 'login', component: LoginComponent },
     { path: '**', redirectTo: 'error', pathMatch: 'full' }
 ];
 

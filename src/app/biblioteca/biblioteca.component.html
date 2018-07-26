@@ -71,9 +71,16 @@
                     {{i + 1}}
                     </button>
                 </div>
+                <h3>
+                    <span class="material-icons icon-top">comment</span>
+                    <label class="icon-mar"><b>COMENTARIOS</b></label>
+                </h3>
+                <mat-divider></mat-divider>
+                <br>
+                <disqus [identifier]="pageId" [url]="url"></disqus>
                 </mat-card>
             </mat-tab>
-            <mat-tab label="Suscripciones">
+            <mat-tab label="Suscripciones" [disabled]="true">
                 <h2>Suscripciones</h2>
                 <span>
                 Centro de notificaciones de mangas, este beneficio posee la posibilidad de darte un aviso cuando
@@ -104,7 +111,7 @@
                 color="primary"
                 (click)="envEmail()">Recibir notificaciones</button>
             </mat-tab>
-            <mat-tab label="Historial">
+            <mat-tab label="Historial" [disabled]="true">
                 <span>Historial</span>
             </mat-tab>
         </mat-tab-group>

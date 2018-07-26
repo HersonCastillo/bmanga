@@ -127,4 +127,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     irManga(nombre: string): void{
         this.router.navigateByUrl('/biblioteca/' + nombre);
     }
+    leer(el: any): void{
+        let id = el.toString(16);
+        this.router.navigate(['/leer', id]);
+    }
 }
