@@ -65,7 +65,7 @@ export class LeerComponent implements OnInit, OnDestroy {
 		if(this.numberPage < (this.nObjetos.length - 1)){
 			this.numberPage++;
 			this.nb.before = false;
-		}
+		}else this.makeSnack("Capítulo terminado.");
 		if(this.numberPage + 1 == this.nObjetos.length)
 			this.nb.next = true;
 	}
@@ -137,6 +137,7 @@ export class LeerComponent implements OnInit, OnDestroy {
 						if(c.error){
 							this.loadError = true;
 							this.isChapterLoaded = true;
+							this.bbDis = true;
 							return;
 						}
 						for(let j = 0; j < c.count; j++)
@@ -168,16 +169,19 @@ export class LeerComponent implements OnInit, OnDestroy {
 							}).catch(e => {
 								this.loadError = true;
 								this.isChapterLoaded = true;
+								this.bbDis = true;
 							});
 						}
 					});
 				}catch(ex){
 					this.loadError = true;
 					this.isChapterLoaded = true;
+					this.bbDis = true;
 				}
 			}).catch(() => {
 				this.loadError = true;
 				this.isChapterLoaded = true;
+				this.bbDis = true;
 			});
 		});
 	}

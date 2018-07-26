@@ -16,18 +16,24 @@ import { CpanelAdminComponent } from './usuarios/cpanel-admin/cpanel-admin.compo
 import { CpanelUserComponent } from './usuarios/cpanel-user/cpanel-user.component';
 import { BuscarComponent } from './buscar/buscar.component';
 import { ConfigComponent } from './modals/config/config.component';
+import { DownloadComponent } from './download/download.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'error', component: ErrorComponent },
     { path: 'biblioteca/:nombre', component: BibliotecaComponent },
     { path: 'leer/:id', component: LeerComponent },
-    { path: 'login', component: LoginComponent },
-    { path: 'home', children: [
+    { path: 'acceder', component: LoginComponent },
+    { path: '@', children: [
         { path: 'admin', component: CpanelAdminComponent },
-        { path: '@me', component: CpanelUserComponent }
+        { path: 'me', component: CpanelUserComponent }
     ] },
-    { path: 'buscar', component: BuscarComponent },
+    { path: 'buscar', component: BuscarComponent, children: [
+        { path: ':name', component: BuscarComponent }
+    ] },
+    { path: 'descargar', component: DownloadComponent, children: [
+        { path: ':id', component: DownloadComponent }
+    ] },
     { path: '**', redirectTo: 'error', pathMatch: 'full' }
 ];
 
@@ -42,7 +48,8 @@ const appRoutes: Routes = [
         CpanelAdminComponent,
         CpanelUserComponent,
         BuscarComponent,
-        ConfigComponent
+        ConfigComponent,
+        DownloadComponent
     ],
     imports: [
         BrowserModule,
