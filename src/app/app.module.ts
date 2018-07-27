@@ -17,6 +17,7 @@ import { CpanelUserComponent } from './usuarios/cpanel-user/cpanel-user.componen
 import { BuscarComponent } from './buscar/buscar.component';
 import { ConfigComponent } from './modals/config/config.component';
 import { DownloadComponent } from './download/download.component';
+import { SimpleComponent } from './modals/simple/simple.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -47,7 +48,8 @@ const appRoutes: Routes = [
         CpanelUserComponent,
         BuscarComponent,
         ConfigComponent,
-        DownloadComponent
+        DownloadComponent,
+        SimpleComponent
     ],
     imports: [
         BrowserModule,
@@ -64,7 +66,8 @@ const appRoutes: Routes = [
     providers: [],
     bootstrap: [AppComponent],
     entryComponents: [
-        ConfigComponent
+        ConfigComponent,
+        SimpleComponent
     ]
 })
 export class AppModule { }
