@@ -32,4 +32,10 @@ export class LibrosService {
             .subscribe(r => resolve(r.json()), err => reject(err));
         });
     }
+    public getAll(): Promise<any>{
+        return new Promise<void>((rs, rj) => {
+            this.http.get(this.globals.API + 'libros')
+            .subscribe(r => rs(r.json()), err => rj(err));
+        });
+    }
 }
