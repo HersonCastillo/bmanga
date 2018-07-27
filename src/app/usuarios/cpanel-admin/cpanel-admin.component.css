@@ -1,8 +1,21 @@
 .sidenav-container {
   height: 100%;
 }
-
 .sidenav {
   width: 200px;
   box-shadow: 3px 0 6px rgba(0,0,0,.24);
+}
+.icon-left{
+  margin-left: 10px;
+}
+.iconimg{
+  width: 80%;
+  position: relative;
+  margin: 20px;
+}
+.router-container{
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }

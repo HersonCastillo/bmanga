@@ -18,6 +18,14 @@ import { BuscarComponent } from './buscar/buscar.component';
 import { ConfigComponent } from './modals/config/config.component';
 import { DownloadComponent } from './download/download.component';
 import { SimpleComponent } from './modals/simple/simple.component';
+import { ConfirmComponent } from './modals/confirm/confirm.component';
+import { PublicacionesComponent } from './usuarios/views-admin/publicaciones/publicaciones.component';
+import { MangaComponent } from './usuarios/views-admin/manga/manga.component';
+import { CapituloComponent } from './usuarios/views-admin/capitulo/capitulo.component';
+import { EstadisticasComponent } from './usuarios/views-admin/estadisticas/estadisticas.component';
+import { GrupoComponent } from './usuarios/views-admin/grupo/grupo.component';
+import { PermisosComponent } from './usuarios/views-admin/permisos/permisos.component';
+import { ConfiguracionComponent } from './usuarios/views-admin/configuracion/configuracion.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -26,7 +34,19 @@ const appRoutes: Routes = [
     { path: 'leer/:id', component: LeerComponent },
     { path: 'login', component: LoginComponent },
     { path: '@dashboard', children: [
-        { path: 'admin', component: CpanelAdminComponent },
+        { path: 'admin', component: CpanelAdminComponent, children: [
+            { path: 'publicaciones', component: PublicacionesComponent },
+            { path: 'nuevo', children: [
+                { path: 'manga', component: MangaComponent },
+                { path: 'capitulo', component: CapituloComponent },
+                { path: '**', redirectTo: 'capitulo', pathMatch: 'full' }
+            ] },
+            { path: 'estadisticas', component: EstadisticasComponent },
+            { path: 'grupo', component: GrupoComponent },
+            { path: 'permisos', component: PermisosComponent },
+            { path: 'configuracion', component: ConfiguracionComponent },
+            { path: '**', redirectTo: 'publicaciones', pathMatch: 'full' }
+        ] },
         { path: 'me', component: CpanelUserComponent }
     ] },
     { path: 'buscar', component: BuscarComponent },
@@ -49,7 +69,15 @@ const appRoutes: Routes = [
         BuscarComponent,
         ConfigComponent,
         DownloadComponent,
-        SimpleComponent
+        SimpleComponent,
+        ConfirmComponent,
+        PublicacionesComponent,
+        MangaComponent,
+        CapituloComponent,
+        EstadisticasComponent,
+        GrupoComponent,
+        PermisosComponent,
+        ConfiguracionComponent
     ],
     imports: [
         BrowserModule,
@@ -67,7 +95,8 @@ const appRoutes: Routes = [
     bootstrap: [AppComponent],
     entryComponents: [
         ConfigComponent,
-        SimpleComponent
+        SimpleComponent,
+        ConfirmComponent
     ]
 })
 export class AppModule { }

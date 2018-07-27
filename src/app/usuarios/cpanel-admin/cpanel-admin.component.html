@@ -7,10 +7,42 @@
     [mode]="(isHandset | async)!.matches ? 'over' : 'side'"
     [opened]="!(isHandset | async)!.matches">
     <mat-toolbar color="primary">Menu</mat-toolbar>
+    <img src="assets/img/icon.png" alt="BMANGA Icon" class="iconimg">
+    <br><br>
     <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
+      <a mat-list-item routerLink="/@dashboard/admin/publicaciones">
+        <span class="material-icons">done_all</span>
+        <span class="icon-left">Publicaciones</span>
+      </a>
+      <a mat-list-item routerLink="/@dashboard/admin/nuevo/manga">
+        <span class="material-icons">book</span>
+        <span class="icon-left">Nuevo manga</span>
+      </a>
+      <a mat-list-item routerLink="/@dashboard/admin/nuevo/capitulo">
+        <span class="material-icons">insert_drive_file</span>
+        <span class="icon-left">Nuevo capítulo</span>
+      </a>
+      <a mat-list-item routerLink="/@dashboard/admin/estadisticas">
+        <span class="material-icons">insert_chart</span>
+        <span class="icon-left">Estadísticas</span>
+      </a>
+      <a mat-list-item routerLink="/@dashboard/admin/grupo">
+        <span class="material-icons">group</span>
+        <span class="icon-left">Mi grupo</span>
+      </a>
+      <a mat-list-item routerLink="/@dashboard/admin/permisos">
+        <span class="material-icons">error_outline</span>
+        <span class="icon-left">Permisos</span>
+      </a>
+      <a mat-list-item routerLink="/@dashboard/admin/configuracion">
+        <span class="material-icons">build</span>
+        <span class="icon-left">Configuración</span>
+      </a>
+      <mat-divider></mat-divider>
+      <a mat-list-item (click)="closeSession()">
+        <span class="material-icons">close</span>
+        <span class="icon-left">Cerrar sesión</span>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -23,7 +55,8 @@
         *ngIf="(isHandset | async)!.matches">
         <span class="material-icons">menu</span>
       </button>
-      <span>Application Title</span>
+      <span>Panel de control para administradores</span>
     </mat-toolbar>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
