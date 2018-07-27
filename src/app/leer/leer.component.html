@@ -4,7 +4,7 @@
     </svg>
 </div>
 <mat-toolbar class="mat-elevation-z1" [@popOverState]="(isAllLoaded) ? 'show' : 'hide'">
-	<mat-toolbar-row class="mat-elevation-z3">
+	<mat-toolbar-row class="mat-elevation-z3" *ngIf="!loadError">
 		<span>
             {{chapterInfo?.info.nombre}} <i>{{title(chapterInfo?.info.titulo)}}</i> 
             <b>{{' #' + chapterInfo?.info.capitulo}}</b>
@@ -31,6 +31,7 @@
         <mat-slide-toggle 
         style="margin-left: 5px;" 
         (change)="pageChangeMode()"
+        [disabled]="bbDis"
         [(ngModel)]="checked"
         [checked]="checked">
             <b *ngIf="!checked">CASCADA</b>
@@ -42,7 +43,7 @@
   <div class="row">
 		<div class="col-md-12">
 			<div class="mat-card mat-elevation-z1" style="padding: 10px; margin-top: 15px; margin-bottom: 15px;" *ngIf="loadError">
-				<h1>Contenido no disponible.</h1>
+				<h2>Contenido no disponible.</h2>
 				El capítulo solicitado no existe o es posible que algún administrador lo haya deshabilitado y en otro 
 				momento se encuentre disponible. <br><br>
 				<button mat-raised-button routerLink="/" color="warn">Regresar al inicio</button>

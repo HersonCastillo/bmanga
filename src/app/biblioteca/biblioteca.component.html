@@ -6,13 +6,17 @@
 <br>
 <div class="container" [@popOverState]="(isAllLoaded) ? 'show' : 'hide'">
     <div class="row">
-        <div class="alert alert-danger" *ngIf="isError.generalLoad">
+        <div class="mat-card" *ngIf="isError.generalLoad">
             <h2>¡Ups!</h2>
             Ocurrió un error al tratar de encontrar el libro que buscas.
             <br><br>
             Inténtalo más tarde. Si el problema persiste repórtalo con un administrador.
             <br><br>
             <code>Log: <b>{{mensajeError}}</b></code>
+            <br><br>
+            <button mat-raised-button color="warn" routerLink="/">
+                Volver a inicio
+            </button>
         </div>
         <div *ngIf="!isError.generalLoad && mangaInformacion" class="media mat-card col-md-9">
         <mat-tab-group>

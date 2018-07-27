@@ -124,6 +124,12 @@ export class LeerComponent implements OnInit, OnDestroy {
 			this.nObjetos = [];
 			this.capitulos.infoLectura(this.id).then(r => {
 				try{
+					if(r.error){
+						this.isAllLoaded = true;
+						this.loadError = true;
+						this.isChapterLoaded = true;
+						return;
+					}
 					this.chapterInfo = r;
 					if(r.siguiente)
 						this.chp.next = false;
