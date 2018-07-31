@@ -92,7 +92,8 @@ export class BuscarComponent implements OnInit {
         return this.getNormalImage(imageUrl) + "?w=80";
     }
     getNormalImage(imageUrl: string): string{
-        return "https://i1.wp.com/bmanga.net/" + imageUrl;
+        if(imageUrl) return "https://i1.wp.com/bmanga.net/" + imageUrl;
+        return "assets/img/image-no-load.png";
     }
     change(): void{
         this.search = this.selected;

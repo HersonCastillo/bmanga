@@ -146,7 +146,8 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
         });
     }
     getImage(imageUrl: string): string{
-        return "https://i1.wp.com/bmanga.net/" + imageUrl;
+        if(imageUrl) return "https://i1.wp.com/bmanga.net/" + imageUrl;
+        return "assets/img/image-no-load.png";
     }
     getSizeImageCard(imageUrl: string): string{
         return this.getImage(imageUrl) + '?w=200';

@@ -50,9 +50,7 @@ const appRoutes: Routes = [
         { path: 'me', component: CpanelUserComponent }
     ] },
     { path: 'buscar', component: BuscarComponent },
-    { path: 'descargar', component: DownloadComponent, children: [
-        { path: ':id', component: DownloadComponent }
-    ] },
+    { path: 'descargar/:id', component: DownloadComponent },
     { path: '**', redirectTo: 'error', pathMatch: 'full' }
 ];
 

@@ -1,34 +1,38 @@
 <br>
 <div class="formlogin">
     <mat-progress-bar mode="indeterminate" *ngIf="isLoading" class="progresslinear"></mat-progress-bar>
-    <h1>Iniciar sesión</h1>
-    <br>
-    <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label><b>Usuario</b></mat-label>
-        <input matInput 
-        autocomplete="off"
-        [(ngModel)]="credentials.user"
+    <form onsubmit="return false">
+        <h1>Iniciar sesión</h1>
+        <br>
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label><b>Usuario</b></mat-label>
+            <input matInput 
+            autocomplete="off"
+            [(ngModel)]="credentials.user"
+            [disabled]="isLoading"
+            name="username"
+            placeholder="Usuario o correo electrónico">
+            <span class="material-icons" matSuffix>person</span>
+            <mat-hint>Puede ser un nombre de usuario o correo electrónico</mat-hint>
+        </mat-form-field>
+        <br><br>
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label><b>Contraseña</b></mat-label>
+            <input matInput 
+            type="password"
+            [(ngModel)]="credentials.pass"
+            [disabled]="isLoading"
+            name="password"
+            placeholder="Contraseña">
+            <span class="material-icons" matSuffix>security</span>
+        </mat-form-field>
+        <br><br>
+        <button mat-raised-button 
+        style="width: 100%;" 
+        color="primary" 
         [disabled]="isLoading"
-        placeholder="Usuario o correo electrónico">
-        <span class="material-icons" matSuffix>person</span>
-        <mat-hint>Puede ser un nombre de usuario o correo electrónico</mat-hint>
-    </mat-form-field>
-    <br><br>
-    <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label><b>Contraseña</b></mat-label>
-        <input matInput 
-        type="password"
-        [(ngModel)]="credentials.pass"
-        [disabled]="isLoading"
-        placeholder="Contraseña">
-        <span class="material-icons" matSuffix>security</span>
-    </mat-form-field>
-    <br><br>
-    <button mat-raised-button 
-    style="width: 100%;" 
-    color="primary" 
-    [disabled]="isLoading"
-    (click)="login()">
-        Iniciar sesión
-    </button>
+        (click)="login()">
+            Iniciar sesión
+        </button>
+    </form>
 </div>
