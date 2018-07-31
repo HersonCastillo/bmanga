@@ -69,7 +69,7 @@
                 <div class="col col-md-3" *ngFor="let d of getData()" style="margin-bottom: 10px;">
                     <mat-card class="example-card">
                         <mat-card-header>
-                            <mat-card-title><b>{{reduce(d?.nombre, 20)}}</b></mat-card-title>
+                            <mat-card-title><b>{{reduce(d?.nombre, 15)}}</b></mat-card-title>
                             <mat-card-subtitle>{{reduce(d?.generos, 10)}}</mat-card-subtitle>
                         </mat-card-header>
                         <img mat-card-image [src]="getNormalImage(d?.imagen)" alt="BMANGA Resource" style="max-height: 349px; height: 350px;">
