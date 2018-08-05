@@ -5,7 +5,7 @@
 </div>
 <br>
 <div class="container" [@popOverState]="(isLoaded) ? 'show' : 'hide'">
-    <mat-toolbar class="mat-elevation-z2" color="primary"><b>{{publicaciones.length}} capítulo han sido subidos por ti.</b></mat-toolbar>
+    <mat-toolbar class="mat-elevation-z2" color="primary"><b>{{publicaciones.length}} capítulo(s) han sido subidos por ti.</b></mat-toolbar>
     <mat-accordion *ngIf="isLoaded">
         <mat-expansion-panel *ngFor="let publicacion of publicaciones">
             <mat-expansion-panel-header>

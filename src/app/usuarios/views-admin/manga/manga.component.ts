@@ -89,20 +89,20 @@ export class MangaComponent implements OnInit {
                             },
                             uploadProgress: (event, position, total, percent) => {
                                 this.valueUpload = percent;
-                                if(percent == 100){
-                                    setTimeout(() => {
-                                        this.uploading = false;
-                                        this.valueUpload = 0;
-                                        this.estado = "A";
-                                        this.inForm.nombre = "";
-                                        this.inForm.sinopsis = "";
-                                        this.allFalse();
-                                        this.simple('¡Perfecto!', 'Manga agregado con éxito en la biblioteca');
-                                    }, 2000);
-                                }
                             },
-                            success: () => {
+                            success: (data) => {
                                 this.uploading = false;
+                                this.valueUpload = 0;
+                                this.estado = "A";
+                                this.inForm.nombre = "";
+                                this.inForm.sinopsis = "";
+                                this.allFalse();
+                                this.simple('¡Perfecto!', 'Manga agregado con éxito en la biblioteca');
+                            },
+                            error: () => {
+                                this.uploading = false;
+                                this.valueUpload = 0;
+                                this.simple('¡Ups!', 'Ocurrió un error al intentar guardar el manga');
                             },
                             resetForm: false
                         });
