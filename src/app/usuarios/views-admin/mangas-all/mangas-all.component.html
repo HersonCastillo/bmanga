@@ -1,3 +1,27 @@
-<p>
-  mangas-all works!
-</p>
+<div id="initial_startup" [@popOverState]="(isLoaded) ? 'hide' : 'show'">
+    <svg class="spinner-container" width="50" height="50" viewBox="0 0 44 44">
+        <circle class="spinner-path" cx="22" cy="22" r="20" fill="none" stroke-width="4"></circle>
+    </svg>
+</div>
+<br>
+<div class="container" [@popOverState]="(isLoaded) ? 'show' : 'hide'">
+    <mat-toolbar class="mat-elevation-z2"><b>{{mangas.length}} mangas en total.</b></mat-toolbar>
+    <mat-list>
+        <mat-list-item *ngFor="let book of mangas">
+            <span class="material-icons" mat-list-icon>book</span>
+            <h4 mat-line>{{reduce(book.nombre, 45)}}</h4>
+            <p mat-line> {{book.created_at | date}}</p>
+            <div class="options-items">
+                <button mat-mini-fab color="primary" class="m-right icon-this" matTooltip="Ir al manga">
+                    <span class="material-icons escala">redo</span>
+                </button>
+                <button mat-mini-fab color="primary" class="m-right icon-this" matTooltip="Editar información">
+                    <span class="material-icons escala">edit</span>
+                </button>
+                <button mat-mini-fab color="warn" class="m-right icon-this" matTooltip="Eliminar manga">
+                    <span class="material-icons escala">delete</span>
+                </button>
+            </div>
+        </mat-list-item>
+    </mat-list>
+</div>

@@ -1,0 +1,66 @@
+#startup, #initial_startup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+
+    display: flex;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%,-50%);
+}
+
+.spinner-container {
+    -webkit-animation: rotate 2s linear infinite;
+    animation: rotate 2s linear infinite;
+    z-index: 2;
+}
+
+.spinner-path {
+    stroke-dasharray: 1,150; 
+    stroke-dashoffset: 0;
+    stroke: #acb9bf;
+    stroke-linecap: round;
+    -webkit-animation: dash 1.5s ease-in-out infinite;
+    animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    100% { transform: rotate(360deg); }
+}
+@-webkit-keyframes rotate{
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes dash {
+    0% {
+    stroke-dasharray: 1,150;  
+    stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90,150; 
+        stroke-dashoffset: -35;   
+    }
+    100% {
+        stroke-dasharray: 90,150; 
+        stroke-dashoffset: -124;  
+    }
+}
+@-webkit-keyframes dash {
+    0% {
+        stroke-dasharray: 1,150;  
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90,150; 
+        stroke-dashoffset: -35;   
+    }
+    100% {
+        stroke-dasharray: 90,150; 
+        stroke-dashoffset: -124;  
+    }
+}

@@ -26,4 +26,10 @@ export class AdminService {
             .subscribe(r => resolve(r.json()), e => reject(e));
         });
     }
+    public mangasAll(): Promise<any>{
+        return new Promise<void>((rs, rj) => {
+            this.http.get(this.globals.API + 'libros')
+            .subscribe(r => rs(r.json()), e => rj(e));
+        });
+    }
 }

@@ -20,7 +20,7 @@
                 <mat-chip-list>
                     <mat-chip matTooltip="Fecha de subida" [matTooltipPosition]="'above'">
                         <span class="material-icons m-right">date_range</span>
-                        {{publicacion.created_at}} {{publicacion.hora}}
+                        {{publicacion.created_at | date}} {{publicacion.hora}}
                     </mat-chip>
                     <mat-chip color="primary" matTooltip="Lecturas actuales" [matTooltipPosition]="'above'">
                         <span class="material-icons m-right">remove_red_eye</span> 

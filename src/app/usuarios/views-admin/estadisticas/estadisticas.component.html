@@ -1,3 +1,26 @@
-<p>
-  estadisticas works!
-</p>
+<div id="initial_startup" [@popOverState]="(isLoaded) ? 'hide' : 'show'">
+    <svg class="spinner-container" width="50" height="50" viewBox="0 0 44 44">
+        <circle class="spinner-path" cx="22" cy="22" r="20" fill="none" stroke-width="4"></circle>
+    </svg>
+</div>
+<br>
+<div class="container" [@popOverState]="(isLoaded) ? 'show' : 'hide'">
+    <mat-card *ngIf="isLoaded">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <canvas id="bestMangas"></canvas>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 40px;">
+                <div class="col-md-6">
+                    <canvas id="lastUpdates"></canvas>
+                </div>
+                <div class="col-md-6">
+                    <canvas id="bestUpdates"></canvas>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <br>
+</div>
