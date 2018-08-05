@@ -1,17 +1,62 @@
+<div id="initial_startup" [@popOverState]="(isLoaded) ? 'hide' : 'show'">
+    <svg class="spinner-container" width="50" height="50" viewBox="0 0 44 44">
+        <circle class="spinner-path" cx="22" cy="22" r="20" fill="none" stroke-width="4"></circle>
+    </svg>
+</div>
 <br>
-<div class="container">
+<div class="container" [@popOverState]="(isLoaded) ? 'show' : 'hide'">
+    <mat-toolbar class="mat-elevation-z2"><b>{{publicaciones.length}} capítulo han sido subidos por ti.</b></mat-toolbar>
     <mat-accordion *ngIf="isLoaded">
         <mat-expansion-panel *ngFor="let publicacion of publicaciones">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Manga name
+                    {{publicacion.nombre}}<b> #{{publicacion.capitulo}}</b>
                 </mat-panel-title>
                 <mat-panel-description>
-                    Type your name and age
+                    {{(publicacion.titulo) ? publicacion.titulo : ""}}
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <div class="body">
-
+                <mat-chip-list>
+                    <mat-chip matTooltip="Fecha de subida" [matTooltipPosition]="'above'">
+                        <span class="material-icons m-right">date_range</span>
+                        {{publicacion.created_at}} {{publicacion.hora}}
+                    </mat-chip>
+                    <mat-chip color="primary" matTooltip="Lecturas actuales" [matTooltipPosition]="'above'">
+                        <span class="material-icons m-right">remove_red_eye</span> 
+                        {{publicacion.vistas}}
+                    </mat-chip>
+                </mat-chip-list>
+                <br>
+                <button mat-raised-button class="center m-right">
+                    <span class="material-icons m-right">play_circle_filled</span>
+                    Leer
+                </button>
+                <button mat-raised-button class="center m-right">
+                    <span class="material-icons m-right">cloud_download</span>
+                    Descargar
+                </button>
+                <button mat-raised-button class="center m-right" color="primary">
+                    <span class="material-icons m-right">edit</span>
+                    Editar capítulo
+                </button>
+                <button mat-raised-button color="warn" class="center m-right">
+                    <span class="material-icons m-right">delete</span>
+                    Eliminar capítulo
+                </button>
+                <button mat-icon-button matTooltip="Más opciones" [matMenuTriggerFor]="menu">
+                    <span class="material-icons center">more_vert</span>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <span class="material-icons center refix m-right">link</span>
+                        <span>Copiar URL para descargar</span>
+                    </button>
+                    <button mat-menu-item>
+                        <span class="material-icons center refix m-right">link</span>
+                        <span>Copiar URL para leer</span>
+                    </button>
+                </mat-menu>
             </div>
         </mat-expansion-panel>
     </mat-accordion>

@@ -27,7 +27,6 @@ import { GrupoComponent } from './usuarios/views-admin/grupo/grupo.component';
 import { PermisosComponent } from './usuarios/views-admin/permisos/permisos.component';
 import { ConfiguracionComponent } from './usuarios/views-admin/configuracion/configuracion.component';
 import { MangasAllComponent } from './usuarios/views-admin/mangas-all/mangas-all.component';
-import { CapitulosAllComponent } from './usuarios/views-admin/capitulos-all/capitulos-all.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -39,7 +38,6 @@ const appRoutes: Routes = [
         { path: 'admin', component: CpanelAdminComponent, children: [
             { path: 'publicaciones', component: PublicacionesComponent },
             { path: 'mangas', component: MangasAllComponent },
-            { path: 'capitulos', component: CapitulosAllComponent },
             { path: 'nuevo', children: [
                 { path: 'manga', component: MangaComponent },
                 { path: 'capitulo', component: CapituloComponent },
@@ -80,8 +78,7 @@ const appRoutes: Routes = [
         GrupoComponent,
         PermisosComponent,
         ConfiguracionComponent,
-        MangasAllComponent,
-        CapitulosAllComponent
+        MangasAllComponent
     ],
     imports: [
         BrowserModule,
