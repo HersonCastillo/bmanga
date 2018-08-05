@@ -32,4 +32,7 @@ export class AdminService {
             .subscribe(r => rs(r.json()), e => rj(e));
         });
     }
+    public get urlToAddBook(){
+        return this.globals.API + 'libros/new?token=' + localStorage.getItem('b_token');
+    }
 }

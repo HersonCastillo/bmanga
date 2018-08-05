@@ -55,6 +55,9 @@
                     <label class="icon-mar">LISTA DE CAPÍTULOS</label>
                 </h3>
                 <mat-list>
+                    <mat-list-item *ngIf="chapters.length == 0">
+                        No hay capítulos disponibles para este manga.
+                    </mat-list-item>
                     <mat-list-item *ngFor="let item of getData(chapters); let i = index;">
                     <div *ngIf="item">
                         {{(item?.titulo !== null) ? reduce(item?.titulo, 25) : 'Capítulo sin título '}} <b style="margin-left: 5px;">{{item?.capitulo}}</b>
@@ -70,7 +73,7 @@
                     </mat-list-item>
                 </mat-list>
                 <br><br>
-                <div style="position: relative; text-align: center;">
+                <div style="position: relative; text-align: center;" *ngIf="chapters.length >= 1">
                     <button style="margin-bottom: 5px;" mat-mini-fab (click)="changePage(i)" class="icon-mar" *ngFor="let i of paginator" [disabled]="page == i">
                     {{i + 1}}
                     </button>

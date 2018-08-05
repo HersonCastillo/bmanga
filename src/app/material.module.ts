@@ -30,7 +30,9 @@ import {
     MatBottomSheetModule,
     MatSliderModule,
     MatAutocompleteModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule,
+    MatButtonToggleModule
 } from '@angular/material';
 
 import { MatProgressBarModule } 
@@ -68,7 +70,9 @@ from '@angular/material/progress-bar';
         MatBottomSheetModule,
         MatSliderModule,
         MatAutocompleteModule,
-        MatMenuModule
+        MatMenuModule,
+        MatCheckboxModule,
+        MatButtonToggleModule
     ],
     exports: [
         MatButtonModule,
@@ -98,7 +102,9 @@ from '@angular/material/progress-bar';
         MatBottomSheetModule,
         MatSliderModule,
         MatAutocompleteModule,
-        MatMenuModule
+        MatMenuModule,
+        MatCheckboxModule,
+        MatButtonToggleModule
     ],
     declarations: []
 })

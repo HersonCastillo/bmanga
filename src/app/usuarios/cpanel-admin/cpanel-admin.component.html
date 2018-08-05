@@ -7,8 +7,7 @@
     [mode]="(isHandset | async)!.matches ? 'over' : 'side'"
     [opened]="!(isHandset | async)!.matches">
     <mat-toolbar color="primary">Menu</mat-toolbar>
-    <img src="assets/img/icon.png" alt="BMANGA Icon" class="iconimg">
-    <br><br>
+    <br>
     <mat-nav-list>
       <a mat-list-item routerLink="/@dashboard/admin/publicaciones">
         <span class="material-icons">done_all</span>

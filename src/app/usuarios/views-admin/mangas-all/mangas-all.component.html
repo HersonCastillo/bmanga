@@ -5,8 +5,8 @@
 </div>
 <br>
 <div class="container" [@popOverState]="(isLoaded) ? 'show' : 'hide'">
-    <mat-toolbar class="mat-elevation-z2"><b>{{mangas.length}} mangas en total.</b></mat-toolbar>
-    <mat-list>
+    <mat-toolbar class="mat-elevation-z2" color="primary"><b>{{mangas.length}} mangas en total.</b></mat-toolbar>
+    <mat-list class="mat-card mat-elevation-z2">
         <mat-list-item *ngFor="let book of mangas">
             <span class="material-icons" mat-list-icon>book</span>
             <h4 mat-line>{{reduce(book.nombre, 45)}}</h4>
@@ -22,6 +22,7 @@
                     <span class="material-icons escala">delete</span>
                 </button>
             </div>
+            <mat-divider></mat-divider>
         </mat-list-item>
     </mat-list>
 </div>

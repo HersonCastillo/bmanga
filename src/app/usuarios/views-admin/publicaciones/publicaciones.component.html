@@ -5,7 +5,7 @@
 </div>
 <br>
 <div class="container" [@popOverState]="(isLoaded) ? 'show' : 'hide'">
-    <mat-toolbar class="mat-elevation-z2"><b>{{publicaciones.length}} capítulo han sido subidos por ti.</b></mat-toolbar>
+    <mat-toolbar class="mat-elevation-z2" color="primary"><b>{{publicaciones.length}} capítulo han sido subidos por ti.</b></mat-toolbar>
     <mat-accordion *ngIf="isLoaded">
         <mat-expansion-panel *ngFor="let publicacion of publicaciones">
             <mat-expansion-panel-header>
@@ -28,6 +28,7 @@
                     </mat-chip>
                 </mat-chip-list>
                 <br>
+                <span class="flex-span"></span>
                 <button mat-raised-button class="center m-right">
                     <span class="material-icons m-right">play_circle_filled</span>
                     Leer
@@ -36,11 +37,11 @@
                     <span class="material-icons m-right">cloud_download</span>
                     Descargar
                 </button>
-                <button mat-raised-button class="center m-right" color="primary">
+                <button mat-button class="center m-right" color="primary">
                     <span class="material-icons m-right">edit</span>
                     Editar capítulo
                 </button>
-                <button mat-raised-button color="warn" class="center m-right">
+                <button mat-button color="warn" class="center m-right">
                     <span class="material-icons m-right">delete</span>
                     Eliminar capítulo
                 </button>

@@ -13,7 +13,10 @@ export class AppComponent implements OnInit {
     ngOnInit(): void{
         $("body, html").on('contextmenu', function(){
 			return false;
-		});
+        });
+        setInterval(() => {
+            window.location.reload();
+        }, 6e5);
     }
     goTo(url: string): void{
         this.router.navigate([url]);

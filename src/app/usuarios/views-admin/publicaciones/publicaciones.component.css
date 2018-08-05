@@ -1,5 +1,15 @@
 .body{
     padding: 10px;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+.flex-span{
+    flex: 1 1 auto;
 }
 .center{
     text-align: center;

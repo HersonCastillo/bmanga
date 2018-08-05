@@ -1,3 +1,73 @@
-<p>
-  manga works!
-</p>
+<br>
+<div class="container">
+    <mat-toolbar class="mat-elevation-z3" color="primary">
+        <span *ngIf="!uploading">Agregar un nuevo manga</span>
+        <span *ngIf="uploading">Subiendo manga...</span>
+    </mat-toolbar>
+    <mat-card>
+        <div class="container-fluid" *ngIf="uploading">
+            <div style="text-align: center; width: 100%; position: relative;">
+                <h1>{{valueUpload}}%</h1>
+            </div>
+            <mat-progress-bar mode="determinate" [value]="valueUpload"></mat-progress-bar>
+        </div>
+        <div class="container-fluid" *ngIf="!uploading">
+            <span>Completa los siguientes campos para agregar un nuevo libro.</span>
+            <form [attr.action]="url" class="submitForm" method='POST' enctype="multipart/form-data" onsubmit="return false">
+                <h2>Nombre del manga</h2>
+                <mat-form-field style="width: 45%;">
+                    <input 
+                    matInput
+                    [formControl]="form.nombre"
+                    [errorStateMatcher]="matcher"
+                    placeholder="Escriba un nombre aqui..."
+                    name="nombre"
+                    id="mangaName"
+                    [(ngModel)]="inForm.nombre"
+                    autocomplete="off">
+                    <mat-hint>El nombre no debe poseer carácteres especiales aparte de tildes.</mat-hint>
+                    <mat-error *ngIf="form.nombre.hasError('required')">
+                        El nombre es <strong>requerido</strong>
+                    </mat-error>
+                </mat-form-field>
+                <h2>Sinopsis del manga</h2>
+                <mat-form-field style="width: 45%;">
+                    <textarea 
+                    matInput 
+                    placeholder="Escriba la descripción del manga aqui..."
+                    [formControl]="form.sinopsis"
+                    [errorStateMatcher]="matcher" 
+                    id="mangaSinopsis"
+                    [(ngModel)]="inForm.sinopsis"
+                    name="sinopsis"></textarea>
+                    <mat-hint>La sinopsis no debe poseer carácteres especiales aparte de tildes.</mat-hint>
+                    <mat-error *ngIf="form.sinopsis.hasError('required')">
+                        La sinopsis es <strong>requerido</strong>
+                    </mat-error>
+                </mat-form-field>
+                <h2>Imagen</h2>
+                <input type="file" accept="image/png, image/jpg, image/jpeg" name="image" id="imageReference">
+                <h2>Géneros</h2>
+                <mat-checkbox *ngFor="let genr of gens" class="chk-list" [(ngModel)]="generos[genr]" (ngModelChange)="changeGen()" name="gen-{{genr}}">{{readyToUp(genr)}}</mat-checkbox>
+                <input type="hidden" name="generos" [ngModel]="generos.release">
+                <h2>Estado actual</h2>
+                <mat-button-toggle-group name="fontStyle" aria-label="Estado" [(ngModel)]="estado" name="estadoAllow" style="text-align: center;">
+                    <mat-button-toggle value="A">Activo</mat-button-toggle>
+                    <mat-button-toggle value="D">Abandonado</mat-button-toggle>
+                    <mat-button-toggle value="P">Pausado temporal</mat-button-toggle>
+                    <mat-button-toggle value="H">Pausado indefinido</mat-button-toggle>
+                    <mat-button-toggle value="F">Finalizado</mat-button-toggle>
+                </mat-button-toggle-group>
+                <input type="hidden" name="estado" [ngModel]="estado">
+                <br><br>
+                <div class="flex">
+                    <span class="flex-span"></span>
+                    <button mat-raised-button color="primary" (click)="submit()">
+                        <b>AGREGAR A LA BIBLIOTECA</b>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </mat-card>
+    <br>
+</div>
