@@ -59,7 +59,7 @@
                             class="mat-elevation-z1 view"
                             (click)="next()">
                         </canvas>
-                        <button *ngIf="isChapterLoaded" mat-button class="intoPage" (click)="refreshImage(ind)">
+                        <button *ngIf="isChapterLoaded" mat-button class="intoPage" (click)="refreshImage(ind)" matTooltip="Recargar página">
                             <span class="material-icons">refresh</span>
                         </button>
                     </div>
@@ -71,7 +71,7 @@
                         <button mat-button color="primary" style="margin-right: 5px;" (click)="previusChapter()" [disabled]="chp.previus">ANTERIOR</button>
                     <button mat-button color="primary" style="margin-right: 5px;" (click)="nextChapter()" [disabled]="chp.next">SIGUIENTE</button>
                     <button mat-raised-button color="primary" style="margin-right: 5px;">DESCARGAR</button>
-                    <button mat-raised-button [routerLink]="['/biblioteca', chapterInfo?.info.nombre]">{{chapterInfo?.info.nombre}}</button>
+                    <button mat-button [routerLink]="['/biblioteca', chapterInfo?.info.nombre]">{{chapterInfo?.info.nombre}}</button>
                     <span class="spacer"></span>
                     <button mat-mini-fab *ngIf="checked" (click)="before()" [disabled]="nb.before">
                         <span class="material-icons">navigate_before</span>

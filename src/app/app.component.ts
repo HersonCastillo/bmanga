@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
 @Component({
-    selector: 'app-root',
+    selector: 'app',
     templateUrl: './app.component.html',
     styleUrls: [ './app.component.css' ]
 })

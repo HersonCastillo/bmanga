@@ -71,7 +71,7 @@
                 </mat-list>
                 <br><br>
                 <div style="position: relative; text-align: center;">
-                    <button mat-mini-fab (click)="changePage(i)" class="icon-mar" *ngFor="let i of paginator">
+                    <button style="margin-bottom: 5px;" mat-mini-fab (click)="changePage(i)" class="icon-mar" *ngFor="let i of paginator" [disabled]="page == i">
                     {{i + 1}}
                     </button>
                 </div>

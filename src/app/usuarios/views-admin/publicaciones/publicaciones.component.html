@@ -1,3 +1,19 @@
-<p>
-  publicaciones works!
-</p>
+<br>
+<div class="container">
+    <mat-accordion *ngIf="isLoaded">
+        <mat-expansion-panel *ngFor="let publicacion of publicaciones">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Manga name
+                </mat-panel-title>
+                <mat-panel-description>
+                    Type your name and age
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="body">
+
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+<br>

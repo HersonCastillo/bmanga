@@ -25,7 +25,7 @@ import {
         state('hide',   style({
           opacity: 0,
           display: 'none',
-          transform: 'scale(.9, .9)'
+          transform: 'scale(.98, .98)'
         })),
         transition('show => hide', animate('100ms ease-out')),
         transition('hide => show', animate('250ms ease-in'))

@@ -30,6 +30,18 @@ import {
         })),
         transition('show => hide', animate('100ms ease-out')),
         transition('hide => show', animate('250ms ease-in'))
+    ]), trigger('showDataShared', [
+        state('show', style({
+          opacity: 1,
+          transform: 'scale(1, 1)'
+        })),
+        state('hide',   style({
+          opacity: 0,
+          display: 'none',
+          transform: 'scale(.95, .95)'
+        })),
+        transition('show => hide', animate('100ms ease-out')),
+        transition('hide => show', animate('200ms ease-in'))
     ])]
 })
 export class BuscarComponent implements OnInit {
@@ -47,21 +59,18 @@ export class BuscarComponent implements OnInit {
     public errorData: boolean = false;
     public selected: string;
     public pageEvent: PageEvent;
-    public pageSizeOptions: number[] = [5, 10, 25, 100];
+    public pageSizeOptions: number[] = [8, 16, 64, 100];
     setPageSizeOptions(setPageSizeOptionsInput: string) {
         this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
     }
     getData(): Array<any>{
         let d = this.data;
         let nArr: Array<any> = [];
-        if(this.pageEvent){
+        if(this.pageEvent)
             for(let i = (this.pageEvent.pageIndex * this.pageEvent.pageSize), j = 0; i < (this.pageEvent.pageIndex * this.pageEvent.pageSize) + this.pageEvent.pageSize; i++, j++)
-            nArr[j] = d[i];
-        }
-        else{
-            for(let i = 0, j = 0; i <  10; i++, j++)
-            nArr[j] = d[i];
-        }
+                if(d[i]) nArr[j] = d[i];
+                else break;
+        else for(let i = 0, j = 0; i <  8; i++, j++) nArr[j] = d[i];
         return nArr;
     }
     makeSnack(txt: string, t?: number): void{

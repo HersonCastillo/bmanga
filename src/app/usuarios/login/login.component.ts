@@ -3,6 +3,7 @@ import { LoginService } from '../../services/login.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { SimpleComponent } from '../../modals/modal';
+import * as $ from 'jquery';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -15,7 +16,12 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private dialog: MatDialog
     ){}
-    ngOnInit() {}
+    ngOnInit() {
+        $("body, html").on('contextmenu', function(){
+            return false;
+        });
+        $("title").text('Inicia sesión en tu cuenta de BMANGA');
+    }
     public credentials = {
         user: "",
         pass: ""
