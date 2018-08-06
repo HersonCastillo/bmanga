@@ -10,6 +10,7 @@ import {
     animate,
     state
 } from '@angular/animations';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
@@ -31,7 +32,8 @@ import {
 export class HomeComponent implements OnInit, OnDestroy {
     constructor(private capitulos: CapitulosService,
     private libros: LibrosService,
-    private router: Router) {}
+    private router: Router,
+    private snack: MatSnackBar) {}
     public capitulosNuevos: Array<any> = [];
     public capitulosOtros: Array<any> = [];
     public librosRanking: Array<any> = [];
@@ -130,5 +132,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     leer(el: any): void{
         let id = el.toString(16);
         this.router.navigate(['/leer', id]);
+    }
+    download(id: any){
+        this.makeSnack("Descargando...", 4500);
+        this.capitulos.descargar(id.toString(16)).subscribe(response => {
+            let url = "http:" + response._body;
+            window.open(url);
+        }, err => {
+            this.makeSnack("Ocurrió un error desconocido... Lo solventaremos luego.");
+            this.router.navigate(['/descargar', id]);
+        });
+    }
+    makeSnack(txt: string, n?: number): void{
+        this.snack.open(txt, null, {duration: n||1500});
     }
 }

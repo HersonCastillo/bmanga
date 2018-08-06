@@ -76,6 +76,7 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
         Validators.email
     ]);
     envEmail(): void{
+        /*
         let email = this.email.toString().trim().toLowerCase();
         if(!this.emailControl.hasError('required') && !this.emailControl.hasError('email')){
             this.suscripcion.sendSuscripcion(email, this.mangaInformacion.id).then(r => {
@@ -85,7 +86,7 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
             }).catch(() => {
                 this.makeSnack('No se pudo agregar la suscripción para este manga.');
             });
-        } else this.makeSnack("Tienes que completar el campo.");
+        } else this.makeSnack("Tienes que completar el campo.");*/
     }
     ngOnDestroy(){
         this.observable.unsubscribe();
@@ -181,5 +182,15 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
     reduce(str: string, num: number): string{
         if(str.length <= num) return str;
         else return str.slice(0, num - 1) + "...";
+    }
+    descargar(id: any): void{
+        this.makeSnack("Descargando...", 4500);
+        this.capitulos.descargar(id.toString(16)).subscribe(response => {
+            let url = "http:" + response._body;
+            window.open(url);
+        }, err => {
+            this.makeSnack("Ocurrió un error desconocido... Lo solventaremos luego.");
+            this.router.navigate(['/descargar', id]);
+        });
     }
 }
