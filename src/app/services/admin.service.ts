@@ -35,4 +35,7 @@ export class AdminService {
     public get urlToAddBook(){
         return this.globals.API + 'libros/new?token=' + localStorage.getItem('b_token');
     }
+    public get urlToAddChapter(){
+        return this.globals.API + 'capitulos/new?token=' + localStorage.getItem('b_token');
+    }
 }

@@ -12,7 +12,6 @@
             <mat-progress-bar mode="determinate" [value]="valueUpload"></mat-progress-bar>
         </div>
         <div class="container-fluid" *ngIf="!uploading">
-            <span>Completa los siguientes campos para agregar un nuevo libro.</span>
             <form [attr.action]="url" class="submitForm" method='POST' enctype="multipart/form-data" onsubmit="return false">
                 <h2>Nombre del manga</h2>
                 <mat-form-field style="width: 45%;">
