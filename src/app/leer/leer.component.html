@@ -23,7 +23,7 @@
             *ngIf="!isChapterLoaded"
             mode="indeterminate">
         </mat-progress-spinner>
-        <button mat-button style="margin-right: 5px;">
+        <button mat-button style="margin-right: 5px;" (click)="descargar()">
             <span class="material-icons">cloud_download</span>
         </button>
         <button mat-raised-button style="margin-right: 5px;" (click)="previusChapter()" [disabled]="chp.previus">CAPÍTULO ANTERIOR</button>
@@ -70,7 +70,7 @@
                 <mat-toolbar-row class="mat-elevation-z2">
                         <button mat-button color="primary" style="margin-right: 5px;" (click)="previusChapter()" [disabled]="chp.previus">ANTERIOR</button>
                     <button mat-button color="primary" style="margin-right: 5px;" (click)="nextChapter()" [disabled]="chp.next">SIGUIENTE</button>
-                    <button mat-raised-button color="primary" style="margin-right: 5px;">DESCARGAR</button>
+                    <button mat-raised-button color="primary" style="margin-right: 5px;" (click)="descargar()">DESCARGAR</button>
                     <button mat-button [routerLink]="['/biblioteca', chapterInfo?.info.nombre]">{{chapterInfo?.info.nombre}}</button>
                     <span class="spacer"></span>
                     <button mat-mini-fab *ngIf="checked" (click)="before()" [disabled]="nb.before">

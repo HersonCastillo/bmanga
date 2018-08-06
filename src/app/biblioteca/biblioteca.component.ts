@@ -190,7 +190,7 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
             window.open(url);
         }, err => {
             this.makeSnack("Ocurrió un error desconocido... Lo solventaremos luego.");
-            this.router.navigate(['/descargar', id]);
+            this.router.navigate(['/descargar', id.toString(16)]);
         });
     }
 }

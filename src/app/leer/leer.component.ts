@@ -19,12 +19,12 @@ import {
 	styleUrls: ['./leer.component.css'],
 	animations: [trigger('popOverState', [
         state('show', style({
-          opacity: 1,
+		  opacity: 1,
           transform: 'scale(1, 1)'
         })),
         state('hide',   style({
           opacity: 0,
-          display: 'none',
+		  display: 'none',
           transform: 'scale(.98, .98)'
         })),
         transition('show => hide', animate('100ms ease-out')),
@@ -233,5 +233,15 @@ export class LeerComponent implements OnInit, OnDestroy {
 				this.router.navigate(['/leer', id]);
 			} else this.chp.previus = true;
 		}
+	}
+	descargar(): void{
+		this.makeSnack("Descargando...", 4500);
+        this.capitulos.descargar(this.id.toString(16)).subscribe(response => {
+            let url = "http:" + response._body;
+            window.open(url);
+        }, err => {
+            this.makeSnack("Ocurrió un error desconocido... Lo solventaremos luego.");
+            this.router.navigate(['/descargar', this.id.toString(16)]);
+        });
 	}
 }

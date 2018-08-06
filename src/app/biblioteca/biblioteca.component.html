@@ -41,6 +41,16 @@
                             </small>
                         </h1>
                         <br>
+                        <mat-chip-list>
+                            <mat-chip>
+                                <span *ngIf="mangaInformacion.estado == 'A'">Activo</span>
+                                <span *ngIf="mangaInformacion.estado == 'D'">Abandonado</span>
+                                <span *ngIf="mangaInformacion.estado == 'H'">Pausa indefinida</span>
+                                <span *ngIf="mangaInformacion.estado == 'P'">Pausado</span>
+                                <span *ngIf="mangaInformacion.estado == 'F'">Finalizado</span>
+                            </mat-chip>
+                        </mat-chip-list>
+                        <br>
                         <span style="margin-right: 5px;">
                             {{mangaInformacion.sinopsis}}
                         </span>
