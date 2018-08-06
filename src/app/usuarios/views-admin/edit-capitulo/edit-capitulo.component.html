@@ -1,0 +1,58 @@
+<div id="initial_startup" [@popOverState]="(isLoad) ? 'hide' : 'show'">
+    <svg class="spinner-container" width="50" height="50" viewBox="0 0 44 44">
+        <circle class="spinner-path" cx="22" cy="22" r="20" fill="none" stroke-width="4"></circle>
+    </svg>
+</div>
+<br>
+<div class="container" [@popOverState]="(isLoad) ? 'show' : 'hide'">
+    <mat-toolbar color="primary" class="mat-elevation-z2">
+        Editar capítulo
+    </mat-toolbar>
+    <mat-card>
+        <div class="container-fluid">
+            <h2>Título del capítulo</h2>
+            <mat-form-field style="width: 45%;">
+                <input 
+                matInput 
+                [(ngModel)]="model.titulo"
+                autocomplete="off"
+                [disabled]="infoMod"
+                placeholder="Título...">
+            </mat-form-field>
+            <h2>Joint</h2>
+            <mat-form-field style="width: 45%;">
+                <input 
+                matInput 
+                [(ngModel)]="model.joint"
+                autocomplete="off"
+                [disabled]="infoMod"
+                placeholder="Grupos...">
+            </mat-form-field>
+            <h2>Número del capítulo</h2>
+            <mat-form-field style="width: 45%;">
+                <input 
+                matInput 
+                placeholder="Capítulo #" 
+                type="number" 
+                [disabled]="infoMod"
+                min="0" 
+                [(ngModel)]="model.capitulo"
+                max="2999" 
+                step="any">
+            </mat-form-field>
+            <br><br>
+            <div class="flex">
+                <span class="flex-span"></span>
+                <button mat-raised-button color="primary" (click)="submitInfo()" [disabled]="infoMod">
+                    <b *ngIf="!infoMod">EDITAR INFORMACIÓN</b>
+                    <b *ngIf="infoMod">MODIFICANDO...</b>
+                </button>
+            </div>
+            <br>
+            <mat-divider></mat-divider>
+            <h2>Imágenes</h2>
+            <span>Sección en desarrollo experimental.</span>
+        </div>
+    </mat-card>
+    <br>
+</div>

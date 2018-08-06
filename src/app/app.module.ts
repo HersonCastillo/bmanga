@@ -27,6 +27,8 @@ import { GrupoComponent } from './usuarios/views-admin/grupo/grupo.component';
 import { PermisosComponent } from './usuarios/views-admin/permisos/permisos.component';
 import { ConfiguracionComponent } from './usuarios/views-admin/configuracion/configuracion.component';
 import { MangasAllComponent } from './usuarios/views-admin/mangas-all/mangas-all.component';
+import { EditMangaComponent } from './usuarios/views-admin/edit-manga/edit-manga.component';
+import { EditCapituloComponent } from './usuarios/views-admin/edit-capitulo/edit-capitulo.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -42,6 +44,10 @@ const appRoutes: Routes = [
                 { path: 'manga', component: MangaComponent },
                 { path: 'capitulo', component: CapituloComponent },
                 { path: '**', redirectTo: 'capitulo', pathMatch: 'full' }
+            ] },
+            { path: 'edit', children: [
+                { path: 'manga/:id', component: EditMangaComponent },
+                { path: 'capitulo/:id', component: EditCapituloComponent }
             ] },
             { path: 'estadisticas', component: EstadisticasComponent },
             { path: 'grupo', component: GrupoComponent },
@@ -78,7 +84,9 @@ const appRoutes: Routes = [
         GrupoComponent,
         PermisosComponent,
         ConfiguracionComponent,
-        MangasAllComponent
+        MangasAllComponent,
+        EditMangaComponent,
+        EditCapituloComponent
     ],
     imports: [
         BrowserModule,

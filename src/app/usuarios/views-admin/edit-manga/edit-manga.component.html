@@ -1,0 +1,85 @@
+<div id="initial_startup" [@popOverState]="(isLoad) ? 'hide' : 'show'">
+    <svg class="spinner-container" width="50" height="50" viewBox="0 0 44 44">
+        <circle class="spinner-path" cx="22" cy="22" r="20" fill="none" stroke-width="4"></circle>
+    </svg>
+</div>
+<br>
+<div class="container" [@popOverState]="(isLoad) ? 'show' : 'hide'">
+    <mat-toolbar color="primary" class="mat-elevation-z2">
+        Editar manga
+    </mat-toolbar>
+    <mat-card>
+        <div class="container-fluid">
+            <h2>Nombre del manga</h2>
+            <mat-form-field style="width: 45%;">
+                <input 
+                matInput 
+                autocomplete="off"
+                [(ngModel)]="model.nombre"
+                [disabled]="infoMod"
+                placeholder="Nombre...">
+            </mat-form-field>
+            <h2>Sinopsis</h2>
+            <mat-form-field style="width: 45%;">
+                <textarea 
+                matInput 
+                [(ngModel)]="model.sinopsis"
+                [disabled]="infoMod"
+                placeholder="Sinopsis..."></textarea>
+            </mat-form-field>
+            <h2>Géneros (no modificable)</h2>
+            <h3 style="color: gray;">{{model.generos}}</h3>
+            <h2>Estado</h2>
+            <mat-button-toggle-group [disabled]="infoMod" name="fontStyle" aria-label="Estado" [(ngModel)]="model.estado" name="estadoAllow" style="text-align: center;">
+                <mat-button-toggle value="A">Activo</mat-button-toggle>
+                <mat-button-toggle value="D">Abandonado</mat-button-toggle>
+                <mat-button-toggle value="P">Pausado temporal</mat-button-toggle>
+                <mat-button-toggle value="H">Pausado indefinido</mat-button-toggle>
+                <mat-button-toggle value="F">Finalizado</mat-button-toggle>
+            </mat-button-toggle-group>
+            <br><br>
+            <div class="flex">
+                <span class="flex-span"></span>
+                <button mat-raised-button color="primary" (click)="submitInfo()" [disabled]="infoMod">
+                    <b *ngIf="!infoMod">EDITAR</b>
+                    <b *ngIf="infoMod">MODIFICANDO...</b>
+                </button>
+            </div>
+            <br><br>
+            <mat-divider></mat-divider>
+            <div *ngIf="uploading">
+                <div style="text-align: center; width: 100%; position: relative;">
+                    <h1>{{valueUpload}}%</h1>
+                </div>
+                <mat-progress-bar mode="determinate" [value]="valueUpload"></mat-progress-bar>
+            </div>
+            <div *ngIf="!uploading">
+                <h2>Imagen</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img [src]="getImage(model.image)"
+                        onerror="this.src='assets/img/image-no-load.png'" 
+                        alt="Resource" 
+                        style="width: 100%;">
+                    </div>
+                    <div class="col-md-8">
+                        <form onsubmit="return false" class="imageEdit" enctype="multipart/form-data" method="POST" [attr.action]="url">
+                            <h3>Cambiar a una nueva imagen</h3>
+                            <input type="hidden" name="id" [ngModel]="model.id">
+                            <input type="hidden" name="old" [ngModel]="model.image">
+                            <input type="file" name="image" id="imageSend">
+                            <br><br>
+                            <div class="flex">
+                                <span class="flex-span"></span>
+                                <button mat-raised-button color="primary" (click)="submitImage()">
+                                    <b>CAMBIAR IMAGEN</b>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <br>
+</div>

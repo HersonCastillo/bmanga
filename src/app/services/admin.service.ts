@@ -38,4 +38,39 @@ export class AdminService {
     public get urlToAddChapter(){
         return this.globals.API + 'capitulos/new?token=' + localStorage.getItem('b_token');
     }
+    public editBook(id: number): Promise<any>{
+        return new Promise<void>((rs, rj) => {
+            this.http.post(this.globals.API + "libros/info?token=" + localStorage.getItem('b_token'), {
+                id: id
+            }).subscribe(r => {
+                try{
+                    rs(r.json())
+                }catch(ex){
+                    rj(null);
+                }
+            }, e => rj(e));
+        });
+    }
+    public editChapter(id: number): Promise<any>{
+        return new Promise<void>((rs, rj) => {
+            this.http.post(this.globals.API + 'capitulos/info?token=' + localStorage.getItem('b_token'), {
+                id: id
+            }).subscribe(r => rs(r.json()), e => rj(e));
+        });
+    }
+    public editInfoChapter(data: any): Promise<any>{
+        return new Promise<void>((rs, rj) => {
+            this.http.post(this.globals.API + 'capitulos/edit/info?token=' + localStorage.getItem('b_token'), data)
+            .subscribe(r => rs(r.json()), e => rj(e));
+        });
+    }
+    public editInfoBook(data: any): Promise<any>{
+        return new Promise<void>((rs, rj) => {
+            this.http.post(this.globals.API + 'libros/edit/info?token=' + localStorage.getItem('b_token'), data)
+            .subscribe(r => rs(r.json()), e => rj(e));
+        });
+    }
+    public get urlToEditImageBook(){
+        return this.globals.API + 'libros/edit/image?token=' + localStorage.getItem('b_token');
+    }
 }
