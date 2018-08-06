@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
 import * as $ from 'jquery';
+import { ConfirmComponent } from '../../../modals/modal';
 import {
     trigger,
     transition,
@@ -8,6 +9,7 @@ import {
     animate,
     state
 } from '@angular/animations';
+import { MatSnackBar, MatDialog } from '@angular/material';
 @Component({
     selector: 'app-publicaciones',
     templateUrl: './publicaciones.component.html',
@@ -28,11 +30,26 @@ import {
 })
 export class PublicacionesComponent implements OnInit {
     constructor(
-        private admin: AdminService
+        private admin: AdminService,
+        private snack: MatSnackBar,
+        private dialog: MatDialog
     ){}
     public publicaciones: Array<any> = [];
     public hasError: boolean = false;
     public isLoaded: boolean = false;
+    confirm(title: string, message: string, fs: Function, fe?: Function): void{
+        ConfirmComponent.confirm = () => {
+            fs();
+            this.dialog.closeAll();
+        }
+        ConfirmComponent.close = () => {
+            if(fe) fe();
+            this.dialog.closeAll();
+        }
+        ConfirmComponent.title = title;
+        ConfirmComponent.message = message;
+        this.dialog.open(ConfirmComponent);
+    }
     ngOnInit(){
         $("body, html").on('contextmenu', function(){
             return false;
@@ -46,5 +63,39 @@ export class PublicacionesComponent implements OnInit {
             this.hasError = true;
             this.isLoaded = true;
         });
+    }
+    deleteChapter(id: number): void{
+        this.confirm('¡Espera un momento!', '¿Estás seguro de que deseas eliminar el capítulo? No podrás recuperarlo más adelante', () => {
+            this.makeSnack("Eliminando capítulo...", 3000);
+            this.admin.deleteChapter(id).then(d => {
+                if(d.success){
+                    this.makeSnack(d.success || "El capítulo se eliminó con éxito.");
+                    this.isLoaded = false;
+                    this.admin.publicaciones().then(d => {
+                        this.isLoaded = true;
+                        this.hasError = false;
+                        this.publicaciones = d;
+                    }).catch(() => {
+                        this.hasError = true;
+                        this.isLoaded = true;
+                    });
+                }
+                else this.makeSnack(d.error || "Ocurrió un problema al eliminar el capítulo.");
+            }).catch(() => {
+                this.makeSnack("Ocurrió un error al eliminar el capítulo");
+            });
+        });
+    }
+    copy(data: any): void{
+        var aux = document.createElement("input");
+        aux.setAttribute("value", data);
+        document.body.appendChild(aux);
+        aux.select();
+        document.execCommand("copy");
+        document.body.removeChild(aux);
+        this.makeSnack("URL copiado al portapapeles");
+    }
+    makeSnack(txt: string, n?: number): void{
+        this.snack.open(txt, null, {duration:n||1500});
     }
 }

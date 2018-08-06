@@ -92,7 +92,7 @@ export class CapituloComponent implements OnInit {
                             },
                             error: () => {
                                 this.uploading = false;
-                                this.simple('¡Ups!', 'Ocurrió un problema al subir el capítulo.');
+                                this.simple('¡Ups!', 'Ocurrió un problema al subir el capítulo. Verifica los datos que has completado.');
                             },
                             resetForm: false
                         });

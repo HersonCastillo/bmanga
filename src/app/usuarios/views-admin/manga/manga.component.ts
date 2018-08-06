@@ -102,7 +102,7 @@ export class MangaComponent implements OnInit {
                             error: () => {
                                 this.uploading = false;
                                 this.valueUpload = 0;
-                                this.simple('¡Ups!', 'Ocurrió un error al intentar guardar el manga');
+                                this.simple('¡Ups!', 'Ocurrió un error al intentar guardar el manga. Verifica los datos que has completado.');
                             },
                             resetForm: false
                         });

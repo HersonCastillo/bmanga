@@ -1,3 +1,21 @@
-<p>
-  download works!
-</p>
+<div id="initial_startup" [@popOverState]="(isLoad) ? 'hide' : 'show'">
+    <svg class="spinner-container" width="50" height="50" viewBox="0 0 44 44">
+        <circle class="spinner-path" cx="22" cy="22" r="20" fill="none" stroke-width="4"></circle>
+    </svg>
+</div>
+<br>
+<div class="container-fluid" [@popOverState]="(isLoad) ? 'show' : 'hide'">
+    <div class="center">
+        <br><br>
+        <img [src]="getImage(model.img)" 
+        class="mat-elevation-z2"
+        onerror="this.src='assets/img/image-no-load.png'" 
+        alt="Cloud" style="width: 250px;">
+        <br><br>
+        <h1><kbd>{{model.nombre}} #{{model.capitulo}}</kbd></h1>
+        <a mat-raised-button [attr.href]="model.url" [disabled]="!urlLoad" color="primary">
+            <b *ngIf="urlLoad">DESCARGAR</b>
+            <b *ngIf="!urlLoad">PREPARANDO ARCHIVO...</b>
+        </a>
+    </div>
+</div>

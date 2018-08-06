@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { GlobalService } from './global.service';
+import { Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
@@ -44,5 +45,8 @@ export class CapitulosService {
                 dir: dir
             }).subscribe(r => rs(r.json()), err => rj(err));
         });
+    }
+    public descargar(id: any): Observable<any>{
+        return this.http.post(this.globals.API_COMPRESS + '?r=' + id, {});
     }
 }

@@ -73,4 +73,18 @@ export class AdminService {
     public get urlToEditImageBook(){
         return this.globals.API + 'libros/edit/image?token=' + localStorage.getItem('b_token');
     }
+    public deleteChapter(id: number): Promise<any>{
+        return new Promise<void>((rs, rj) => {
+            this.http.post(this.globals.API + 'capitulos/delete?token=' + localStorage.getItem('b_token'), {
+                id: id
+            }).subscribe(r => rs(r.json()), e => rj(e));
+        });
+    }
+    public deleteManga(id: number): Promise<any>{
+        return new Promise<void>((rs, rj) => {
+            this.http.post(this.globals.API + 'libros/delete?token=' + localStorage.getItem('b_token'), {
+                id: id
+            }).subscribe(r => rs(r.json()), e => rj(e));
+        });
+    }
 }
