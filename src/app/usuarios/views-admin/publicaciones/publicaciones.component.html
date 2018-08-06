@@ -33,7 +33,7 @@
                     <span class="material-icons m-right">play_circle_filled</span>
                     Leer
                 </button>
-                <button mat-raised-button class="center m-right">
+                <button mat-raised-button class="center m-right" [routerLink]="['/descargar', publicacion.id.toString(16)]">
                     <span class="material-icons m-right">cloud_download</span>
                     Descargar
                 </button>

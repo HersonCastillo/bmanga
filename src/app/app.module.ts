@@ -4,6 +4,7 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DisqusModule } from 'ngx-disqus';
+import { LoginGuard, AuthGuardAdmin, AuthGuardUser } from './services/auth.guard';
 
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
@@ -35,7 +36,7 @@ const appRoutes: Routes = [
     { path: 'error', component: ErrorComponent },
     { path: 'biblioteca/:nombre', component: BibliotecaComponent },
     { path: 'leer/:id', component: LeerComponent },
-    { path: 'login', component: LoginComponent },
+    { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
     { path: '@dashboard', children: [
         { path: 'admin', component: CpanelAdminComponent, children: [
             { path: 'publicaciones', component: PublicacionesComponent },
@@ -54,8 +55,8 @@ const appRoutes: Routes = [
             { path: 'permisos', component: PermisosComponent },
             { path: 'configuracion', component: ConfiguracionComponent },
             { path: '**', redirectTo: 'publicaciones', pathMatch: 'full' }
-        ] },
-        { path: 'me', component: CpanelUserComponent }
+        ], canActivate: [AuthGuardAdmin] },
+        { path: 'me', component: CpanelUserComponent, children: [], canActivate: [AuthGuardUser] }
     ] },
     { path: 'buscar', component: BuscarComponent },
     { path: 'descargar/:id', component: DownloadComponent },
