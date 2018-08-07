@@ -103,6 +103,7 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
             this.isAllLoaded = false;
             this.counter = 0;
             this.pageId = "/leer/" + this.id;
+            this.page = 0;
             $("title").text(this.id + " en BMANGA");
             this.libros.getLibro(this.id).then(r => {
                 if(r.error){

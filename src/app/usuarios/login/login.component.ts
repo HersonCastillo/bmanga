@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
         user: "",
         pass: ""
     }
-    private isLoading: boolean = false;
+    public isLoading: boolean = false;
     login(): void{
         if(this.credentials.user && this.credentials.pass){
             this.isLoading = true;
