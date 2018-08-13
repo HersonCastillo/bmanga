@@ -87,4 +87,20 @@ export class AdminService {
             }).subscribe(r => rs(r.json()), e => rj(e));
         });
     }
+    public uploadImage(file: File, carpeta): Promise<any>{
+        return new Promise<any>((rs, rj) => {
+            if(localStorage.getItem('b_token')){
+                let formData = new FormData();
+                formData.append('image', file);
+                this.http.post(this.globals.API + 'capitulos/image?into=' + carpeta, formData)
+                .subscribe(r => rs(r.json()), err => rj(err));
+            } else rj(null);
+        });
+    }
+    public newChapter(data: any): Promise<any>{
+        return new Promise<void>((rs, rj) => {
+            this.http.post(this.globals.API + 'capitulos/new?token=' + localStorage.getItem('b_token'), data)
+            .subscribe(r => rs(r.json()), e => rj(e));
+        });
+    }
 }

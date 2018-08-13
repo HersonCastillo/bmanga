@@ -3,7 +3,6 @@ import { AdminService } from '../../../services/admin.service';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import * as $ from 'jquery';
-import 'jquery-form';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ConfirmComponent, SimpleComponent } from '../../../modals/modal';
 
@@ -38,7 +37,10 @@ export class CapituloComponent implements OnInit {
         joint: "",
         titulo: ""
     }
+    public images: Array<File> = [];
+    public lastImage: number = 0;
     public uploading: boolean = false;
+    public uploadingData: boolean = false;
     public valueUpload: number = 0;
     confirm(title: string, message: string, fs: Function, fe?: Function): void{
         ConfirmComponent.confirm = () => {
@@ -59,11 +61,21 @@ export class CapituloComponent implements OnInit {
         SimpleComponent.message = message;
         this.dialog.open(SimpleComponent);
     }
+    setImages($e: any): void{
+        this.images = <Array<File>> $e.target.files;
+    }
     ngOnInit(){
         this.admin.mangasAll().then(r => {
             this.mangas = r;
             this.isLoad = true;
         });
+    }
+    getPercent(d: number): void{
+        let val = d * this.lastImage;
+        this.valueUpload = val * 100;
+    }
+    getVal(): number{
+        return this.valueUpload;
     }
     submit(): void{
         if(
@@ -75,26 +87,29 @@ export class CapituloComponent implements OnInit {
             if(this.data.manga >= 1){
                 if($("#imagesInput").val()){
                     this.confirm('Subir capítulo', '¿Estás seguro de que quieres subir el capítulo ahora?', () => {
-                        let env = (<any>$(".submitForm"));
-                        env.ajaxSubmit({
-                            beforeSubmit: (): any => {
+                        let nArray = [];
+                        for(let i = 0; i < this.images.length; i++){
+                            if(this.images[i]){
+                                let element = this.images[i];
+                                nArray.push(element);
+                            } else break;
+                        }
+                        this.uploadingData = true;
+                        this.admin.newChapter(this.data).then(res => {
+                            this.uploadingData = false;
+                            if(res.success){
                                 this.uploading = true;
-                            },
-                            uploadProgress: (event, position, total, percent) => {
-                                this.valueUpload = percent;
-                            },
-                            success: (data) => {
-                                this.uploading = false;
-                                this.valueUpload = 0;
-                                this.data.capitulo++;
-                                this.data.titulo = "";
-                                this.simple('¡Perfecto!', 'El capítulo fue subido con éxito.');
-                            },
-                            error: () => {
-                                this.uploading = false;
-                                this.simple('¡Ups!', 'Ocurrió un problema al subir el capítulo. Verifica los datos que has completado.');
-                            },
-                            resetForm: false
+                                let carpeta = res.carpeta;
+                                this.upload(nArray, carpeta);
+                            } else {
+                                if(res.error) this.simple("Error", res.error || "No se puede subir el capítulo.");
+                                this.makeSnack("Comprueba los datos ingresados.");
+                            }
+                        }).catch(err => {
+                            this.simple('¡Ups!', 'Ocurrió un error como respuesta del servidor, envía un reporte al técnico encargado.');
+                            this.uploading = false;
+                            this.uploadingData = false;
+                            this.images = [];
                         });
                     });
                 } else this.makeSnack("Faltan las imágenes");
@@ -103,5 +118,40 @@ export class CapituloComponent implements OnInit {
     }
     makeSnack(txt: string, n?: number): void{
         this.snack.open(txt, null, {duration:n||1500});
+    }
+    upload(data: any, carpeta: string): void{
+        var errorCount: number = 0;
+        var warningCount: number = 0;
+        var normalCount: number = 0;
+        var count: number = 0;
+        this.lastImage = this.images.length;
+        var image: number = 0;
+        let upSystem = () => {
+            this.admin.uploadImage(data[image], carpeta).then(ires => {
+                count++;
+                this.getPercent(count);
+                if(ires.success && ires.status == 200) normalCount++;
+                else if(ires.success && ires.status == 20) warningCount++;
+                else errorCount++;
+                if(count == this.lastImage){
+                    this.uploading = false;
+                    if(this.images.length == normalCount){
+                        this.simple("¡Perfecto!", "Imágenes subidas con éxito.");
+                        this.data.capitulo++;
+                        this.data.titulo = "";
+                        this.data.joint = "";
+                    }else {
+                        if(warningCount > 0) this.simple("¡Cuidado!", "Puede que alguna imagen no se haya guardado correctamente.");
+                        if(errorCount > 0) this.simple("¡Error!", "Varias, pocas o todas las imágenes no se pudieron subir.");
+                    }
+                    return;
+                }
+                if(++image != undefined) upSystem();
+            }).catch(() => {
+                errorCount++;
+            });
+        }
+        if(image != this.images.length)
+            upSystem();
     }
 }

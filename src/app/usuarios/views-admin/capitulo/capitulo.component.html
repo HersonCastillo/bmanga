@@ -7,31 +7,32 @@
     <mat-card>
         <div class="container-fluid" *ngIf="uploading">
             <div style="text-align: center; width: 100%; position: relative;">
-                <h1>{{valueUpload}}%</h1>
+                <h1>{{getVal()}}%</h1>
             </div>
             <mat-progress-bar mode="determinate" [value]="valueUpload"></mat-progress-bar>
         </div>
         <div class="container-fluid" *ngIf="!uploading">
             <form [attr.action]="url" class="submitForm" method='POST' enctype="multipart/form-data" onsubmit="return false">
                 <h2>Nombre del manga</h2>
-                <mat-form-field style="width: 45%;">
+                <mat-form-field style="width: 50%;">
                     <mat-select placeholder="Manga" [formControl]="form.manga"
                     [errorStateMatcher]="matcher" [(ngModel)]="data.manga">
-                        <mat-option [value]="-1" disabled>
+                        <mat-option [value]="-1" disabled *ngIf="!isLoad">
+                            Cargando lista...
+                        </mat-option>
+                        <mat-option [value]="-1" disabled *ngIf="isLoad">
                             --Escoger
                         </mat-option>
                         <mat-option *ngFor="let book of mangas" [value]="book.id">
                             {{book.nombre}}
                         </mat-option>
                     </mat-select>
-                    <input type="hidden" value="{{data.manga}}" name="manga">
                     <mat-hint>Para agregar un capítulo debes escoger un manga.</mat-hint>
                     <mat-error *ngIf="form.manga.hasError('required')">
                         El manga es <strong>requerido</strong>
                     </mat-error>
                 </mat-form-field>
-                <h2>Número de capítulo</h2>
-                <mat-form-field style="width: 45%;">
+                <mat-form-field style="width: 50%;">
                     <input 
                     type="number" 
                     matInput 
@@ -62,6 +63,7 @@
                     matInput 
                     placeholder="Joint" 
                     [(ngModel)]="data.joint"
+                    [disabled]="uploadingData"
                     name="joint"
                     autocomplete="off">
                     <mat-hint>Basta con colocar el nombre y si son mas, separarlos por coma. (Opcional)</mat-hint>
@@ -72,17 +74,25 @@
                     matInput 
                     placeholder="Título" 
                     [(ngModel)]="data.titulo"
+                    [disabled]="uploadingData"
                     name="titulo"
                     autocomplete="off">
                     <mat-hint>(Opcional)</mat-hint>
                 </mat-form-field>
                 <h2>Imágenes del capítulo</h2>
-                <input type="file" name="images[]" id="imagesInput" accept="image/png, image/jpg, image/jpeg" multiple>
+                <input type="file" 
+                name="images[]" 
+                id="imagesInput" 
+                accept="image/png, image/jpg, image/jpeg" 
+                [disabled]="uploadingData"
+                (change)="setImages($event)"
+                multiple>
                 <br><br>
                 <div class="flex">
                     <span class="flex-span"></span>
-                    <button mat-raised-button color="primary" (click)="submit()">
-                        <b>SUBIR CAPÍTULO</b>
+                    <button mat-raised-button color="primary" (click)="submit()" [disabled]="uploadingData">
+                        <b *ngIf="!uploadingData">SUBIR CAPÍTULO</b>
+                        <b *ngIf="uploadingData">VERIFICANDO DATOS EN EL SERVIDOR...</b>
                     </button>
                 </div>
             </form>

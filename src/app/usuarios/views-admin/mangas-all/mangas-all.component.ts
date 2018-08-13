@@ -54,14 +54,19 @@ export class MangasAllComponent implements OnInit {
         this.dialog.open(ConfirmComponent);
     }
     getData(): Array<any>{
-        let d = this.mangas;
-        let nArr: Array<any> = [];
-        if(this.pageEvent)
-            for(let i = (this.pageEvent.pageIndex * this.pageEvent.pageSize), j = 0; i < (this.pageEvent.pageIndex * this.pageEvent.pageSize) + this.pageEvent.pageSize; i++, j++)
+        try{
+            let d = this.mangas;
+            let nArr: Array<any> = [];
+            if(this.pageEvent)
+                for(let i = (this.pageEvent.pageIndex * this.pageEvent.pageSize), j = 0; i < (this.pageEvent.pageIndex * this.pageEvent.pageSize) + this.pageEvent.pageSize; i++, j++)
+                    if(d[i]) nArr[j] = d[i];
+                    else break;
+            else for(let i = 0, j = 0; i <  10; i++, j++)
                 if(d[i]) nArr[j] = d[i];
-                else break;
-        else for(let i = 0, j = 0; i <  10; i++, j++) nArr[j] = d[i];
-        return nArr;
+            return nArr;
+        }catch(ex){
+            return [];
+        }
     }
     ngOnInit(){
         $("body, html").on('contextmenu', function(){

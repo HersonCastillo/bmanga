@@ -10,7 +10,7 @@
         <mat-expansion-panel *ngFor="let publicacion of getData()">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{publicacion.nombre + ' '}}<b> #{{publicacion.capitulo}}</b>
+                    {{publicacion.nombre}}<b>{{'#' + publicacion.capitulo}}</b>
                 </mat-panel-title>
                 <mat-panel-description>
                     {{(publicacion.titulo) ? publicacion.titulo : ""}}
