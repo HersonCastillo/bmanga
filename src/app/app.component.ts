@@ -17,6 +17,11 @@ export class AppComponent implements OnInit {
         setInterval(() => {
             window.location.reload();
         }, 6e5);
+        setInterval(() => {
+            $.get('/engine/public/delete.php').always(() => {
+                console.info("Cache was deleted.");
+            });
+        }, 15e5);
     }
     goTo(url: string): void{
         this.router.navigate([url]);
