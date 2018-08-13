@@ -70,7 +70,7 @@ export class DownloadComponent implements OnInit {
                 }
                 this.model.nombre = d.nombre;
                 this.model.capitulo = +d.capitulo;
-                this.model.id = d.id;
+                this.model.id = parm['id'];
                 this.model.img = d.imagen;
                 this.urlLoad = false;
                 $("title").text("Descargar " + d.nombre + " " + d.capitulo + " | BMANGA");
