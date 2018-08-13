@@ -59,7 +59,7 @@ export class CapitulosService {
     }
     public infoDownload(id: any): Promise<any>{
         return new Promise<void>((rs, rj) => {
-            this.http.post(this.globals.API + 'download/info', {
+            this.http.post(this.globals.API + 'donwload_info', {
                 id: id
             }).subscribe(r => rs(r.json()), e => rj(e));
         });
