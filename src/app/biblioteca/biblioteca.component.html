@@ -66,7 +66,7 @@
                 </h3>
                 <div *ngIf="selection.selectedOptions.selected.length" class="row-flex">
                     <span class="flex"></span>
-                    <button mat-button color="warn" (click)="multipleDownload()">
+                    <button mat-button color="warn" (click)="multipleDownload()" [disabled]="isDonwloadMultiple">
                         <b>DESCARGAR CAPITULOS</b>
                     </button>
                 </div>

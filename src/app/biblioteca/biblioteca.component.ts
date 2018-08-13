@@ -77,6 +77,7 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
         Validators.email
     ]);
     envEmail(): void{}
+    public isDonwloadMultiple: boolean = false;
     multipleDownload(): void{
         let nStr = "";
         let val = this.selectToDownload.selectedOptions.selected.length;
@@ -86,9 +87,11 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
                 if(index != val - 1) nStr += ",";
             });
             let nombre = this.mangaInformacion.nombre;
+            this.makeSnack("Descargando capítulos, esto puede demorar un poco...", 5000);
+            this.isDonwloadMultiple = true;
             this.capitulos.multipleDownloads(nStr, nombre).subscribe(r => {
                 window.open(r._body);
-                this.makeSnack("Descargando capítulos, esto puede demorar un poco...", 5000);
+                this.isDonwloadMultiple = false;
             });
         } else this.makeSnack("Solo se pueden 5 descargas como máximo.");
     }
