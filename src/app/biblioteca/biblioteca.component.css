@@ -97,3 +97,10 @@
         stroke-dashoffset: -124;  
     }
 }
+.row-flex{
+    display: flex;
+    flex-direction: row;
+}
+.flex{
+    flex: 1 1 auto;
+}

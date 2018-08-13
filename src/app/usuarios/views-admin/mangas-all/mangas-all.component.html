@@ -7,7 +7,7 @@
 <div class="container" [@popOverState]="(isLoaded) ? 'show' : 'hide'">
     <mat-toolbar class="mat-elevation-z2" color="primary"><b>{{mangas.length}} mangas en total.</b></mat-toolbar>
     <mat-list class="mat-card mat-elevation-z2">
-        <mat-list-item *ngFor="let book of mangas">
+        <mat-list-item *ngFor="let book of getData()">
             <span class="material-icons" mat-list-icon>book</span>
             <h4 mat-line>{{reduce(book.nombre, 45)}}</h4>
             <p mat-line> {{book.created_at | date}}</p>
@@ -28,4 +28,10 @@
             <mat-divider></mat-divider>
         </mat-list-item>
     </mat-list>
+    <mat-paginator [length]="mangas.length"
+        class="mat-elevation-z1"
+        [pageSize]="10"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageEvent = $event">
+    </mat-paginator>
 </div>

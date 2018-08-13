@@ -7,10 +7,10 @@
 <div class="container" [@popOverState]="(isLoaded) ? 'show' : 'hide'">
     <mat-toolbar class="mat-elevation-z2" color="primary"><b>{{publicaciones.length}} capítulo(s) han sido subidos por ti.</b></mat-toolbar>
     <mat-accordion *ngIf="isLoaded">
-        <mat-expansion-panel *ngFor="let publicacion of publicaciones">
+        <mat-expansion-panel *ngFor="let publicacion of getData()">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{publicacion.nombre}}<b> #{{publicacion.capitulo}}</b>
+                    {{publicacion.nombre + ' '}}<b> #{{publicacion.capitulo}}</b>
                 </mat-panel-title>
                 <mat-panel-description>
                     {{(publicacion.titulo) ? publicacion.titulo : ""}}
@@ -61,5 +61,11 @@
             </div>
         </mat-expansion-panel>
     </mat-accordion>
+    <mat-paginator [length]="publicaciones.length"
+        class="mat-elevation-z1"
+        [pageSize]="10"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageEvent = $event">
+    </mat-paginator>
 </div>
 <br>

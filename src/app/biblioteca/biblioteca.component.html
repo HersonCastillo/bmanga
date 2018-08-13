@@ -64,24 +64,31 @@
                     <span class="material-icons icon-top">bookmark</span>
                     <label class="icon-mar">LISTA DE CAPÍTULOS</label>
                 </h3>
-                <mat-list>
+                <div *ngIf="selection.selectedOptions.selected.length" class="row-flex">
+                    <span class="flex"></span>
+                    <button mat-button color="warn" (click)="multipleDownload()">
+                        <b>DESCARGAR CAPITULOS</b>
+                    </button>
+                </div>
+                <mat-selection-list #selection>
                     <mat-list-item *ngIf="chapters.length == 0">
                         No hay capítulos disponibles para este manga.
                     </mat-list-item>
-                    <mat-list-item *ngFor="let item of getData(chapters); let i = index;">
-                    <div *ngIf="item">
-                        {{(item?.titulo !== null) ? reduce(item?.titulo, 25) : 'Capítulo sin título '}} <b style="margin-left: 5px;">{{item?.capitulo}}</b>
-                        <button mat-mini-fab color="primary" style="position: absolute;
-                        right: 50px;" (click)="lectura(item?.id)">
-                        <span class="material-icons">play_arrow</span>
-                        </button>
-                        <button mat-mini-fab color="warn" style="position: absolute;
-                        right: 0px;" (click)="descargar(item?.id)">
-                            <span class="material-icons">cloud_download</span>
-                        </button>
+                    <mat-list-option *ngFor="let item of getData(chapters); let i = index;" [value]="item?.id">
+                        <div *ngIf="item">
+                            {{(tituloCanBe(item?.titulo)) ? reduce(item?.titulo, 25) : 'Capítulo sin título '}} <b style="margin-left: 5px;">{{item?.capitulo}}</b>
+                            <i style="margin-left: 5px;"><small>{{item?.created_at | date}}</small></i>
+                            <button mat-mini-fab color="primary" style="position: absolute;
+                            right: 100px; top: 5px;" (click)="lectura(item?.id)">
+                                <span class="material-icons">play_arrow</span>
+                            </button>
+                            <button mat-mini-fab color="warn" style="position: absolute;
+                            right: 50px; top: 5px;" (click)="descargar(item?.id)" [disabled]="selectToDownload.selectedOptions.selected.length >= 1">
+                                <span class="material-icons">cloud_download</span>
+                            </button>
                         </div>
-                    </mat-list-item>
-                </mat-list>
+                    </mat-list-option>
+                </mat-selection-list>
                 <br><br>
                 <div style="position: relative; text-align: center;" *ngIf="chapters.length >= 1">
                     <button style="margin-bottom: 5px;" mat-mini-fab (click)="changePage(i)" class="icon-mar" *ngFor="let i of paginator" [disabled]="page == i">
@@ -137,6 +144,9 @@
         <h2>Obras similares</h2>
         <mat-divider></mat-divider>
         <br>
+        <mat-card style="padding: 10px;" *ngIf="mangasSimilares.length == 0">
+            Sin sugerencias.
+        </mat-card>
         <mat-card 
         *ngFor="let similar of mangasSimilares" 
         [routerLink]="['/biblioteca', similar.nombre]"
@@ -153,6 +163,9 @@
         <h2>Algo al azar</h2>
         <mat-divider></mat-divider>
         <br>
+        <mat-card style="padding: 10px;" *ngIf="otrosMangas.length == 0">
+            Sin sugerencias.
+        </mat-card>
         <mat-card 
         *ngFor="let otros of otrosMangas"
         [routerLink]="['/biblioteca', otros.nombre]"

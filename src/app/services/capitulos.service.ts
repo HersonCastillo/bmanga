@@ -47,6 +47,14 @@ export class CapitulosService {
         });
     }
     public descargar(id: any): Observable<any>{
-        return this.http.post(this.globals.API_COMPRESS + '?r=' + id, {});
+        return this.http.post(this.globals.API + 'download', {
+            id: id
+        });
+    }
+    public multipleDownloads(ids: string, name: string): Observable<any>{
+        return this.http.post(this.globals.API + 'downloads', {
+            ids: ids,
+            nombre: name
+        });
     }
 }

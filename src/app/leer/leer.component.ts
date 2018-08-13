@@ -62,20 +62,24 @@ export class LeerComponent implements OnInit, OnDestroy {
 		previus: true
 	}
 	next(): void{
-		if(this.numberPage < (this.nObjetos.length - 1)){
-			this.numberPage++;
-			this.nb.before = false;
-		}else this.makeSnack("Capítulo terminado.");
-		if(this.numberPage + 1 == this.nObjetos.length)
-			this.nb.next = true;
+		if(this.checked){
+			if(this.numberPage < (this.nObjetos.length - 1)){
+				this.numberPage++;
+				this.nb.before = false;
+			}else this.makeSnack("Capítulo terminado.");
+			if(this.numberPage + 1 == this.nObjetos.length)
+				this.nb.next = true;
+		}
 	}
 	before(): void{
-		if(this.numberPage >= 1){
-			this.numberPage--;
-			this.nb.next = false;
+		if(this.checked){
+			if(this.numberPage >= 1){
+				this.numberPage--;
+				this.nb.next = false;
+			}
+			if(this.numberPage == 0)
+				this.nb.before = true;
 		}
-		if(this.numberPage == 0)
-			this.nb.before = true;
 	}
 	check(): void{
 		if(localStorage.getItem('pagemode')){
@@ -237,8 +241,7 @@ export class LeerComponent implements OnInit, OnDestroy {
 	descargar(): void{
 		this.makeSnack("Descargando...", 4500);
         this.capitulos.descargar(this.id.toString(16)).subscribe(response => {
-            let url = "http:" + response._body;
-            window.open(url);
+            window.open(response._body);
         }, err => {
             this.makeSnack("Ocurrió un error desconocido... Lo solventaremos luego.");
             this.router.navigate(['/descargar', this.id.toString(16)]);

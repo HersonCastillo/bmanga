@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
+import { PageEvent } from '@angular/material';
 import {
     trigger,
     transition,
@@ -37,6 +38,8 @@ export class MangasAllComponent implements OnInit {
     public mangas: Array<any> = [];
     public hasError: boolean = false;
     public isLoaded: boolean = false;
+    public pageEvent: PageEvent;
+    public pageSizeOptions: number[] = [10, 20, 40, 80, 100];
     confirm(title: string, message: string, fs: Function, fe?: Function): void{
         ConfirmComponent.confirm = () => {
             fs();
@@ -49,6 +52,16 @@ export class MangasAllComponent implements OnInit {
         ConfirmComponent.title = title;
         ConfirmComponent.message = message;
         this.dialog.open(ConfirmComponent);
+    }
+    getData(): Array<any>{
+        let d = this.mangas;
+        let nArr: Array<any> = [];
+        if(this.pageEvent)
+            for(let i = (this.pageEvent.pageIndex * this.pageEvent.pageSize), j = 0; i < (this.pageEvent.pageIndex * this.pageEvent.pageSize) + this.pageEvent.pageSize; i++, j++)
+                if(d[i]) nArr[j] = d[i];
+                else break;
+        else for(let i = 0, j = 0; i <  10; i++, j++) nArr[j] = d[i];
+        return nArr;
     }
     ngOnInit(){
         $("body, html").on('contextmenu', function(){

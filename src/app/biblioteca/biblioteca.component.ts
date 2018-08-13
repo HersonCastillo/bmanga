@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { 
     FormControl, 
     FormGroupDirective, 
     NgForm, 
-    Validators } 
+    Validators} 
 from '@angular/forms';
 import {
     trigger,
@@ -53,6 +53,7 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
         private snack: MatSnackBar,
         private router: Router
     ) { }
+    @ViewChild('selection') public selectToDownload: any;
     public matcher = new MyErrorStateMatcher();
     public mangaInformacion: any = {};
     public mangasSimilares: Array<any> = [];
@@ -75,18 +76,21 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
         Validators.required, 
         Validators.email
     ]);
-    envEmail(): void{
-        /*
-        let email = this.email.toString().trim().toLowerCase();
-        if(!this.emailControl.hasError('required') && !this.emailControl.hasError('email')){
-            this.suscripcion.sendSuscripcion(email, this.mangaInformacion.id).then(r => {
-                if(r.success) this.makeSnack(r.success);
-                else if(r.error) this.makeSnack(r.error);
-                else this.makeSnack('Se encontró un error al ejecutar el servicio. Intentalo más tarde.');
-            }).catch(() => {
-                this.makeSnack('No se pudo agregar la suscripción para este manga.');
+    envEmail(): void{}
+    multipleDownload(): void{
+        let nStr = "";
+        let val = this.selectToDownload.selectedOptions.selected.length;
+        if(val <= 5 && val >= 1){
+            this.selectToDownload.selectedOptions.selected.forEach((item, index) => {
+                nStr += item.value;
+                if(index != val - 1) nStr += ",";
             });
-        } else this.makeSnack("Tienes que completar el campo.");*/
+            let nombre = this.mangaInformacion.nombre;
+            this.capitulos.multipleDownloads(nStr, nombre).subscribe(r => {
+                window.open(r._body);
+                this.makeSnack("Descargando capítulos, esto puede demorar un poco...", 5000);
+            });
+        } else this.makeSnack("Solo se pueden 5 descargas como máximo.");
     }
     ngOnDestroy(){
         this.observable.unsubscribe();
@@ -147,6 +151,13 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
             });
         });
     }
+    tituloCanBe(str: string): boolean{
+        if(str != undefined || str != null){
+            if(str == null || str.length == 0) return false;
+            return true;
+        } 
+        return false;
+    }
     getImage(imageUrl: string): string{
         if(imageUrl) return "https://i1.wp.com/bmanga.net/" + imageUrl;
         return "assets/img/image-no-load.png";
@@ -171,24 +182,22 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
     }
     getData(data: Array<any>): Array<any>{
         let inicio = this.page * 10;
-        let final = ((this.page + 1) * 10) - 1;
+        let final = (this.page + 1) * 10;
         try{
-            let nArray: Array<any> = [];
-            for(let i = inicio; i <= final; i++) nArray.push(data[i]);
-            return nArray;
+            return this.chapters.slice(inicio, final);
         }catch(ex){
             return [];
         }
     }
     reduce(str: string, num: number): string{
+        if(!str) return "";
         if(str.length <= num) return str;
         else return str.slice(0, num - 1) + "...";
     }
     descargar(id: any): void{
         this.makeSnack("Descargando...", 4500);
         this.capitulos.descargar(id.toString(16)).subscribe(response => {
-            let url = "http:" + response._body;
-            window.open(url);
+            window.open(response._body);
         }, err => {
             this.makeSnack("Ocurrió un error desconocido... Lo solventaremos luego.");
             this.router.navigate(['/descargar', id.toString(16)]);

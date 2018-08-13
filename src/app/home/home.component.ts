@@ -136,8 +136,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     download(id: any){
         this.makeSnack("Descargando...", 4500);
         this.capitulos.descargar(id.toString(16)).subscribe(response => {
-            let url = "http:" + response._body;
-            window.open(url);
+            window.open(response._body);
         }, err => {
             this.makeSnack("Ocurrió un error desconocido... Lo solventaremos luego.");
             this.router.navigate(['/descargar', id.toString(16)]);
