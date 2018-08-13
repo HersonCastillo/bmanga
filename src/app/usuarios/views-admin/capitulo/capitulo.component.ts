@@ -71,7 +71,7 @@ export class CapituloComponent implements OnInit {
         });
     }
     getPercent(d: number): void{
-        let val = d * this.lastImage;
+        let val = d / this.lastImage;
         this.valueUpload = val * 100;
     }
     getVal(): number{
