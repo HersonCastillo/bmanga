@@ -57,4 +57,11 @@ export class CapitulosService {
             nombre: name
         });
     }
+    public infoDownload(id: any): Promise<any>{
+        return new Promise<void>((rs, rj) => {
+            this.http.post(this.globals.API + 'download/info', {
+                id: id
+            }).subscribe(r => rs(r.json()), e => rj(e));
+        });
+    }
 }

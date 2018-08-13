@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { CapitulosService } from '../services/capitulos.service';
-import { AdminService } from '../services/admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -32,7 +31,6 @@ import { SimpleComponent } from '../modals/modal';
 })
 export class DownloadComponent implements OnInit {
     constructor(
-        private admin: AdminService,
         private caps: CapitulosService,
         private route: ActivatedRoute,
         private router: Router,
@@ -61,7 +59,7 @@ export class DownloadComponent implements OnInit {
         $("title").text("Descargar capítulo | BMANGA");
         this.route.params.subscribe(parm => {
             let id = parseInt("0x" + parm['id']);
-            this.admin.editChapter(id).then(d => {
+            this.caps.infoDownload(id).then(d => {
                 this.isLoad = true;
                 if(d.error){
                     this.simple("Un problema...", "Ocurrió un error al generar la descarga");
