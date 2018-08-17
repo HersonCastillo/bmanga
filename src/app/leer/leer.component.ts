@@ -117,8 +117,33 @@ export class LeerComponent implements OnInit, OnDestroy {
 		$("body, html").on('contextmenu', function(){
 			return false;
 		});
+
+		var isMobile = {
+			Android: function() {
+				return navigator.userAgent.match(/Android/i);
+			},
+			BlackBerry: function() {
+				return navigator.userAgent.match(/BlackBerry/i);
+			},
+			iOS: function() {
+				return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+			},
+			Opera: function() {
+				return navigator.userAgent.match(/Opera Mini/i);
+			},
+			Windows: function() {
+				return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
+			},
+			any: function() {
+				return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+			}
+		};
+
 		this.check();
 		this.subs = this.route.params.subscribe(subs => {
+			if( isMobile.any() ){
+				window.location.href = "https://bmanga.net/mobile/leer/" + subs['id'];
+			}
 			this.isChapterLoaded = false;
 			this.isAllLoaded = false;
 			this.count = 0;
@@ -126,6 +151,7 @@ export class LeerComponent implements OnInit, OnDestroy {
 			this.pageId = "/leer/" + this.id;
 			this.bbDis = true;
 			this.nObjetos = [];
+			this.numberPage = 0;
 			this.capitulos.infoLectura(this.id).then(r => {
 				try{
 					if(r.error){

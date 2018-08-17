@@ -63,7 +63,7 @@ export class EditCapituloComponent implements OnInit {
                 this.model.titulo = (data.titulo) ? data.titulo : "";
                 this.model.joint = (data.joint) ? data.joint : "";
                 this.model.capitulo = +data.capitulo;
-                this.model.id = data.id;
+                this.model.id = id;
             }).catch(() => {
                 this.isLoad = true;
                 this.isError = true;

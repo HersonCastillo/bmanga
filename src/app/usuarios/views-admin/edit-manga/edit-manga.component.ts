@@ -67,7 +67,7 @@ export class EditMangaComponent implements OnInit {
                 this.model.estado = data.estado;
                 this.model.image = data.imagen;
                 this.model.generos = data.generos;
-                this.model.id = data.id;
+                this.model.id = id;
             }).catch(() => {
                 this.isLoad = true;
                 this.isError = true;
