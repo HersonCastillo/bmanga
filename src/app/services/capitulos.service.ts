@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { GlobalService } from './global.service';
 import { Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
 export class CapitulosService {
-    constructor(private globals: GlobalService, private http: Http) { }
+    constructor(
+        private globals: GlobalService, 
+        private http: Http,
+        private httpClient: HttpClient
+    ) { }
     public ultimosCapitulos(): Promise<any>{
         return new Promise<void>((resolve, reject) => {
             this.http.get(this.globals.API + "capitulos/ultimos")
@@ -37,6 +42,12 @@ export class CapitulosService {
                 dir: dir,
                 n: n
             }).subscribe(r => rs(r.json()), err => rj(err));
+        });
+    }
+    public getImagesSubscribe(dir: string, n: number): Observable<any>{
+        return this.httpClient.post(this.globals.API + "capitulos/lectura/images", {
+            dir: dir,
+            n: n
         });
     }
     public getImagesCount(dir: string): Promise<any>{

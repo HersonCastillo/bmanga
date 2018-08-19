@@ -1,17 +1,11 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CapitulosService } from '../services/capitulos.service';
-import { MatSnackBar, MatBottomSheet } from '@angular/material';
-import { ConfigComponent } from '../modals/modal';
+import { MatSnackBar, MatBottomSheet, MatDialog } from '@angular/material';
+import { ConfigComponent, ConfirmComponent } from '../modals/modal';
 import * as $ from 'jquery';
 import { Subscription } from '../../../node_modules/rxjs';
-import {
-    trigger,
-    transition,
-    style,
-    animate,
-    state
-} from '@angular/animations';
+import { trigger, transition, style, animate, state } from '@angular/animations';
 @Component({
 	selector: 'app-leer',
 	encapsulation: ViewEncapsulation.None,
@@ -37,7 +31,8 @@ export class LeerComponent implements OnInit, OnDestroy {
 		private router: Router,
 		private capitulos: CapitulosService,
 		private snack: MatSnackBar,
-		private sheet: MatBottomSheet
+		private sheet: MatBottomSheet,
+		private dialog: MatDialog
 	) { }
 	public checked = false;
 	private id: number;
@@ -49,6 +44,7 @@ export class LeerComponent implements OnInit, OnDestroy {
 	private valConfigwidth:number = 100;
 	public bbDis: boolean = true;
 	private subs: Subscription;
+	private imagesSubs: Subscription[] = [];
 	private count: number = 0;
 	public isChapterLoaded: boolean = false;
 	public isAllLoaded: boolean = false;
@@ -91,8 +87,27 @@ export class LeerComponent implements OnInit, OnDestroy {
 	makeSnack(str: string, t?: number): void{
 		this.snack.open(str, null, { duration: t || 1500 });
 	}
+	confirm(title: string, message: string, ok: Function, cancel?: Function): void{
+		ConfirmComponent.title = title;
+		ConfirmComponent.message = message;
+		ConfirmComponent.close = () => {
+			if(cancel) cancel();
+			this.dialog.closeAll();
+		}
+		ConfirmComponent.confirm = () => {
+			ok();
+			this.dialog.closeAll();
+		}
+		this.dialog.open(ConfirmComponent);
+	}
 	ngOnDestroy(): void{
 		this.subs.unsubscribe();
+		this.imagesSubs.forEach(el => {
+			el.unsubscribe();
+		});
+		if(!this.isChapterLoaded) this.confirm('Advertencia', 'El capítulo no se cargó completamente. El sitio tardará en cargar, ¿Quieres recargar forzosamente el sitio?', () => {
+			window.location.reload();
+		});
 	}
 	refreshImage(i: number): void{
 		this.makeSnack("Actualizando imagen...");
@@ -141,9 +156,8 @@ export class LeerComponent implements OnInit, OnDestroy {
 
 		this.check();
 		this.subs = this.route.params.subscribe(subs => {
-			if( isMobile.any() ){
-				window.location.href = "https://bmanga.net/mobile/leer/" + subs['id'];
-			}
+			if(isMobile.any()) window.location.href = "https://bmanga.net/mobile/leer/" + subs['id'];
+			
 			this.isChapterLoaded = false;
 			this.isAllLoaded = false;
 			this.count = 0;
@@ -161,10 +175,8 @@ export class LeerComponent implements OnInit, OnDestroy {
 						return;
 					}
 					this.chapterInfo = r;
-					if(r.siguiente)
-						this.chp.next = false;
-					if(r.anterior)
-						this.chp.previus = false;
+					if(r.siguiente) this.chp.next = false;
+					if(r.anterior) this.chp.previus = false;
 					$("title").text(r.info.nombre + " " + r.info.capitulo + " en BMANGA");
 					if(r.info) this.isAllLoaded = true;
 					this.bbDis = false;
@@ -175,10 +187,9 @@ export class LeerComponent implements OnInit, OnDestroy {
 							this.bbDis = true;
 							return;
 						}
-						for(let j = 0; j < c.count; j++)
-							this.nObjetos.push(j);
+						for(let j = 0; j < c.count; j++) this.nObjetos.push(j);
 						for(let i = 0; i < c.count; i++){
-							this.capitulos.getImages(r.info.directorio, i).then(img => {
+							this.imagesSubs[i] = this.capitulos.getImagesSubscribe(r.info.directorio, i).subscribe(img => {
 								setTimeout(() => {
 									try{
 										let canvas = (<any> document.getElementById('img'+i));
@@ -191,8 +202,34 @@ export class LeerComponent implements OnInit, OnDestroy {
 											ctx.drawImage(noImage, 0, 0);
 										}
 										this.count++;
-										if(this.count == c.count)
-											this.isChapterLoaded = true;
+										if(this.count == c.count) this.isChapterLoaded = true;
+									}catch(ex){}
+								}, 1);
+								if(localStorage.getItem('vwi')){
+									this.valConfigwidth = +localStorage.getItem('vwi');
+									$(".view").css({
+										'width': this.valConfigwidth + "%"
+									});
+								}
+							}, err => {
+								this.loadError = true;
+								this.isChapterLoaded = true;
+								this.bbDis = true;
+							});
+							/*this.capitulos.getImages(r.info.directorio, i).then(img => {
+								setTimeout(() => {
+									try{
+										let canvas = (<any> document.getElementById('img'+i));
+										let ctx = canvas.getContext('2d');
+										let noImage = new Image();
+										noImage.src = img.image;
+										noImage.onload = function(){
+											canvas.width = noImage.width;
+											canvas.height = noImage.height;
+											ctx.drawImage(noImage, 0, 0);
+										}
+										this.count++;
+										if(this.count == c.count) this.isChapterLoaded = true;
 									}catch(ex){}
 								}, 1);
 								if(localStorage.getItem('vwi')){
@@ -205,7 +242,7 @@ export class LeerComponent implements OnInit, OnDestroy {
 								this.loadError = true;
 								this.isChapterLoaded = true;
 								this.bbDis = true;
-							});
+							});*/
 						}
 					});
 				}catch(ex){

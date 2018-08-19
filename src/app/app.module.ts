@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DisqusModule } from 'ngx-disqus';
 import { LoginGuard, AuthGuardAdmin, AuthGuardUser } from './services/auth.guard';
@@ -99,7 +100,8 @@ const appRoutes: Routes = [
         }),
         FormsModule,
         ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
-        DisqusModule.forRoot('mangabooombin')
+        DisqusModule.forRoot('mangabooombin'),
+        HttpClientModule
     ],
     providers: [],
     bootstrap: [AppComponent],
