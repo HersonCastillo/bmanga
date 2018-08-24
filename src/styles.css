@@ -3,12 +3,11 @@
 @import "roboto-fontface/css/roboto/roboto-fontface.css";
 @import "assets/css/bootstrap.grid.min.css";
 @import "assets/pace/pace-theme-minimal.css";
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 *, html, body{
     font-family: 'Roboto', sans-serif, arial;
 }
-body{
-    background-image: url(assets/img/background.jpg);
-}
+html, body{ background-color: #f0f0f0; }
 /*Scroll*/
 ::-webkit-scrollbar {
     width: 11px;
