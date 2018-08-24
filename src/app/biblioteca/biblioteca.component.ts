@@ -1,17 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { 
-    FormControl, 
-    FormGroupDirective, 
-    NgForm, 
-    Validators} 
+import { FormControl, FormGroupDirective, NgForm, Validators } 
 from '@angular/forms';
-import {
-    trigger,
-    transition,
-    style,
-    animate,
-    state
-} from '@angular/animations';
+import { trigger, transition, style, animate, state } from '@angular/animations';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LibrosService } from '../services/libros.service';
@@ -38,7 +28,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
         state('hide',   style({
           opacity: 0,
           display: 'none',
-          transform: 'scale(.9, .9)'
+          transform: 'scale(.96, .96)'
         })),
         transition('show => hide', animate('100ms ease-out')),
         transition('hide => show', animate('250ms ease-in'))

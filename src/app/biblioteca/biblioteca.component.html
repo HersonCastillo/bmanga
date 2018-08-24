@@ -120,7 +120,9 @@
                 </h3>
                 <mat-divider></mat-divider>
                 <br>
-                <disqus [identifier]="pageId"></disqus>
+                <div class="disq-blank" style="background: white; padding: 30px; border-radius: 5px;">
+                    <disqus [identifier]="pageId"></disqus>
+                </div>
                 </mat-card>
             </mat-tab>
             <mat-tab label="Suscripciones" [disabled]="true">
@@ -157,7 +159,7 @@
         </mat-tab-group>
         </div>
         <div class="col-md-3" *ngIf="!isError.generalLoad && mangaInformacion">
-        <h2>Obras similares</h2>
+        <h2 style="color: white;">Obras similares</h2>
         <mat-divider></mat-divider>
         <br>
         <mat-card style="padding: 10px;" *ngIf="mangasSimilares.length == 0">
@@ -176,7 +178,7 @@
             </mat-card-header>
         </mat-card>
         <br>
-        <h2>Algo al azar</h2>
+        <h2 style="color: white;">Algo al azar</h2>
         <mat-divider></mat-divider>
         <br>
         <mat-card style="padding: 10px;" *ngIf="otrosMangas.length == 0">

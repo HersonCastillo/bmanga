@@ -6,154 +6,161 @@
 <br>
 <div class="container" [@popOverState]="(isAllLoaded) ? 'show' : 'hide'">
     <div class="row">
-        <mat-toolbar class="mat-elevation-z2">
-            <span class="material-icons icon-top">favorite</span>
-            <label class="icon-mar"><b>NUEVO</b></label>
-        </mat-toolbar>
-        <mat-divider></mat-divider><br>
-        <mat-card *ngIf="!isLoad.ultimos">
-            <mat-progress-bar mode="indeterminate" class="up-top"></mat-progress-bar>
-            Cargando lista de capítulos.
-        </mat-card>
-        <mat-card *ngIf="isError.ultimos">
-            <span class="material-icons" style="top: 6px; position: relative;">error</span>
-            <span style="margin-left: 10px;">Ocurrió un error al cargar la lista. Inténtalo mas tarde.</span>
-        </mat-card>
-        <div class="col">
-            <div class="col-md-3" *ngFor="let element of capitulosNuevos" style="margin-bottom: 15px;">
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>{{getName(element.nombre)}}</mat-card-title>
-                    <mat-card-subtitle>capítulo <b>{{element.capitulo}}</b></mat-card-subtitle>
-                </mat-card-header>
-                <img 
-                mat-card-image 
-                src="{{getImage(element.imagen)}}"
-                onerror="this.src='assets/img/image-no-load.png'"
-                alt="BMANGA Resource"
-                style="cursor: pointer;"
-                (click)="irManga(element.nombre)"
-                class="fix-size">
-                <mat-card-actions style="padding-bottom: 10px; padding-left: 10px;">
-                    <button 
-                    mat-fab 
-                    color="accent" 
-                    matTooltip="Leer" 
-                    (click)="leer(element.id)"
-                    [matTooltipPosition]="positionTooltip">
-                    <span class="material-icons">play_arrow</span>
-                    </button>
-                    <button 
-                    mat-icon-button 
-                    color="primary" 
-                    class="icon-mar" 
-                    matTooltip="Ver capítulos"
-                    (click)="irManga(element.nombre)"
-                    [matTooltipPosition]="positionTooltip">
-                    <span class="material-icons">book</span>
-                    </button>
-                    <button 
-                    mat-icon-button 
-                    color="warn" 
-                    matTooltip="Descargar"
-                    (click)="download(element.id)"
-                    [matTooltipPosition]="positionTooltip">
-                    <span class="material-icons">cloud_download</span>
-                    </button>
-                </mat-card-actions>
-            </mat-card>
-            </div>
-        </div>
-        <br><br>
-        <mat-toolbar class="mat-elevation-z2">
-            <span class="material-icons icon-top">plus_one</span>
-            <label class="icon-mar"><b>MÁS CAPÍTULOS</b></label>
-        </mat-toolbar>
-        <mat-divider></mat-divider><br>
-        <mat-card *ngIf="!isLoad.otros && !isLoad.azar">
-            <mat-progress-bar mode="indeterminate" class="up-top"></mat-progress-bar>
-            Cargando lista de capítulos.
-        </mat-card>
-        <mat-card *ngIf="isError.otros || isError.azar">
-            <span class="material-icons" style="top: 6px; position: relative;">error</span>
-            <span style="margin-left: 10px;">Ocurrió un error al cargar la lista. Inténtalo mas tarde.</span>
-        </mat-card>
-        <div class="container" *ngIf="!isError.otros && !isError.azar">
-            <div class="col-md-6">
-                <mat-card *ngFor="let caps of capitulosOtros" style="margin-bottom: 10px;">
-                    <img src="{{getImage(caps.imagen)}}" alt="BMANGA Resource" onerror="this.src='assets/img/image-no-load.png'" class="mat-image-card" 
-                    style="cursor: pointer;" (click)="irManga(caps.nombre)">
-                    <div class="cnt">
-                        <b style="font-weight: 800; font-size: 1.5em;">{{getName(caps.nombre)}}</b><br><br>
-                        <span>Capítulo </span><b>{{caps.capitulo}}</b> por <code>{{caps.nick}}</code>
-                        <br><br>
-                        <button mat-fab color="primary" style="transform: scale(.7,.7)" (click)="leer(caps.id)">
-                            <b><span class="material-icons">play_arrow</span></b>
-                        </button>
-                        <button mat-fab (click)="irManga(caps.nombre)" style="transform: scale(.7,.7)">
-                            <b><span class="material-icons">book</span></b>
-                        </button>
-                        <br><br>
-                    </div>
-                </mat-card>
-            </div>
-            <div class="col-md-6">
-                <mat-card *ngIf="isLoad.azar">
-                    <mat-card-header>
-                        <mat-card-title><b>{{libroAzar.nombre}}</b></mat-card-title>
-                        <mat-card-subtitle>{{libroAzar.generos}}</mat-card-subtitle>
-                    </mat-card-header>
-                    <img mat-card-image src="{{getImage(libroAzar.imagen)}}" onerror="this.src='assets/img/image-no-load.png'" alt="BMANGA Resource">
-                    <mat-card-content>
-                        <p>{{elipsis(libroAzar.sinopsis, 75)}}</p>
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <button color="warn" mat-raised-button [routerLink]="['biblioteca', libroAzar.nombre]">
-                            <b>SABER MÁS</b>
-                        </button>
-                    </mat-card-actions>
-                </mat-card>
+        <mat-tab-group>
+            <mat-tab label="Actualizaciones recientes">
+                <mat-toolbar class="mat-elevation-z2">
+                    <span class="material-icons icon-top">favorite</span>
+                    <label class="icon-mar"><b>NUEVO EN ACTUALIZACIONES</b></label>
+                </mat-toolbar>
                 <br>
-            </div>
-        </div>
-        <mat-toolbar class="mat-elevation-z2">
-            <span class="material-icons icon-top">stars</span>
-            <label class="icon-mar"><b>LO MÁS LEIDO</b></label>
-        </mat-toolbar>
-        <mat-divider></mat-divider><br>
-        <mat-card *ngIf="!isLoad.rank">
-            <mat-progress-bar mode="indeterminate" class="up-top"></mat-progress-bar>
-            Cargando lista de lo más leido.
-        </mat-card>
-        <mat-card *ngIf="isError.rank">
-            <span class="material-icons" style="top: 6px; position: relative;">error</span>
-            <span style="margin-left: 10px;">Ocurrió un error al cargar la lista. Inténtalo mas tarde.</span>
-        </mat-card>
-        <div class="col">
-            <div class="col-md-3" *ngFor="let element of librosRanking" style="margin-bottom: 15px;">
-            <mat-card>
-                <mat-card-header>
-                <mat-card-title>
-                    <span>{{getName(element.nombre)}}</span>
-                </mat-card-title>
-                <mat-card-subtitle><span class="material-icons icon-top" style="top: 5px;">remove_red_eye</span> <b class="icon-mar">{{element.vistas}}</b></mat-card-subtitle>
-                </mat-card-header>
-                <img 
-                mat-card-image 
-                src="{{getImage(element.imagen)}}"
-                onerror="this.src='assets/img/image-no-load.png'"
-                alt="BMANGA Resource"
-                style="cursor: pointer;"
-                (click)="irManga(element.nombre)"
-                class="fix-size">
-                <mat-card-actions>
-                <button mat-raised-button color="primary" (click)="irManga(element.nombre)" style="width: 100%;">
-                    VER CAPÍTULOS
-                </button>
-                </mat-card-actions>
-            </mat-card>
-            </div>
-        </div>
+                <mat-card *ngIf="!isLoad.ultimos">
+                    <mat-progress-bar mode="indeterminate" class="up-top"></mat-progress-bar>
+                    Cargando lista de capítulos.
+                </mat-card>
+                <mat-card *ngIf="isError.ultimos">
+                    <span class="material-icons" style="top: 6px; position: relative;">error</span>
+                    <span style="margin-left: 10px;">Ocurrió un error al cargar la lista. Inténtalo mas tarde.</span>
+                </mat-card>
+                <div class="col">
+                    <div class="col-md-3" *ngFor="let element of capitulosNuevos" style="margin-bottom: 15px;">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>{{getName(element.nombre)}}</mat-card-title>
+                            <mat-card-subtitle>capítulo <b>{{element.capitulo}}</b></mat-card-subtitle>
+                        </mat-card-header>
+                        <img 
+                        mat-card-image 
+                        src="{{getImage(element.imagen)}}"
+                        onerror="this.src='assets/img/image-no-load.png'"
+                        alt="BMANGA Resource"
+                        style="cursor: pointer;"
+                        (click)="irManga(element.nombre)"
+                        class="fix-size">
+                        <mat-card-actions style="padding-bottom: 10px; padding-left: 10px;">
+                            <button 
+                            mat-fab 
+                            color="accent" 
+                            matTooltip="Leer" 
+                            (click)="leer(element.id)"
+                            [matTooltipPosition]="positionTooltip">
+                            <span class="material-icons">play_arrow</span>
+                            </button>
+                            <button 
+                            mat-mini-fab
+                            color="primary" 
+                            class="icon-mar" 
+                            matTooltip="Ver capítulos"
+                            (click)="irManga(element.nombre)"
+                            [matTooltipPosition]="positionTooltip">
+                            <span class="material-icons">book</span>
+                            </button>
+                            <button 
+                            mat-mini-fab 
+                            color="warn" 
+                            matTooltip="Descargar"
+                            (click)="download(element.id)"
+                            [matTooltipPosition]="positionTooltip">
+                            <span class="material-icons">cloud_download</span>
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Más capítulos disponibles">
+                <mat-toolbar class="mat-elevation-z2">
+                    <span class="material-icons icon-top">plus_one</span>
+                    <label class="icon-mar"><b>MÁS CAPÍTULOS DISPONIBLES</b></label>
+                </mat-toolbar>
+                <br>
+                <mat-card *ngIf="!isLoad.otros && !isLoad.azar">
+                    <mat-progress-bar mode="indeterminate" class="up-top"></mat-progress-bar>
+                    Cargando lista de capítulos.
+                </mat-card>
+                <mat-card *ngIf="isError.otros || isError.azar">
+                    <span class="material-icons" style="top: 6px; position: relative;">error</span>
+                    <span style="margin-left: 10px;">Ocurrió un error al cargar la lista. Inténtalo mas tarde.</span>
+                </mat-card>
+                <div class="container" *ngIf="!isError.otros && !isError.azar">
+                    <div class="col-md-6">
+                        <mat-card *ngFor="let caps of capitulosOtros" style="margin-bottom: 10px;">
+                            <img src="{{getImage(caps.imagen)}}" alt="BMANGA Resource" onerror="this.src='assets/img/image-no-load.png'" class="mat-image-card" 
+                            style="cursor: pointer;" (click)="irManga(caps.nombre)">
+                            <div class="cnt">
+                                <b style="font-weight: 800; font-size: 1.5em;">{{getName(caps.nombre)}}</b><br><br>
+                                <span>Capítulo </span><b>{{caps.capitulo}}</b> por <code>{{caps.nick}}</code>
+                                <br><br>
+                                <button mat-fab color="primary" style="transform: scale(.7,.7)" (click)="leer(caps.id)">
+                                    <b><span class="material-icons">play_arrow</span></b>
+                                </button>
+                                <button mat-fab (click)="irManga(caps.nombre)" style="transform: scale(.7,.7)">
+                                    <b><span class="material-icons">book</span></b>
+                                </button>
+                                <br><br>
+                            </div>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-card *ngIf="isLoad.azar">
+                            <mat-card-header>
+                                <mat-card-title><b>{{libroAzar.nombre}}</b></mat-card-title>
+                                <mat-card-subtitle>{{libroAzar.generos}}</mat-card-subtitle>
+                            </mat-card-header>
+                            <img mat-card-image src="{{getImage(libroAzar.imagen)}}" onerror="this.src='assets/img/image-no-load.png'" alt="BMANGA Resource">
+                            <mat-card-content>
+                                <p>{{elipsis(libroAzar.sinopsis, 75)}}</p>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <button color="warn" mat-raised-button [routerLink]="['biblioteca', libroAzar.nombre]">
+                                    <b>SABER MÁS</b>
+                                </button>
+                            </mat-card-actions>
+                        </mat-card>
+                        <br>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Popular en BMANGA">
+                <mat-toolbar class="mat-elevation-z2">
+                    <span class="material-icons icon-top">stars</span>
+                    <label class="icon-mar"><b>LO MÁS LEIDO</b></label>
+                </mat-toolbar>
+                <mat-divider></mat-divider><br>
+                <mat-card *ngIf="!isLoad.rank">
+                    <mat-progress-bar mode="indeterminate" class="up-top"></mat-progress-bar>
+                    Cargando lista de lo más leido.
+                </mat-card>
+                <mat-card *ngIf="isError.rank">
+                    <span class="material-icons" style="top: 6px; position: relative;">error</span>
+                    <span style="margin-left: 10px;">Ocurrió un error al cargar la lista. Inténtalo mas tarde.</span>
+                </mat-card>
+                <div class="col">
+                    <div class="col-md-3" *ngFor="let element of librosRanking" style="margin-bottom: 15px;">
+                    <mat-card>
+                        <mat-card-header>
+                        <mat-card-title>
+                            <span>{{getName(element.nombre)}}</span>
+                        </mat-card-title>
+                        <mat-card-subtitle><span class="material-icons icon-top" style="top: 5px;">remove_red_eye</span> <b class="icon-mar">{{element.vistas}}</b></mat-card-subtitle>
+                        </mat-card-header>
+                        <img 
+                        mat-card-image 
+                        src="{{getImage(element.imagen)}}"
+                        onerror="this.src='assets/img/image-no-load.png'"
+                        alt="BMANGA Resource"
+                        style="cursor: pointer;"
+                        (click)="irManga(element.nombre)"
+                        class="fix-size">
+                        <mat-card-actions>
+                        <button mat-raised-button color="primary" (click)="irManga(element.nombre)" style="width: 100%;">
+                            VER CAPÍTULOS
+                        </button>
+                        </mat-card-actions>
+                    </mat-card>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
         <footer class="footer">
             <div class="container">
                 <p class="text-muted">
@@ -161,6 +168,5 @@
                 </p>
             </div>
         </footer>
-        <br>
     </div>
 </div>

@@ -10,7 +10,7 @@
     bottom: 0px;
     left: 0px; 
     width: 100%; 
-    background: white; 
+    background: rgba(26, 25, 25, 0.9);
     padding-top: 15px; 
     padding-left: 10px;
 }
