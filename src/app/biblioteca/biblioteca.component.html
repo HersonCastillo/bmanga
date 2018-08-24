@@ -64,13 +64,32 @@
                     <span class="material-icons icon-top">bookmark</span>
                     <label class="icon-mar">LISTA DE CAPÍTULOS</label>
                 </h3>
-                <div *ngIf="selection.selectedOptions.selected.length" class="row-flex">
+                <!--<div *ngIf="selection.selectedOptions.selected.length" class="row-flex">
                     <span class="flex"></span>
                     <button mat-button color="warn" (click)="multipleDownload()" [disabled]="isDonwloadMultiple">
                         <b>DESCARGAR CAPITULOS</b>
                     </button>
-                </div>
-                <mat-selection-list #selection>
+                </div>-->
+                <mat-list role="list">
+                    <mat-list-item *ngIf="chapters.length == 0">
+                        No hay capítulos disponibles para este manga.
+                    </mat-list-item>
+                    <mat-list-item role="listitem" *ngFor="let item of getData(chapters); let i = index;">
+                        <div *ngIf="item">
+                            {{(tituloCanBe(item?.titulo)) ? reduce(item?.titulo, 25) : 'Capítulo sin título '}} <b style="margin-left: 5px;">{{item?.capitulo}}</b>
+                            <i style="margin-left: 5px;"><small>{{item?.created_at | date}}</small></i>
+                            <button mat-mini-fab color="primary" style="position: absolute;
+                            right: 100px; top: 5px;" (click)="lectura(item?.id)">
+                                <span class="material-icons">play_arrow</span>
+                            </button>
+                            <button mat-mini-fab color="warn" style="position: absolute;
+                            right: 50px; top: 5px;" (click)="descargar(item?.id)">
+                                <span class="material-icons">cloud_download</span>
+                            </button>
+                        </div>
+                    </mat-list-item>
+                  </mat-list>
+                <!--<mat-selection-list #selection>
                     <mat-list-item *ngIf="chapters.length == 0">
                         No hay capítulos disponibles para este manga.
                     </mat-list-item>
@@ -88,7 +107,7 @@
                             </button>
                         </div>
                     </mat-list-option>
-                </mat-selection-list>
+                </mat-selection-list>-->
                 <br><br>
                 <div style="position: relative; text-align: center;" *ngIf="chapters.length >= 1">
                     <button style="margin-bottom: 5px;" mat-mini-fab (click)="changePage(i)" class="icon-mar" *ngFor="let i of paginator" [disabled]="page == i">
@@ -134,9 +153,6 @@
                 mat-raised-button 
                 color="primary"
                 (click)="envEmail()">Recibir notificaciones</button>
-            </mat-tab>
-            <mat-tab label="Historial" [disabled]="true">
-                <span>Historial</span>
             </mat-tab>
         </mat-tab-group>
         </div>

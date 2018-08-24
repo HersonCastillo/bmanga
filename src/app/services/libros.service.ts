@@ -6,6 +6,12 @@ import { Http } from '@angular/http';
 })
 export class LibrosService {
     constructor(private globals: GlobalService, private http: Http) { }
+    public bookGet(id): Promise<any>{
+        return new Promise<void>((rs, rj) => {
+            this.http.get(this.globals.API + 'get/chapter/' + id)
+            .subscribe(r => rs(r.json()), e => rj(e));
+        });
+    }
     public ranking(): Promise<any>{
         return new Promise<void>((resolve, reject) => {
             this.http.get(this.globals.API + "libros/rank")

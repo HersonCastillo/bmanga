@@ -58,48 +58,27 @@ export class HomeComponent implements OnInit, OnDestroy {
         $("body, html").on('contextmenu', function(){
             return false;
         });
-        this.capitulos.ultimosCapitulos().then(r => {
-            this.capitulosNuevos = r;
+        this.capitulos.indexInfo().then(r => {
+            this.capitulosNuevos = r.ultimos;
+            this.capitulosOtros = r.otros;
+            this.librosRanking = r.rank;
+            this.libroAzar = r.random[0];
+
             this.isLoad.ultimos = true;
-            this.counter++;
-            if(this.counter == 4)
-                this.isAllLoaded = true;
+            this.isLoad.otros = true;
+            this.isLoad.rank = true;
+            this.isLoad.azar = true;
+            this.isAllLoaded = true;
         }).catch(() => {
             this.isLoad.ultimos = true;
             this.isError.ultimos = true;
-            this.isAllLoaded = true;
-        });
-        this.capitulos.otrosCapitulos().then(r => {
-            this.capitulosOtros = r
-            this.isLoad.otros = true;
-            this.counter++;
-            if(this.counter == 4)
-                this.isAllLoaded = true;
-        }).catch(() => {
             this.isLoad.otros = true;
             this.isError.otros = true;
-            this.isAllLoaded = true;
-        });
-        this.libros.ranking().then(r => {
-            this.librosRanking = r;
-            this.isLoad.rank = true;
-            this.counter++;
-            if(this.counter == 4)
-                this.isAllLoaded = true;
-        }).catch(() => {
             this.isLoad.rank = true;
             this.isError.rank = true;
-            this.isAllLoaded = true;
-        });
-        this.libros.otrasObras(0).then(r => {
-            this.libroAzar = r[0];
-            this.isLoad.azar = true;
-            this.counter++;
-            if(this.counter == 4)
-                this.isAllLoaded = true;
-        }).catch(() => {
             this.isLoad.azar = true;
             this.isError.azar = true;
+
             this.isAllLoaded = true;
         });
     }

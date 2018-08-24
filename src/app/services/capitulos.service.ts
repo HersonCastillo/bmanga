@@ -12,6 +12,12 @@ export class CapitulosService {
         private http: Http,
         private httpClient: HttpClient
     ) { }
+    public indexInfo(): Promise<any>{
+        return new Promise<void>((rs, rj) => {
+            this.http.get(this.globals.API + 'index')
+            .subscribe(r => rs(r.json()), e => rj(e));
+        });
+    }
     public ultimosCapitulos(): Promise<any>{
         return new Promise<void>((resolve, reject) => {
             this.http.get(this.globals.API + "capitulos/ultimos")

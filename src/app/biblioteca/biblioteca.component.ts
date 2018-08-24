@@ -78,7 +78,7 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
     ]);
     envEmail(): void{}
     public isDonwloadMultiple: boolean = false;
-    multipleDownload(): void{
+    /*multipleDownload(): void{
         let nStr = "";
         let val = this.selectToDownload.selectedOptions.selected.length;
         if(val <= 5 && val >= 1){
@@ -94,7 +94,7 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
                 this.isDonwloadMultiple = false;
             });
         } else this.makeSnack("Solo se pueden 5 descargas como máximo.");
-    }
+    }*/
     ngOnDestroy(){
         this.observable.unsubscribe();
         this.isAllLoaded = false;
@@ -112,40 +112,22 @@ export class BibliotecaComponent implements OnInit, OnDestroy {
             this.pageId = "/leer/" + this.id;
             this.page = 0;
             $("title").text(this.id + " en BMANGA");
-            this.libros.getLibro(this.id).then(r => {
+            this.libros.bookGet(this.id).then(r => {
                 if(r.error){
                     this.isError.generalLoad = true;
                     this.mensajeError = r.error;
                     this.isAllLoaded = true;
                 } else {
                     document.getElementsByTagName("html")[0].scroll(0, 0);
-                    this.mangaInformacion = r;
-                    this.libros.obrasSimilares(r.generos, r.id).then(s => {
-                        this.mangasSimilares = s;
-                        this.counter++;
-                        if(this.counter == 3)
-                            this.isAllLoaded = true;
-                    });
-                    this.libros.otrasObras(r.id).then(o => {
-                        this.otrosMangas = o;
-                        this.counter++;
-                        if(this.counter == 3)
-                            this.isAllLoaded = true;
-                    });
-                    this.capitulos.getCapitulos(r.id).then(c => {
-                        this.chapters = c;
-                        this.counter++;
-                        if(this.counter == 3)
-                            this.isAllLoaded = true;
-                        if(this.chapters.length > 0){
-                            let n = Math.ceil(this.chapters.length / 10);
-                            for(let i = 0; i < n; i++) this.paginator.push(i);
-                        }
-                    }).catch(() => {
-                        this.isError.generalLoad = true;
-                        this.mensajeError = "Los capítulos están corruptos.";
-                        this.isAllLoaded = true;
-                    });
+                    this.mangaInformacion = r.info;
+                    this.mangasSimilares = r.similares;
+                    this.otrosMangas = r.random;
+                    this.chapters = r.capitulos;
+                    this.isAllLoaded = true;
+                    if(this.chapters.length > 0){
+                        let n = Math.ceil(this.chapters.length / 10);
+                        for(let i = 0; i < n; i++) this.paginator.push(i);
+                    }
                 }
             }).catch(() => {
                 this.isError.generalLoad = true;
